@@ -1,3 +1,7 @@
+'''
+Controls the robots motion.
+'''
+
 __version__ = '1'
 __author__ = 'Thomas Schnapka'
 
