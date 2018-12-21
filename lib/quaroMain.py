@@ -1,3 +1,7 @@
+'''
+Manages threads, server and builds up the shell menu.
+'''
+
 __version__ = '1.1'
 __author__ = 'Thomas Schnapka'
 
