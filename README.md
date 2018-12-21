@@ -1,5 +1,7 @@
 # Quaro Quadruped Robots
-Planning- and control-software for Quadrupedal Robots. 
+Planning- and control-software for Quadrupedal Robots.
+
+The software ensures a safe and stable walking gait. However, there are some issues with the robot's body like weak servos and mechanics. That's why a new bigger version is currently under development, that hopefully can exhaust all possibilities.
 
 ![sideview](https://raw.githubusercontent.com/ThomasSchnapka/quaro/master/doc/sideview.jpeg)
 
