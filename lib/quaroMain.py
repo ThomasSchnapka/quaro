@@ -30,8 +30,8 @@ def change_value(name, val=None):
         sh.Data.teta = val/1000.0
         print_info(name, sh.Data.teta)
     elif name is "supp":
-        sh.Data.supportRatio = val
-        print_info(name, sh.Data.supportRatio)
+        sh.Data.support_ratio = val
+        print_info(name, sh.Data.support_ratio)
     elif name is "comx":
         sh.Data.com_adjust[0] = val
         print_info(name, sh.Data.com_adjust[0])
