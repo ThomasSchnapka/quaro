@@ -1,3 +1,8 @@
+'''
+Module contains all shared data, manages communication with Arduino and
+the simulation and stores/plots sensor data.
+'''
+
 __version__ = '1'
 __author__ = 'Thomas Schnapka'
 
