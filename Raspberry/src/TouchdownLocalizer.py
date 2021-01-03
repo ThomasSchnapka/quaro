@@ -1,11 +1,3 @@
-#!/usr/bin/env python2
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Jan  1 14:15:56 2021
-
-@author: Thomas
-"""
-
 import numpy as np
 
 class TouchdownLocalizer:

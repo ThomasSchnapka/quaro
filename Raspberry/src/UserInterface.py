@@ -1,11 +1,3 @@
-#!/usr/bin/env python2
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Dec 29 21:36:30 2020
-
-@author: Thomas
-"""
-
 class UserInterface:
     def __init__(self, controller, state):
         self.controller = controller

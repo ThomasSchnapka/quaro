@@ -1,13 +1,3 @@
-#!/usr/bin/env python2
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Dec 29 22:30:26 2020
-
-@author: Thomas
-"""
-
-
-
 class SupportController:
     def __init__(self, touchdown_localizer):
         
