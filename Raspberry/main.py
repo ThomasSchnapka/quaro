@@ -1,12 +1,3 @@
-#!/usr/bin/env python2
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Dec 29 21:04:19 2020
-
-@author: Thomas
-"""
-
-
 from quaro.HardwareConfig import HardwareConfig
 
 from src.HardwareInterface import HardwareInterface
