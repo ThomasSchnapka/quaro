@@ -1,7 +1,13 @@
-# Quaro Quadruped Robot
+# Quaro Quadruped Robot v3
 Planning- and control-software for Quadrupedal Robots.
 
-The software ensures a safe and stable walking gait. However, there are some issues with the robot's body like weak servos and mechanics. That's why a new bigger version is currently under development, that hopefully can exhaust all possibilities.
+This is the third iteration of my quadruped robot. As it is still in development, some files in this repository are still missing and some pictures are are out of date. However my goal is to upload all new files as soon as possible!
+
+The robot uses a Raspberry Pi for control and an Arduino Mega 2560 for handling the hardware.
+
+![sideview](https://github.com/ThomasSchnapka/quaro/blob/v3/doc/Quaro_diagramm.png)
+
+Here are a picture and a video of the old version, which already had a quite stable gait.
 
 ![sideview](https://raw.githubusercontent.com/ThomasSchnapka/quaro/master/doc/sideview.jpeg)
 
