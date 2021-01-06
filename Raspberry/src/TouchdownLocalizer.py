@@ -8,12 +8,9 @@ class TouchdownLocalizer:
         self.state = state
         
         # start- and end-point of swing phase
-        self.last_touchdown_point = np.array([[-0.5, -0.5, -0.5, -0.5],
-                                              [-0.5, -0.5, -0.5, -0.5],
-                                              [ 0.8,  0.8,  0.8,  0.8]])
-        self.next_touchdown_point = np.array([[0.5, 0.5, 0.5, 0.5],
-                                              [0.5, 0.5, 0.5, 0.5],
-                                              [0.8, 0.8, 0.8, 0.8]])
+        self.last_touchdown_point = np.copy(self.state.last_touchdown_point)
+        
+        self.next_touchdown_point = np.copy(self.state.next_touchdown_point)
         
     def update_touchdown_points(self, leg_state):
         '''

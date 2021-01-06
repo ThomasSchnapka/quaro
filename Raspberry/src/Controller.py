@@ -23,19 +23,21 @@ class Controller:
         
         self.gait_controller = GaitController(state, hardware_config)
         
-        self.gait_loop_thread = threading.Thread(target=self.gait_loop,)
         self.allow_loop = False
         
     def start_gait(self):
         # start thread
         self.allow_loop = True
+        self.gait_loop_thread = threading.Thread(target=self.gait_loop,)
         self.gait_loop_thread.start()
         
     def stop_gait(self):
         self.allow_loop = False
         
     def shun(self):
-        # To-Do
+        self.stop_gait();
+        self.state.joint_angle = np.zeros((3, 4))
+        self.hardware_interface.send_angle(np.zeros((3, 4)))
         pass
     
     def shutdown(self):
@@ -51,7 +53,7 @@ class Controller:
         position = self.gait_controller.get_position()
         if position is not None:
             angle = self.hardware_config.inverse_kinematics(position)
-            self.state.angle = angle
+            self.state.joint_angle = angle
             self.sanity_check_angle(angle)
             self.hardware_interface.send_angle(angle)
         else:
@@ -69,4 +71,7 @@ class Controller:
             print "[controller] bad angle value"
             print angle
             raise Exception("[controller] unreachable angle detected!")
+    
+    def calibrate(self):
+        calibration.calibration_menu(self, self.hardware_interface);
         

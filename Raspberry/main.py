@@ -7,6 +7,7 @@ from src.UserInterface import UserInterface
 
 # To-Do: import threading
 
+
 def main():
     # independend objects
     hardware_config = HardwareConfig()

@@ -18,11 +18,13 @@ class UserInterface:
                     self.controller.stop_gait()
                 elif inp == "shun":
                     self.controller.stop_gait()
-                    self.shun()
+                    self.controller.shun()
                 elif inp in ["q","quit","exit"]:
                     print "[main] initalizing shutdown!"
                     self.controller.stop_gait()
                     break
+                elif inp in ["c","calibrate"]:
+                    self.controller.calibrate()
                 elif inp in ["help", "h"]:
                     print "[help] No help available. Help has to be extended!"
                 elif inp in ["debug", "d"]:
