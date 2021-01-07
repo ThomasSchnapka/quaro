@@ -19,7 +19,7 @@ class GaitController:
     def __init__(self, state, hardware_config):
         
         self.state = state
-        self.config = hardware_config
+        self.hardware_config = hardware_config
         
         self.touchdown_localizer = TouchdownLocalizer(self.state)
         self.swing_controller = SwingController(self.touchdown_localizer)
@@ -38,6 +38,7 @@ class GaitController:
             normalized_position = self.get_norm_position(leg_state, leg_time)
             position = self.norm2abs_position(normalized_position)
             self.state.absolute_foot_position = position
+            position += self.correct_shoulder_displacement()
         else:
             position = None
         return position
@@ -98,9 +99,21 @@ class GaitController:
         '''maps normalized to absolute coordinates, uses 3x4 np.arrays'''
         stride = self.state.velocity * self.state.cycle_time
         # add information for movement in z direction
-        stride3 = np.append(stride, 2*self.config.leg_length)
+        stride3 = np.append(stride, 2*self.hardware_config.leg_length)
         
         return (normalized_position * stride3[:, None])
+    
+    def correct_shoulder_displacement(self):
+        '''
+        Returns needed translation in y directionfor every foot position. 
+        Foottips will be placed right under coxa or femur joint of inbetween
+        (based on correct_shoulder_displacement, which is between 1 and 0)
+        '''
+        pos = np.zeros((3,4))
+        pos[1] = ( self.hardware_config.shoulder_displacement
+                *np.sign(self.hardware_config.leg_locations[1])
+                *self.state.correct_shoulder_displacement)
+        return pos
         
         
         

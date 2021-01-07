@@ -40,7 +40,7 @@ def calibration_menu(controller, hardware_interface):
             print "[calibration] There is no command: ", inp
     
     
-# longer text files:
+# longer texts:
 
 header = "\n+------------------+\n"\
         +"|   ZEROPOS-MENU   |\n"\

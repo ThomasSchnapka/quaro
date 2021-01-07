@@ -65,7 +65,7 @@ class Controller:
         # TODO: add direct kinematics for a better verification
         if (    np.any(np.abs(angle[0]) > 60)
             or  np.any(np.abs(angle[1]) > 120)
-            or  np.any(np.abs(angle[2]) > 45)
+            or  np.any(np.abs(angle[2]) > 60)
             or  np.any(np.isnan(angle))):
             self.state.debug()
             print "[controller] bad angle value"

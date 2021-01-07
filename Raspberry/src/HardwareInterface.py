@@ -14,6 +14,7 @@ class HardwareInterface:
             self.sock.bind((self.UDP_IP, self.UDP_PORT_receive))
             self.sock.settimeout(1) #timeout if nothing is recieved
             
+            
         def write(self, text):
             # print(text)
             self.sock.sendto(text , (self.UDP_IP, self.UDP_PORT_send))
@@ -26,10 +27,11 @@ class HardwareInterface:
             return "<noDataAvailable>"
         
         
-    def __init__(self, hardware_config):
+    def __init__(self, hardware_config, state):
         self.config = hardware_config
         self.ser = self.open_serial_connection()
-        # self.vals = np.empty(1) # for plotting 
+        self.angle_cache = np.zeros((3,4))
+        self.state = state
         
     def open_serial_connection(self):
         '''
@@ -61,11 +63,12 @@ class HardwareInterface:
         
     def send(self, data):
         self.ser.write("<" + data + ">")
-        # print "[serial] sending: <" + data + ">"
+        if self.state.debug_communication:
+            print "[serial] sending: <" + data + ">"
         
 
     def receive(self):
-        self.send('s') # request to send own data
+        self.send('s') # request to Arduino to send own data
         rec = self.ser.readline()
         while("<noDataAvailable>" not in rec):
             print "[serial] receiving: " + rec
@@ -73,13 +76,20 @@ class HardwareInterface:
             
         
     def send_angle(self, angle):
+        '''
+        Input: angles in 3x4 np.array
+        Angles get rounded to 2 decimals and send via quaro protocoll
+        To reduce the amount of data in serial communication, angles are saved
+        and not resendet if they do not change (angle_cache)
+        '''
         angle = np.around(angle, 2)
-        #print "[HardwareInterface]", angle
-        #self.vals = np.append(self.vals, angle[0,0]) # for plotting
+        
         for leg, a in enumerate(angle.T):
-            self.send(str(leg)+ ':a' + str(a[0])
-                              +  'b' + str(a[1])
-                              +  'g' + str(a[2]))
+            if not np.array_equal(self.angle_cache[:,leg],a):
+                self.send(str(leg)+ ':a' + str(a[0])
+                                  +  'b' + str(a[1])
+                                  +  'g' + str(a[2]))
+                self.angle_cache[:,leg] = a
         #tell Arduino to send own data
         self.receive()
         

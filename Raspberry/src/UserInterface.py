@@ -8,10 +8,10 @@ class UserInterface:
         runs user interface in while-true-loop
         other programm parts need single threads
         '''
-        print("[UI] waiting for commands. Type 'h' for help.")
+        print header
         try:
             while True:         
-                inp = raw_input("[main]-> ")
+                inp = raw_input("[UserInterface]-> ")
                 if inp in ["s","start","go"]:
                     self.controller.start_gait()
                 elif inp in ["stop"]:
@@ -20,7 +20,7 @@ class UserInterface:
                     self.controller.stop_gait()
                     self.controller.shun()
                 elif inp in ["q","quit","exit"]:
-                    print "[main] initalizing shutdown!"
+                    print("[main] initalizing shutdown!")
                     self.controller.stop_gait()
                     break
                 elif inp in ["c","calibrate"]:
@@ -30,7 +30,7 @@ class UserInterface:
                 elif inp in ["debug", "d"]:
                     self.state.debug()
                 else:
-                    print "[main] There is no command for '", inp, "'"
+                    print "[UserInterface] There is no command for '", inp, "'"
                 '''
                 elif inp == "send":
                     #"send messages directly via serial"
@@ -42,5 +42,13 @@ class UserInterface:
                     
         except KeyboardInterrupt:
             print "[main] end"
+            
+            
+# longer texts:
+            
+header = "\n+------------------+\n"\
+        +  "|    QUARO-MENU    |\n"\
+        +  "+------------------+\n"\
+        +  "[UI] waiting for commands. Type 'h' for help."
         
         
