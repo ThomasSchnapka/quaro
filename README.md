@@ -9,4 +9,13 @@ The robot uses a Raspberry Pi for control and an Arduino Mega 2560 for handling 
 
 ![hardware](https://raw.githubusercontent.com/ThomasSchnapka/quaro/master/doc/hardware_image.jpg)
 
-More information coming soon!
+---
+Update 20.01.2020
+
+Today I found the reason why the servos were jittering sometimes. Although I bought high torque servos, it seems that they were not capable of handling the robots weight in the long run. One IC is burned on most of the servos.
+
+![hardware](https://raw.githubusercontent.com/ThomasSchnapka/quaro/master/doc/servo_burnt.jpg)
+
+There are two things I could do right now: 1) buy new similar servos and limit the robots movements so that the current will stay low or 2) find a way to build the robot without other motors than RC servos.
+
+Since a limitited robot is a boring one, I will focus on the second option. The main problem here is that all motos that are of-the-shelf-parts and fit my budget run on low voltages. As exactly this is my problem (low voltage -> high current -> burnt servos) I have to find another way to realize the robots actuators. Let's see how long this will take. 
