@@ -16,6 +16,6 @@ Today I found the reason why the servos were jittering sometimes. Although I bou
 
 ![burnt servo](https://raw.githubusercontent.com/ThomasSchnapka/quaro/master/doc/burnt_servo.jpeg)
 
-There are two things I can do right now: 1) buy new similar servos and limit the robots movements so that the current will stay low or 2) find a way to build the robot without other motors than RC servos.
+There are two things I can do right now: 1) buy new similar servos and limit the robots movements so that the current will stay low or 2) find a way to build the robot with other motors than RC servos.
 
-Since a limitited robot is a boring one, I will focus on the second option. The main problem here is that all motos that are of-the-shelf-parts and fit my budget run on low voltages. As exactly this is my problem (low voltage -> high current -> burnt servos) I have to find another way to realize the robots actuators. Let's see how long this will take. 
+Since a limitited robot is a boring one, I will focus on the second option. The main problem here is that all of-the-shelf-servos that fit my budget run on low voltages. As exactly this is my problem (low voltage -> high current -> burnt servos) I have to find another way to realize the robots actuators. Let's see how long this will take. 
