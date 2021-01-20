@@ -7,6 +7,6 @@ The robot uses a Raspberry Pi for control and an Arduino Mega 2560 for handling 
 
 ![diagram](https://github.com/ThomasSchnapka/quaro/blob/v3/doc/Quaro_diagramm.png)
 
-![hardware](https://raw.githubusercontent.com/ThomasSchnapka/quaro/master/doc/hardware_image.jpeg)
+![hardware](https://raw.githubusercontent.com/ThomasSchnapka/quaro/master/doc/hardware_image.jpg)
 
 More information coming soon!
