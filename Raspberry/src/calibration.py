@@ -34,6 +34,7 @@ def calibration_menu(controller, hardware_interface):
         elif inp in ["+", "-", "++", "--"]:
             hardware_interface.send("z:l" + leg + "j" + joints[joint]
                                     + "a" + amounts[inp])
+            hardware_interface.receive()
         elif inp in ["h", "i"]:
             print instruction
         else:

@@ -40,10 +40,14 @@ class HardwareInterface:
         returns serial handle
         '''
         ser = None
-        for num in range(4):
+        possible_ports = ["/dev/ttyUSB0", "/dev/ttyUSB1", "/dev/ttyUSB2",
+                          "/dev/ttyUSB3", "/dev/tty.wchusbserialfd120",
+                          "/dev/tty.wchusbserialfa130",
+                          "/dev/tty.usbmodemFD121", "/dev/tty.usbmodemFA131"]
+        for possible_port in possible_ports:
             try:
                 import serial
-                ser = serial.Serial(port=('/dev/ttyUSB'+str(num)),
+                ser = serial.Serial(port=(str(possible_port)),
                                     baudrate =int(self.config.serial_baudrate),
                                     timeout = self.config.serial_timeout) 
                 print "[serial] opened at " + ser.port

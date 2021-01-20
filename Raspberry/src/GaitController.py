@@ -4,6 +4,7 @@ import time
 from SwingController import SwingController
 from SupportController import SupportController
 from TouchdownLocalizer import TouchdownLocalizer
+from Stabilizer import Stabilizer
 
 
 class GaitController:
@@ -24,6 +25,7 @@ class GaitController:
         self.touchdown_localizer = TouchdownLocalizer(self.state)
         self.swing_controller = SwingController(self.touchdown_localizer)
         self.support_controller = SupportController(self.touchdown_localizer)
+        self.stabilizer = Stabilizer(self.state)
         
         self.last_cycle  =    0.0
         self.last_update =    0.0
@@ -36,12 +38,14 @@ class GaitController:
         leg_state, leg_time = self.get_timing()
         if leg_state is not None:
             normalized_position = self.get_norm_position(leg_state, leg_time)
-            position = self.norm2abs_position(normalized_position)
-            self.state.absolute_foot_position = position
-            position += self.correct_shoulder_displacement()
+            abs_position = self.norm2abs_position(normalized_position)
+            abs_position += self.correct_shoulder_displacement()
+            abs_position = self.stabilizer.stabilize_gait(leg_state, leg_time, 
+                                                          abs_position)
+            self.state.absolute_foot_position = abs_position
         else:
-            position = None
-        return position
+            abs_position = None
+        return abs_position
         
     def current_time(self):
         '''return current system time in ms'''
@@ -111,8 +115,8 @@ class GaitController:
         '''
         pos = np.zeros((3,4))
         pos[1] = ( self.hardware_config.shoulder_displacement
-                *np.sign(self.hardware_config.leg_locations[1])
-                *self.state.correct_shoulder_displacement)
+                 * np.abs(np.sign(self.hardware_config.leg_locations[1]))
+                 * self.state.correct_shoulder_displacement)
         return pos
         
         

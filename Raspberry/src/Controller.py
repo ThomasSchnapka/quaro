@@ -3,6 +3,7 @@ import numpy as np
 
 from GaitController import GaitController
 import calibration
+import demo
 
 
 class Controller:
@@ -37,7 +38,7 @@ class Controller:
     def shun(self):
         self.stop_gait();
         self.state.joint_angle = np.zeros((3, 4))
-        self.hardware_interface.send_angle(np.zeros((3, 4)))
+        self.hardware_interface.send_command("d")
         pass
     
     def shutdown(self):
@@ -49,16 +50,27 @@ class Controller:
             self.update_leg_position()
         
     def update_leg_position(self):
-        '''check if leg positions need to be updated, calculate and send them'''
+        '''updates leg positons if neccessary'''
         position = self.gait_controller.get_position()
         if position is not None:
-            angle = self.hardware_config.inverse_kinematics(position)
-            self.state.joint_angle = angle
-            self.sanity_check_angle(angle)
-            self.hardware_interface.send_angle(angle)
+            self.set_leg_position(position)
         else:
             # no update is needed
             pass
+        
+    def set_leg_position(self, position):
+        '''
+        calculates angles out of absolute cartesian leg positions 
+        and sends them
+        '''
+        angle = self.hardware_config.inverse_kinematics(position)
+        self.set_leg_angle(angle)
+        
+    def set_leg_angle(self, angle):
+        '''check and save angles to hardware interface'''
+        self.state.joint_angle = angle
+        self.sanity_check_angle(angle)
+        self.hardware_interface.send_angle(angle)
         
     def sanity_check_angle(self, angle):
         '''check if angles can be used without flaws'''
@@ -74,4 +86,7 @@ class Controller:
     
     def calibrate(self):
         calibration.calibration_menu(self, self.hardware_interface);
+        
+    def start_demo(self):
+        demo.start_demo(self);
         

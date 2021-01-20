@@ -17,7 +17,6 @@ class UserInterface:
                 elif inp in ["stop"]:
                     self.controller.stop_gait()
                 elif inp == "shun":
-                    self.controller.stop_gait()
                     self.controller.shun()
                 elif inp in ["q","quit","exit"]:
                     print("[main] initalizing shutdown!")
@@ -29,6 +28,8 @@ class UserInterface:
                     print "[help] No help available. Help has to be extended!"
                 elif inp in ["debug", "d"]:
                     self.state.debug()
+                elif inp in ["demo"]:
+                    self.controller.start_demo()
                 else:
                     print "[UserInterface] There is no command for '", inp, "'"
                 '''
