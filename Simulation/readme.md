@@ -15,7 +15,8 @@ This data is then processed by `QuaroPlot3D` to display the state of the robots 
 ![definitions](https://github.com/ThomasSchnapka/quaro/blob/v4/Simulation/Quaro_Kinematics.png)
 
 ## Next steps
-- [ ] display support triangle and stability margin
+- [x] display support triangle
+- [ ] display stability margin
 - [ ] display torque for every joint
-- [ ] make this whole animation faster, maybe by changing from Matplotlib to Pygame or Tkinter
+- [x] make this whole animation faster
 - [ ] display leg trajectory
