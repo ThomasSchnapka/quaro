@@ -116,7 +116,7 @@ def all_leg_coordinates(angles):
 
     Returns
     -------
-    (4,3,8) list of 3x8 points representing the leg coordinates
+    (4,3,8) numpy.ndarray, points representing the leg coordinates
 
     '''
     coordinates = [0,0,0,0]
@@ -127,7 +127,7 @@ def all_leg_coordinates(angles):
                       leg_location[1, leg_num],
                       leg_location[2, leg_num])@chain
         coordinates[leg_num] = chain
-    return coordinates
+    return np.array(coordinates)
 
 
 def full_leg_coordinates(angles, rpy):
@@ -145,7 +145,7 @@ def full_leg_coordinates(angles, rpy):
 
     Returns
     -------
-    (4,3,8) list of 3x8 points representing the leg coordinates
+    (4,3,8) numpy.ndarray, points representing the leg coordinates
 
     '''
     coordinates = all_leg_coordinates(angles)
