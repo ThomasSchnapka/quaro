@@ -17,9 +17,9 @@ def start_demo(controller):
     # pushups
     start_time = current_time()
     last_time = 0
-    print "[Demo] starting demo"
+    print("[Demo] starting demo")
     for n in range(PUSHUP_AMOUNT):
-        print "[Demo] Pushup Nr.", n+1
+        print("[Demo] Pushup Nr.", n+1)
         start_time = current_time()
         while (current_time() - start_time) < PUSHUP_TIME:
             if (current_time() - last_time) > 30:

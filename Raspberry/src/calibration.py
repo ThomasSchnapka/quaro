@@ -5,26 +5,26 @@ until the legs are in their initial position. Results get saved on Arduino
 '''
 
 def calibration_menu(controller, hardware_interface):
-    print header
+    print(header)
     controller.shun()
     joint = 't'
     leg = '0'
     joints = {'f':'0', 't':'1', 'c':'2'}
     amounts = {'+':'1', '-':'-1', '++':'10', '--':'-10'}
     while True:
-        inp = raw_input("[calibration][" + joint + leg + "]-> ")
+        inp = input("[calibration][" + joint + leg + "]-> ")
         if inp in ["n","q","quit"]:
-            print "[calibration] Do you want to save the changes? y/n"
+            print("[calibration] Do you want to save the changes? y/n")
             while True:
-                inp = raw_input("[calibration]-> ")
-                if inp is "y":
+                inp = input("[calibration]-> ")
+                if inp == "y":
                     hardware_interface.send("q")     # save values to EEPROM
-                    print "[calibration] new zero positions saved!"
+                    print("[calibration] new zero positions saved!")
                     break
                 elif inp in ["n","q","quit"]:
                     break
                 else:
-                    print "[calibration] There is no command: ",inp
+                    print("[calibration] There is no command: ",inp)
             controller.shun()
             break
         elif inp in ['f', 't', 'c']:
@@ -36,9 +36,9 @@ def calibration_menu(controller, hardware_interface):
                                     + "a" + amounts[inp])
             hardware_interface.receive()
         elif inp in ["h", "i"]:
-            print instruction
+            print(instruction)
         else:
-            print "[calibration] There is no command: ", inp
+            print("[calibration] There is no command: ", inp)
     
     
 # longer texts:

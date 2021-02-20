@@ -38,14 +38,14 @@ class TouchdownLocalizer:
                 and np.any(self.state.next_touchdown_point < 0)):
                 # bad value encoutered
                 self.state.debug()
-                print "[controller] bad value in next_touchdown_point"
-                print self.state.next_touchdown_point
+                print("[controller] bad value in next_touchdown_point")
+                print(self.state.next_touchdown_point)
                 raise Exception("[TouchdownLocalizer] bad value encountered!")
             
             if (    np.any(self.state.last_touchdown_point > 1)
                 and np.any(self.state.last_touchdown_point < 0)):
                 # bad value encoutered
                 self.state.debug()
-                print "[controller] bad value in last_touchdown_point"
-                print self.state.last_touchdown_point
+                print("[controller] bad value in last_touchdown_point")
+                print(self.state.last_touchdown_point)
                 raise Exception("[TouchdownLocalizer] bad value encountered!")

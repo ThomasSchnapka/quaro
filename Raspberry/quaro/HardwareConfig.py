@@ -26,10 +26,15 @@ class HardwareConfig:
                                         6.0*np.array([ 1,-1,  1, -1]),
                                             np.array([ 0, 0,  0,  0])])
         
-        # serial data
-        self.serial_baudrate = 115200
-        self.serial_timeout = 3
-        # To-Do: add all hardware details
+        # I2C-PWM-board settings
+        self.i2c_address = 0x40
+        self.servo_pwm_min = 500
+        self.servo_pwm_max = 2500
+        self.servo_pwm_freq = 50
+        self.servo_angle_range = 120
+        self.servo_channels = np.array([[0, 4, 8, 12],  # femur
+                                        [1, 5, 9, 13],  # coxa
+                                        [2, 6,10, 14]]) # tibia
         
     def inverse_kinematics(self, coordinates):
         '''
@@ -56,6 +61,12 @@ class HardwareConfig:
         '''
         coxa = ((np.pi/2) - np.arctan(coordinates[1]/coordinates[2])
                 - np.arctan(l/self.shoulder_displacement))
+        
+        #invert coxa of leg 1 and 3a
+        coxa[np.array([False, True, False, True])] *= -1
+        tibia[np.array([False, True, False, True])] *= -1
+        femur[np.array([True, False, True, False])] *= -1
+        
         angles = np.array([femur, tibia, coxa])
         # convert to deg
         angles *= 360.0/(2.0*np.pi)

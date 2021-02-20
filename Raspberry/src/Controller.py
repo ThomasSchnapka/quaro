@@ -1,9 +1,9 @@
 import threading
 import numpy as np
 
-from GaitController import GaitController
-import calibration
-import demo
+from .GaitController import GaitController
+from . import calibration
+from . import demo
 
 
 class Controller:
@@ -37,8 +37,9 @@ class Controller:
         
     def shun(self):
         self.stop_gait();
-        self.state.joint_angle = np.zeros((3, 4))
-        self.hardware_interface.send_command("d")
+        angle_shun = np.zeros((3, 4))
+        self.hardware_interface.send_angle(angle_shun)
+        self.state.joint_angle = angle_shun
         pass
     
     def shutdown(self):
@@ -80,8 +81,8 @@ class Controller:
             or  np.any(np.abs(angle[2]) > 60)
             or  np.any(np.isnan(angle))):
             self.state.debug()
-            print "[controller] bad angle value"
-            print angle
+            print("[controller] bad angle value")
+            print(angle)
             raise Exception("[controller] unreachable angle detected!")
     
     def calibrate(self):

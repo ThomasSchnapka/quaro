@@ -18,7 +18,7 @@ class PlotDataClient:
     def __init__(self):
         # setup socket
         self.HEADERSIZE = 10
-        self.IP = "127.0.0.1"
+        self.IP = "192.168.2.111"
         self.PORT = 1276
         
         for attempt in range(1, 5+1):

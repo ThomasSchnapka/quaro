@@ -1,10 +1,10 @@
 import numpy as np
 import time
 
-from SwingController import SwingController
-from SupportController import SupportController
-from TouchdownLocalizer import TouchdownLocalizer
-from Stabilizer import Stabilizer
+from .SwingController import SwingController
+from .SupportController import SupportController
+from .TouchdownLocalizer import TouchdownLocalizer
+from .Stabilizer import Stabilizer
 
 
 class GaitController:
