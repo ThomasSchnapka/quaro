@@ -2,7 +2,7 @@
 
 With this collection of scripts, it is possible to visualise the robot's movement in a diagram. This can be done in operation as well as standalone to verify new parameters or algorithms.
 
-![gif](https://github.com/ThomasSchnapka/quaro/blob/v4/Simulation/anim.gif)
+![gif](https://github.com/ThomasSchnapka/quaro/blob/v4/Simulation/doc/anim.gif)
 
 (sorry for this sloppy gif, my laptop has the computing power of a potato. The live visualisation is way smoother)
 
@@ -12,7 +12,7 @@ With this collection of scripts, it is possible to visualise the robot's movemen
 This data is then processed by `QuaroPlot3D` to display the state of the robots legs as well as body. The joint positions are calculated by 
 `forward_kinematics` using these definitions:
 
-![definitions](https://github.com/ThomasSchnapka/quaro/blob/v4/Simulation/Quaro_Kinematics.png)
+![definitions](https://github.com/ThomasSchnapka/quaro/blob/v4/Simulation/doc/Quaro_Kinematics.png)
 
 ## Next steps
 - [x] display support triangle
