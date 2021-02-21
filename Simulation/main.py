@@ -12,8 +12,8 @@ to the robot server will not be closed properly
 If plot does not show up, use the %matplotlib qt command in IPython
 """
 
-from PlotDataClient import PlotDataClient
-from QuaroPlot3D import QuaroPlot3D
+from src.PlotDataClient import PlotDataClient
+from src.QuaroPlot3D import QuaroPlot3D
 
 # create objects for server connection and plotting
 plot_data_client = PlotDataClient()

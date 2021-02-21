@@ -22,7 +22,7 @@ from matplotlib.animation import FuncAnimation
 import numpy as np
 from IPython import get_ipython
 
-import forward_kinematics
+from src import forward_kinematics
 
 
 # open plot in new window instead of inline
