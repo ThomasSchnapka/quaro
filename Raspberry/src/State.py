@@ -32,7 +32,7 @@ class State:
         
         # Robot movement parameters
         self.z_stride = 0.0       # maximal step height, currently unused
-        self.correct_shoulder_displacement = 1.0 # 1 = foottip under coxa
+        self.correct_shoulder_displacement = 0 # 1 = foottip under coxa
                                                  # 0 = foottip under femur
         
         # Robot location

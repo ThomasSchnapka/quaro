@@ -115,7 +115,7 @@ class GaitController:
         '''
         pos = np.zeros((3,4))
         pos[1] = ( self.hardware_config.shoulder_displacement
-                 * np.abs(np.sign(self.hardware_config.leg_locations[1]))
+                 * np.abs(np.sign(self.hardware_config.leg_location[1]))
                  * self.state.correct_shoulder_displacement)
         return pos
         

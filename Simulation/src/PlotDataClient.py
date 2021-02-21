@@ -20,7 +20,8 @@ class PlotDataClient:
         self.HEADERSIZE = 10
         self.IP = "192.168.2.111"
         self.PORT = 1276
-        
+        print("[PlotDataClient] Searching for server. Use 'server' command "\
+              "to start server on Quaro Controller")
         for attempt in range(1, 5+1):
             try:
                 self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

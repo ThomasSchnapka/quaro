@@ -48,10 +48,13 @@ class Controller:
     
     def gait_loop(self):
         while self.allow_loop:
-            self.update_leg_position()
+            self.check_for_position_updates()
         
-    def update_leg_position(self):
-        '''updates leg positons if neccessary'''
+    def check_for_position_updates(self):
+        '''
+        checks if it is time to update the leg position and updates is
+        use this function in gait generation only!
+        '''
         position = self.gait_controller.get_position()
         if position is not None:
             self.set_leg_position(position)
@@ -59,17 +62,19 @@ class Controller:
             # no update is needed
             pass
         
-    def set_leg_position(self, position):
+    def set_leg_position(self, position, rpy=np.zeros(3)):
         '''
         calculates angles out of absolute cartesian leg positions 
         and sends them
         '''
-        angle = self.hardware_config.inverse_kinematics(position)
+        angle = self.hardware_config.inverse_kinematics(position, rpy)
+        # save values in state
+        self.state.joint_angle = angle
+        self.state.rpy = rpy
         self.set_leg_angle(angle)
         
     def set_leg_angle(self, angle):
         '''check and save angles to hardware interface'''
-        self.state.joint_angle = angle
         self.sanity_check_angle(angle)
         self.hardware_interface.send_angle(angle)
         

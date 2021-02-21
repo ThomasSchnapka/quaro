@@ -24,7 +24,7 @@ except OSError as err:
 
 except ModuleNotFoundError:
     print("[HardwareInterface] I2C PWM module not found. "\
-          "Creating dummy module for tests")
+          "Creating dummy module for tests. Did you download the submodule?")
     # dummy module
     class PCA9685:
         def __init__(self, address):

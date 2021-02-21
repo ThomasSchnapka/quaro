@@ -56,8 +56,8 @@ def trans(x, y, z):
                      [          0,            0,           1,           z],
                      [          0,            0,           0,           1]])
 
-def rot_rpy(roll, pitch, yaw):
-    return rot_z(roll)@rot_y(pitch)@rot_y(yaw)
+def rot_rpy(rpy):
+    return rot_z(rpy[0])@rot_y(rpy[1])@rot_x(rpy[2])
 
 
 ## transformation equations for quadruped robot
@@ -149,7 +149,7 @@ def full_leg_coordinates(angles, rpy):
 
     '''
     coordinates = all_leg_coordinates(angles)
-    T_COM_b = rot_rpy(rpy[0], rpy[1], rpy[2])
+    T_COM_b = rot_rpy(rpy)
     for leg_num in range(4):
         coordinates[leg_num] = T_COM_b@coordinates[leg_num]
     return coordinates
@@ -169,7 +169,7 @@ def body_edges(rpy):
 
     '''
     corners = np.vstack((leg_location, np.ones(4)))
-    T_COM_b = rot_rpy(rpy[0], rpy[1], rpy[2])
+    T_COM_b = rot_rpy(rpy)
     corners = T_COM_b@corners
     return corners[:-1]
 

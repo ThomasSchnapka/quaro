@@ -95,12 +95,17 @@ class QuaroPlot3D:
         lowest_coordinate = np.max(ground_points[-1])
         leg_on_ground = np.abs(ground_points[2]-lowest_coordinate) < 5 #tolerance
         ground_points = ground_points[:, leg_on_ground]
-        # add a point to plot a closed curve
-        ground_points[:,[0,1]] = ground_points[:,[1, 0]]
-        ground_points = np.vstack((ground_points.T, ground_points[:,0])).T
-        stability_triangle.set_data_3d(ground_points[0],
-                                       ground_points[1],
-                                       ground_points[2])
+        # check if there is more than one ground points to draw something
+        if ground_points.shape[1] > 1:
+            # add a point to plot a closed curve
+            ground_points[:,[0,1]] = ground_points[:,[1, 0]]
+            ground_points = np.vstack((ground_points.T, ground_points[:,0])).T
+            stability_triangle.set_data_3d(ground_points[0],
+                                           ground_points[1],
+                                           ground_points[2])
+        else:
+            # show no stability polygon if no leg on ground
+            stability_triangle.set_data_3d(0,0,0)
         
         ## plot projection of COM onto ground
         com_projection.set_data_3d(0,0,lowest_coordinate)
