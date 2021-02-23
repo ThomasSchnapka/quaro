@@ -27,13 +27,13 @@ class State:
         self.leg_time  = np.array([0, 0, 0, 0])
         self.velocity  = np.array([-0.01, 0.00])    # x and y direction, in m/s
         self.rpy       = np.array([0.0, 0.0, 0.0]) # roll, pitch, yaw of body
-        self.operating_hight = 0.8 # relative, 1 is 2*leg_length
+        self.operating_hight = 0.9 
         
         
         # Robot movement parameters
         self.z_stride = 0.0       # maximal step height, currently unused
-        self.correct_shoulder_displacement = 0 # 1 = foottip under coxa
-                                                 # 0 = foottip under femur
+        self.correct_shoulder_displacement = 1 # 1 = foottip under C0/1
+                                               # 0 = foottip under C4/5
         
         # Robot location
         self.absolute_foot_position   = np.zeros((3, 4))

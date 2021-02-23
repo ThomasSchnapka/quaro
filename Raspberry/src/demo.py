@@ -11,7 +11,7 @@ import time
 
 
 
-def start_demo(controller, demo="pushups"):
+def start_demo(controller, demo="rpy"):
     '''initated demo depending on demanded demo type'''
     if demo == "rpy":
         do_rpy_demo(controller)
@@ -22,21 +22,22 @@ def do_rpy_demo(controller):
     '''changes roll, pitch and yaw'''
     # parameters
     UPDATE_TIME = 30
-    RPY_AMOUNT = 1
-    RPY_TIME = 12000     # ms
+    RPY_AMOUNT = 2
+    RPY_TIME = 8000     # ms, total time per iteration
     # amplitudes
-    ROLL = 10            # degree
-    PITCH = 10           # degree
-    YAW = 10             # degree
+    ROLL = 5            # degree
+    PITCH = 5           # degree
+    YAW = 5             # degree
     
     # calculation
     coordinates = np.zeros((3,4))
-    coordinates[2] = 160
+    coordinates[2] = 220
     start_time = current_time()
     last_time = 0
     print("[Demo] starting demo: RPY demonstration")
     for n in range(RPY_AMOUNT):
         # roll
+        print("[Demo] roll")
         start_time = current_time()
         while (current_time() - start_time) < RPY_TIME/3:
             if (current_time() - last_time) > UPDATE_TIME:
@@ -45,6 +46,7 @@ def do_rpy_demo(controller):
                 controller.set_leg_position(coordinates, np.array([angle, 0, 0]))
                 last_time = current_time()
         # pitch
+        print("[Demo] pitch")
         start_time = current_time()
         while (current_time() - start_time) < RPY_TIME/3:
             if (current_time() - last_time) > UPDATE_TIME:
@@ -53,12 +55,13 @@ def do_rpy_demo(controller):
                 controller.set_leg_position(coordinates, np.array([0, angle, 0]))
                 last_time = current_time()
         # yaw
+        print("[Demo] yaw")
         start_time = current_time()
         while (current_time() - start_time) < RPY_TIME/3:
             if (current_time() - last_time) > UPDATE_TIME:
                 t = (current_time() - start_time)/(RPY_TIME/3)
                 angle = YAW*np.sin(2*np.pi*t)
-                controller.set_leg_position(coordinates, np.array([0, angle, 0]))
+                controller.set_leg_position(coordinates, np.array([0, 0, angle]))
                 last_time = current_time()
     
     

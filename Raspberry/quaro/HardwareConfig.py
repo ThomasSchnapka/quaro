@@ -36,13 +36,10 @@ class HardwareConfig:
         self.l1 = 108    # upper leg length
         self.l2 = 130    # lower leg length
         
-        self.leg_length = 80 # assuming both legs have the same length
-        self.shoulder_displacement = 45 # y-distance femur coxa joint in
         
-        
-        self.leg_location = np.array([self.a*np.array([ 1, 1, -1, -1]),
-                                      self.b*np.array([-1, 1, -1,  1]),
-                                             np.array([ 0, 0,  0,  0])])
+        self.leg_location = np.array([self.a*0.5*np.array([ 1, 1, -1, -1]),
+                                      self.b*0.5*np.array([-1, 1, -1,  1]),
+                                                 np.array([ 0, 0,  0,  0])])
         
         # I2C-PWM-board settings
         self.i2c_address = 0x40
@@ -74,13 +71,14 @@ class HardwareConfig:
                          [          0,            0,           0,           1]])
     
     
-    def rot_rpy(self, rpy_deg):
-        # convert DEG to RAD
-        rpy = (2*pi/360)*rpy_deg
+    def rot_rpy(self, rpy):
+        rpy = np.copy(rpy)
+        # conversion to RAD
+        rpy = rpy*2*pi/360
         return self.rot_z(rpy[0])@self.rot_y(rpy[1])@self.rot_x(rpy[2])
     
     
-    def inverse_kinematics(self, position, rpy=np.zeros(3)):
+    def inverse_kinematics(self, coordinates, rpy=np.zeros(3)):
         '''
         Vectorised inverse kinematics
         
@@ -96,37 +94,53 @@ class HardwareConfig:
                  angles for each leg in DEG [[femur], [tibia], [coxa]]
 
         '''
-        # create local copy position (because Python is pass by reference)
-        coordinates = np.copy(position)
+        # local copy of coordinates variable as Python is pass by reference
+        coordinates = np.copy(coordinates)
         
-        # influence off pitch, roll and yaw on coordinates
-        shoulder_coordinates = np.vstack((self.leg_location, np.ones(4)))
-        T_rpy = self.rot_rpy(rpy)
-        delta = shoulder_coordinates - T_rpy@shoulder_coordinates
-        delta[:,[1,2]] *= -1    # rotated coordinate system
-        coordinates -= delta[:3]
+        ## influence of pitch, roll, yaw
         
-        L = sqrt(     coordinates[1]**2
-                 +    coordinates[2]**2
-                 + self.shoulder_displacement**2)
+        # convert coordinates into transformable form
+        coordinates = np.vstack((coordinates, np.ones(4)))
+        leg_location = np.vstack((self.leg_location, np.ones(4)))
         
-        G = sqrt(     coordinates[0]**2
-                 +    coordinates[1]**2
-                 +    coordinates[2]**2
-                 + self.shoulder_displacement**2)
+        # transform coordinates into body coordinate system
+        foot_tips = coordinates + leg_location
         
-        femur = (     arcsin(coordinates[0]/G)
-                 +    arccos(G / (2*self.l1)))
-        tibia = 2.0*arccos(G / (2*self.l1))
-        coxa = ((pi/2) - arctan(coordinates[1]/coordinates[2])
-                - arctan(L/self.h))
+        # rotate coordinates in body coordinate system
+        foot_tips = self.rot_rpy(-rpy)@foot_tips
         
-        #invert coxa of leg 1 and 3
-        coxa[np.array([False, True, False, True])] *= -1
-        tibia[np.array([False, True, False, True])] *= -1
-        femur[np.array([True, False, True, False])] *= -1
+        # transform back to shoulder coordinate system
+        foot_tips = foot_tips - leg_location
         
-        angles = np.array([femur, tibia, coxa])
+        
+        x = foot_tips[0]
+        y = foot_tips[1]
+        z = foot_tips[2]
+        
+        
+        # coordinate systems of leg 1 and 3 are rotated around z
+        #x[[1,3]] *= -1
+        y[[1,3]] *= -1
+        
+        # inverse kinematics calculation, definitions can be found in doc
+        B = sqrt(y**2 + z**2)
+        A = sqrt(B**2 - self.g**2) - self.h
+        gamma = arctan(-y/z) - arcsin(self.g/B)
+        C = sqrt(A**2 + x**2)
+        C1 = ( self.l1**2 - self.l2**2 + C**2)/(2*C)
+        C2 = (-self.l1**2 + self.l2**2 + C**2)/(2*C)
+        alpha1 = -arctan(-x/A)
+        alpha2 = -arccos(C1/self.l1)
+        teta = -arccos(C2/self.l2)
+        alpha = alpha1 + alpha2
+        beta = -(teta + alpha2)
+        
+        # coordinate systems of leg 1 and 3 are rotated around z
+        alpha[[1,3]] *= -1
+        beta[[1,3]] *= -1
+        gamma[[1,3]] *= -1
+        
+        angles = np.array([alpha, beta, gamma])
         # convert to deg
         angles *= 360.0/(2.0*np.pi)
         return angles

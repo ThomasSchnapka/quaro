@@ -36,8 +36,7 @@ except ModuleNotFoundError:
         def set_pwm(self, channel, on, pulse):
             pass
 
-            
-        
+
 
 class HardwareInterface:
 
@@ -100,12 +99,15 @@ class HardwareInterface:
                 (as calculated by robot controller)
 
         '''
+        # create local copy
+        angle = np.copy(angle)
         # ensure that angles are within rangee:
         angle[angle >  self.servo_angle_range/2] =  self.servo_angle_range/2
         angle[angle < -self.servo_angle_range/2] = -self.servo_angle_range/2
         if self.state.debug_communication:
             print("[HardwareInterface] sending angles:")
             print(angle)
+        angle[[0,1]] *= -1 # WORKAROUND AS LONG AS HW IS FLIPPED    
         self.set_servo_angle(angle)
   
 

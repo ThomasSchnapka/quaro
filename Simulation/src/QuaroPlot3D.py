@@ -25,6 +25,7 @@ from IPython import get_ipython
 from src import forward_kinematics
 
 
+
 # open plot in new window instead of inline
 # use %matplotlib qt if plot is not showing up
 get_ipython().run_line_magic('matplotlib', 'qt')
@@ -73,8 +74,8 @@ class QuaroPlot3D:
         '''
         
         ## retrieve robot state
-        joint_angles = self.data_source.request_data("joiang")*(2*np.pi/360)
-        rpy = self.data_source.request_data("ropiya")*(2*np.pi/360)
+        joint_angles = self.data_source.request_data("joiang")
+        rpy = self.data_source.request_data("ropiya")
         
         ## retrieve points representing the robots pose
         leg_points = forward_kinematics.full_leg_coordinates(joint_angles, rpy)
@@ -83,8 +84,8 @@ class QuaroPlot3D:
         ## plot legs and leg numbers
         for n in range(4):
             leg_lines[n].set_data_3d(leg_points[n,0,:],
-                             leg_points[n,1,:],
-                             leg_points[n,2,:])
+                                     leg_points[n,1,:],
+                                     leg_points[n,2,:])
             # plot leg numbers
             leg_numbers[n].set_position((edges[0, n], edges[1, n]))
             leg_numbers[n].set_3d_properties(edges[2, n] - 30)
@@ -108,7 +109,9 @@ class QuaroPlot3D:
             stability_triangle.set_data_3d(0,0,0)
         
         ## plot projection of COM onto ground
-        com_projection.set_data_3d(0,0,lowest_coordinate)
+        com_projection.set_data_3d([0, 0],
+                                   [0, 0],
+                                   [0, lowest_coordinate])
         
         ## plot body   
         # swap 2 and 3 coordinate so that connecting lines do not cross in plot
@@ -122,10 +125,10 @@ class QuaroPlot3D:
     def start_plot(self):
         '''Initialize Plot'''
         # set axes properties
-        boundary = 230
-        self.ax.set_xlim3d([-boundary, boundary])
-        self.ax.set_ylim3d([-boundary, boundary])
-        self.ax.set_zlim3d([-boundary, boundary])
+        ax_range = 230
+        self.ax.set_xlim3d([-ax_range, ax_range])
+        self.ax.set_ylim3d([-ax_range, ax_range])
+        self.ax.set_zlim3d([-ax_range, ax_range])
         self.ax.set_xlabel("x", fontsize=14, fontweight='bold')
         self.ax.set_ylabel("y", fontsize=14, fontweight='bold')
         self.ax.set_zlabel("z", fontsize=14, fontweight='bold')
@@ -139,7 +142,7 @@ class QuaroPlot3D:
         body_lines = self.ax.plot(0,0,0, color="blue", linewidth=3)[0]
         leg_numbers = [self.ax.text(0,0,0, str(n)) for n in range(4)]
         stability_triangle = self.ax.plot(0,0,0,color="red")[0]
-        com_projection = self.ax.plot(0,0,0,'o',color="red")[0]
+        com_projection = self.ax.plot(0,0,0,'o-',color="red")[0]
         
         # create animation
         ani = FuncAnimation(self.fig, self.update_plot,
@@ -161,12 +164,12 @@ if __name__ == "__main__":
     class TestDataSource:
         def request_data(self, typ):
             if typ == "joiang":             # joint angles
-                angles = np.zeros((3,4))
-                angles[0,0] = -40
-                angles[1,0] = 80
+                angles = np.array([[ 27.54812251, -42.0457834,   27.54812251, -42.0457834 ],
+                                   [-50.14377845,  75.85203445, -50.14377845,  75.85203445],
+                                   [-33.05519517,   5.21860477, -33.05519517,   5.21860477]])
                 return angles
             elif typ == "ropiya":           # pitch roll yaw angeles
-                return np.zeros(3)
+                return np.array([0, 0, 20])
             
     tds = TestDataSource()
     qp3 = QuaroPlot3D(tds)

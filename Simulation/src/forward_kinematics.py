@@ -27,9 +27,9 @@ g = 55      # horizontal shoulder displacement
 l1 = 108    # upper leg length
 l2 = 130    # lower leg length
 
-leg_location = np.array([[ (a/2),  (a/2), -(a/2), -(a/2)],
-                         [-(b/2),  (b/2), -(b/2),  (b/2)],
-                         [     0,      0,      0,      0]])
+leg_location = np.array([a*0.5*np.array([ 1, 1, -1, -1]),
+                         b*0.5*np.array([-1, 1, -1,  1]),
+                               np.array([ 0, 0,  0,  0])])
 
 ## transformation equations
 
@@ -57,6 +57,9 @@ def trans(x, y, z):
                      [          0,            0,           0,           1]])
 
 def rot_rpy(rpy):
+    rpy = np.copy(rpy)
+    # conversion to RAD
+    rpy = rpy*2*pi/360
     return rot_z(rpy[0])@rot_y(rpy[1])@rot_x(rpy[2])
 
 
@@ -69,7 +72,7 @@ def single_leg_coordinates(leg_num, angles):
     Parameters
     ----------
     leg_num : int, number of leg as defined in "Quaro_Kinematics.svg"
-    angles : (3x1) numpy.ndarray,  alpha, beta, gamma angles in RAD
+    angles : (3x1) numpy.ndarray,  alpha, beta, gamma angles in DEG
 
     Returns
     -------
@@ -77,8 +80,12 @@ def single_leg_coordinates(leg_num, angles):
           x/y/z-coordinates
 
     '''
-    T_0_1 = rot_z(pi*(leg_num%2))     # leg 1 and 3 are rotated
-    T_1_2 = rot_x(angles[2])
+    # conversion to RAD
+    angles = (2*pi/360)*np.copy(angles)
+    
+    # transformation matrices
+    T_0_1 = rot_z(pi*(leg_num%2))            # leg 1 and 3 are rotated
+    T_1_2 = rot_x(angles[2] * (-1)**leg_num) # leg 1 and 3 are rotated
     T_2_3 = trans(0, 0, h)
     T_3_4 = trans(0, -g, 0)
     T_4_5 = rot_y(angles[0])
@@ -111,7 +118,7 @@ def all_leg_coordinates(angles):
 
     Parameters
     ----------
-    angles : (3x4) numpy.ndarray,  alpha, beta, gamma in RAD of all four legs
+    angles : (3x4) numpy.ndarray,  alpha, beta, gamma in DEG of all four legs
                                    (same as returned by robot controller)
 
     Returns
@@ -138,9 +145,9 @@ def full_leg_coordinates(angles, rpy):
 
     Parameters
     ----------
-    angles : (3x4) numpy.ndarray,  alpha, beta, gamma in RAD of all four legs
+    angles : (3x4) numpy.ndarray,  alpha, beta, gamma in DEG of all four legs
                                    (same as returned by robot controller)
-    rpy : (3x1) numpy.ndarray,  roll, pitch, yaw in RAD (as returned by 
+    rpy : (3x1) numpy.ndarray,  roll, pitch, yaw in DEG (as returned by 
                                                          robot controller).
 
     Returns
@@ -161,7 +168,7 @@ def body_edges(rpy):
 
     Parameters
     ----------
-    rpy : (3x1) numpy.ndarray,  roll, pitch, yaw in RAD (as returned by 
+    rpy : (3x1) numpy.ndarray,  roll, pitch, yaw in DEG (as returned by 
                                                          robot controller).
     Returns
     -------
@@ -179,13 +186,17 @@ def body_edges(rpy):
 if __name__ == "__main__":
     # for testing the module
     
-    # set robot pose
-    angles = np.zeros((3,4))
-    rpy = np.array([pi/8, 0, 0])
+    
+    
+    angles = np.array([[ 27.54812251, -42.0457834,   27.54812251, -42.0457834 ],
+                       [-50.14377845,  75.85203445, -50.14377845,  75.85203445],
+                       [-33.05519517,   5.21860477, -33.05519517,   5.21860477]])
+    rpy = np.array([0, 0, 20])
     
     ## get data
     legs = full_leg_coordinates(angles, rpy)
     edges = body_edges(rpy)
+    
     
     ## plot setting
     import matplotlib.pyplot as plt
@@ -219,3 +230,4 @@ if __name__ == "__main__":
     
     plt.tight_layout()
     plt.show()
+    

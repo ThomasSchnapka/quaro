@@ -39,7 +39,6 @@ class GaitController:
         if leg_state is not None:
             normalized_position = self.get_norm_position(leg_state, leg_time)
             abs_position = self.norm2abs_position(normalized_position)
-            abs_position += self.correct_shoulder_displacement()
             abs_position = self.stabilizer.stabilize_gait(leg_state, leg_time, 
                                                           abs_position)
             self.state.absolute_foot_position = abs_position
@@ -103,21 +102,10 @@ class GaitController:
         '''maps normalized to absolute coordinates, uses 3x4 np.arrays'''
         stride = self.state.velocity * self.state.cycle_time
         # add information for movement in z direction
-        stride3 = np.append(stride, 2*self.hardware_config.leg_length)
+        max_height = self.hardware_config.l1 + self.hardware_config.l2
+        stride3 = np.append(stride, max_height)
         
         return (normalized_position * stride3[:, None])
-    
-    def correct_shoulder_displacement(self):
-        '''
-        Returns needed translation in y directionfor every foot position. 
-        Foottips will be placed right under coxa or femur joint of inbetween
-        (based on correct_shoulder_displacement, which is between 1 and 0)
-        '''
-        pos = np.zeros((3,4))
-        pos[1] = ( self.hardware_config.shoulder_displacement
-                 * np.abs(np.sign(self.hardware_config.leg_location[1]))
-                 * self.state.correct_shoulder_displacement)
-        return pos
         
         
         

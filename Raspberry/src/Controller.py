@@ -62,12 +62,14 @@ class Controller:
             # no update is needed
             pass
         
-    def set_leg_position(self, position, rpy=np.zeros(3)):
+    def set_leg_position(self, coordinates, rpy=np.zeros(3)):
         '''
         calculates angles out of absolute cartesian leg positions 
         and sends them
         '''
-        angle = self.hardware_config.inverse_kinematics(position, rpy)
+        coordinates = np.copy(coordinates)
+        coordinates += self.correct_shoulder_displacement()
+        angle = self.hardware_config.inverse_kinematics(coordinates, rpy)
         # save values in state
         self.state.joint_angle = angle
         self.state.rpy = rpy
@@ -95,4 +97,16 @@ class Controller:
         
     def start_demo(self):
         demo.start_demo(self);
+        
+    def correct_shoulder_displacement(self):
+        '''
+        Returns needed translation in y directionfor every foot position. 
+        Foottips will be placed right under coxa or femur joint of inbetween
+        (based on correct_shoulder_displacement, which is between 1 and 0)
+        '''
+        pos = np.zeros((3,4))
+        pos[1] = ( self.hardware_config.g
+                 * np.sign(self.hardware_config.leg_location[1])
+                 * self.state.correct_shoulder_displacement)
+        return pos
         
