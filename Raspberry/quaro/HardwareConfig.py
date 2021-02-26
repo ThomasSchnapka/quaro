@@ -13,6 +13,7 @@
 """
 
 ## imports and redefinitions
+from . import calibration
 import numpy as np
 # redefine some functions for better visualisation in code
 sin = np.sin
@@ -40,6 +41,8 @@ class HardwareConfig:
         self.leg_location = np.array([self.a*0.5*np.array([ 1, 1, -1, -1]),
                                       self.b*0.5*np.array([-1, 1, -1,  1]),
                                                  np.array([ 0, 0,  0,  0])])
+        
+        self.zero_pos = calibration.load_zero_pos()
         
         # I2C-PWM-board settings
         self.i2c_address = 0x40
@@ -144,3 +147,6 @@ class HardwareConfig:
         # convert to deg
         angles *= 360.0/(2.0*np.pi)
         return angles
+    
+    def zero_pos_menu(self, controller):
+        calibration.zero_pos_menu(controller, self)

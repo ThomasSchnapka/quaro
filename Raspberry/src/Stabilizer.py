@@ -1,9 +1,5 @@
-#!/usr/bin/env python2
-# -*- coding: utf-8 -*-
 """
-Created on Wed Jan 20 15:54:40 2021
-
-@author: Thomas
+Contains functions to maintain static and dynamic stabiliy
 """
 
 import numpy as np

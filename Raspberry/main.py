@@ -18,7 +18,7 @@ def main():
     controller = Controller(hardware_config,
                             state,
                             hardware_interface)
-    user_interface = UserInterface(controller, state)
+    user_interface = UserInterface(controller, state, hardware_config)
     
     # calling UI, which handles the whole robot control
     user_interface.run()

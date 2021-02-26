@@ -1,9 +1,10 @@
 from .QuaroServerHandler import QuaroServerHandler
 
 class UserInterface:
-    def __init__(self, controller, state):
+    def __init__(self, controller, state, hardware_config):
         self.controller = controller
         self.state = state
+        self.hardware_config = hardware_config
         self.quaro_server_handler = QuaroServerHandler(self.state)
         
     def run(self):
@@ -38,16 +39,11 @@ class UserInterface:
                     self.state.debug()
                 elif inp in ["demo"]:
                     self.controller.start_demo()
+                elif inp in ["z", "zero", "zeropos"]:
+                    self.hardware_config.zero_pos_menu(self.controller)
                 else:
                     print("[UserInterface] There is no command for '", inp, "'")
-                '''
-                elif inp == "send":
-                    #"send messages directly via serial"
-                    inp = raw_input("[Message without '<>']->")
-                    communication.send_command(inp)
-                elif inp in ["z", "zero", "zeropos"]:
-                    zeropos_menu()
-                '''
+    
                     
         except KeyboardInterrupt:
             print("[main] end")

@@ -38,7 +38,7 @@ class Controller:
     def shun(self):
         self.stop_gait();
         angle_shun = np.zeros((3, 4))
-        self.hardware_interface.send_angle(angle_shun)
+        self.set_leg_angle(angle_shun)
         self.state.joint_angle = angle_shun
         pass
     
@@ -77,6 +77,7 @@ class Controller:
         
     def set_leg_angle(self, angle):
         '''check and save angles to hardware interface'''
+        angle += self.hardware_config.zero_pos
         self.sanity_check_angle(angle)
         self.hardware_interface.send_angle(angle)
         
