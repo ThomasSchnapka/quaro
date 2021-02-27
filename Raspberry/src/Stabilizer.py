@@ -11,7 +11,7 @@ class Stabilizer:
         self.state = state
         self.hardware_config = hardware_config
         
-    def stability_shift(self, leg_time):
+    def stability_shift(self, leg_state, leg_time):
         '''
         calculated the distance the leg should be shifted in x/y-direction in
         order to keep the COM in the stability triangle
@@ -24,11 +24,16 @@ class Stabilizer:
         support phase
         
         Args:
+            leg_state: 4x1 array with current leg state
             leg_time: 4x1 array with normalized leg times
-            position: 4x3 array with current normalized leg positions
         Returns:
-            1x3 array with distance each leg should be shifted
+            1x3 array with absolute distance each leg should be shifted
         '''
+        ## recreate "original" time out of normalized leg_time
+        leg_time = np.copy(leg_time)
+        leg_time[leg_state] *= self.state.support_ratio
+        leg_time[~leg_state] *= (1-self.state.support_ratio) 
+        leg_time[~leg_state] += self.state.support_ratio
         
         ## first part: calculate length of shift
         # temporal difference between support phase and stability ratio
@@ -39,7 +44,7 @@ class Stabilizer:
         d /= self.state.stability_ratio
         # create sinus signal in stability phase
         d = self.state.stability_amplitude*np.sin(np.pi*d)
-        # delete all entrys for legs that are in support phase
+        # delete all entrys for legs that are not in support phase
         d[(leg_time - stability_overlap)%1 < (1 - self.state.stability_ratio)] = 0
         
         ## second part: calculate direction of shift

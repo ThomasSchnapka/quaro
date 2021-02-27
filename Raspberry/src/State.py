@@ -11,13 +11,13 @@ class State:
         
         # Robot gait
         self.support_ratio = 0.8
-        self.stability_ratio = 0.4
+        self.stability_ratio = 0.5
         self.stability_amplitude = 20
-        self.phase = np.array([0.0, 0.5, 0.5, 0.0])
+        self.phase = np.array([0.0, 0.25, 0.75, 0.5])
         
         
         # Robot schedule
-        self.cycle_time       = 3000.0
+        self.cycle_time       = 4000.0
         self.update_time      = 20.0
         self.true_update_time = 0.0
         
@@ -26,7 +26,7 @@ class State:
         self.leg_state      = np.array([1, 1, 1, 1]).astype(bool) # supporting or not
         self.last_leg_state = np.array([1, 1, 1, 1]).astype(bool)
         self.leg_time  = np.array([0, 0, 0, 0])
-        self.velocity  = np.array([0.02, 0.00])    # x and y direction, in m/s
+        self.velocity  = np.array([0.00, 0.00])    # x and y direction, in m/s
         self.rpy       = np.array([0.0, 0.0, 0.0]) # roll, pitch, yaw of body
         self.operating_hight = 0.9
         

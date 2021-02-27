@@ -38,8 +38,8 @@ class GaitController:
         leg_state, leg_time = self.get_timing()
         if leg_state is not None:
             normalized_position = self.get_norm_position(leg_state, leg_time)
-            normalized_position += self.stabilizer.stability_shift(leg_time)
             abs_position = self.norm2abs_position(normalized_position)
+            abs_position += self.stabilizer.stability_shift(leg_state, leg_time)
             self.state.absolute_foot_position = abs_position
         else:
             abs_position = None
