@@ -17,7 +17,7 @@ class State:
         
         # Robot schedule
         self.cycle_time       = 3000.0
-        self.update_time      = 50.0
+        self.update_time      = 20.0
         self.true_update_time = 0.0
         
         
@@ -25,9 +25,9 @@ class State:
         self.leg_state      = np.array([1, 1, 1, 1]).astype(bool) # supporting or not
         self.last_leg_state = np.array([1, 1, 1, 1]).astype(bool)
         self.leg_time  = np.array([0, 0, 0, 0])
-        self.velocity  = np.array([-0.01, 0.00])    # x and y direction, in m/s
+        self.velocity  = np.array([0.02, 0.00])    # x and y direction, in m/s
         self.rpy       = np.array([0.0, 0.0, 0.0]) # roll, pitch, yaw of body
-        self.operating_hight = 0.9 
+        self.operating_hight = 0.9
         
         
         # Robot movement parameters

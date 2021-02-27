@@ -127,7 +127,7 @@ class HardwareConfig:
         
         # inverse kinematics calculation, definitions can be found in doc
         B = sqrt(y**2 + z**2)
-        A = sqrt(B**2 - self.g**2) - self.h
+        A = sqrt(B**2 - self.g**2)# - self.h
         gamma = arctan(-y/z) - arcsin(self.g/B)
         C = sqrt(A**2 + x**2)
         C1 = ( self.l1**2 - self.l2**2 + C**2)/(2*C)

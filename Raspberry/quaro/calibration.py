@@ -70,7 +70,7 @@ def zero_pos_menu(controller, hardware_config):
         elif inp in ['0', '1', '2', '3']:
             leg = inp
         elif inp in ["+", "-", "++", "--"]:
-            zero_pos[int(leg), joints[joint]] += amounts[inp]
+            zero_pos[joints[joint], int(leg)] += amounts[inp]
             print(zero_pos)
             controller.shun()
         elif inp in ["h", "i"]:
