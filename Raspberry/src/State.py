@@ -11,8 +11,9 @@ class State:
         
         # Robot gait
         self.support_ratio = 0.8
+        self.stability_ratio = 0.4
+        self.stability_amplitude = 20
         self.phase = np.array([0.0, 0.5, 0.5, 0.0])
-        #self.phase = np.array([0.0, 0.5, 0.5, 0.0])
         
         
         # Robot schedule
