@@ -1,5 +1,7 @@
 # Quaro Quadruped Robot v4
-Control software for quadrupedal robots with a focus on tidy kinematics and motion. Made by Thomas Schnapka.
+Control software for quadrupedal robots with a focus on tidy kinematics and motion.
+
+_Made by user Thomas Schnapka_
 
 ### General
 This repo contains the control software that runs my version of KDY0523's [SpotMicro](https://www.thingiverse.com/thing:3445283). 
@@ -28,16 +30,20 @@ git clone --branch v4 --recurse-submodules https://github.com/ThomasSchnapka/qua
 * 12 JX HV5932MG Servos
 * PCA9685 servo board
 
+
 ### Future work
-- [] implement (inverse) dynamic model
-- [] implement IMU support
-- [] add foot contact switches similar to [these here](https://github.com/open-dynamic-robot-initiative/open_robot_actuator_hardware/blob/master/mechanics/foot_contact_switch_v1/README.md)
-- [] add a nice blinking light
+- [ ] implement (inverse) dynamic model
+- [ ] implement IMU support
+- [ ] add foot contact switches similar to [these here](https://github.com/open-dynamic-robot-initiative/open_robot_actuator_hardware/blob/master/mechanics/foot_contact_switch_v1/README.md)
+- [ ] add a nice blinking light
 
 long term:
-- [] buy [better actuators](https://mjbots.com/) that can handly higher loads and give sensor feedback to enable closed loop control
+- [ ] buy [better actuators](https://mjbots.com/) that can handly higher loads and give sensor feedback to enable closed loop control
+
 
 ### Additional resources 
 [mikes4192's version of spotMicro built with ROS and supporting SLAM](https://github.com/mike4192/spotMicro)
+
 [Open Dynamic Robot Initiative with a focus on research](https://github.com/open-dynamic-robot-initiative/open_robot_actuator_hardware)
-[michaelkubina's version of spotMirco using an ESP32](https://github.com/michaelkubina/SpotMicroESP32/#bill-of-material)
+
+[michaelkubina's version of spotMirco using an ESP32](https://github.com/michaelkubina/SpotMicroESP32/)
