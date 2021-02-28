@@ -25,12 +25,13 @@ def do_rpy_demo(controller):
     RPY_AMOUNT = 2
     RPY_TIME = 8000     # ms, total time per iteration
     # amplitudes
-    ROLL = 10            # degree
+    ROLL = 15            # degree
     PITCH = 5           # degree
-    YAW = 10             # degree
+    YAW = 15             # degree
     
     # calculation
     coordinates = np.zeros((3,4))
+    coordinates[0] = -20
     coordinates[2] = 220
     start_time = current_time()
     last_time = 0

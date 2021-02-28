@@ -32,7 +32,7 @@ class SwingController:
         
         # Calculate the middle point
         p1 = (p0 + p2)/2
-        p1[2] *= 0.8 # TODO: find better way to get z coordinate of middle point
+        p1[2] *= 0.95 # TODO: find better way to get z coordinate of middle point
         
         pos = self.bezier(leg_time, p0, p1, p2)
         

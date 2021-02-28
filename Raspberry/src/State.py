@@ -10,10 +10,12 @@ class State:
     def __init__(self):
         
         # Robot gait
-        self.support_ratio = 0.8
+        self.support_ratio = 0.85
         self.stability_ratio = 0.5
-        self.stability_amplitude = 20
-        self.phase = np.array([0.0, 0.25, 0.75, 0.5])
+        self.stability_amplitude = 15
+        #self.phase = np.array([0.0, 0.25, 0.75, 0.5])
+        self.phase = np.array([0.0, 0.5, 0.5, 0])
+        self.true_com = np.array([-15, 0, 0])
         
         
         # Robot schedule
@@ -28,13 +30,14 @@ class State:
         self.leg_time  = np.array([0, 0, 0, 0])
         self.velocity  = np.array([0.00, 0.00])    # x and y direction, in m/s
         self.rpy       = np.array([0.0, 0.0, 0.0]) # roll, pitch, yaw of body
-        self.operating_hight = 0.9
+        self.operating_hight = 0.95                # operation z distance
         
         
         # Robot movement parameters
         self.z_stride = 0.0       # maximal step height, currently unused
         self.correct_shoulder_displacement = 1 # 1 = foottip under C0/1
                                                # 0 = foottip under C4/5
+        self.swing_hight_factor = 0.95
         
         # Robot location
         self.absolute_foot_position   = np.zeros((3, 4))

@@ -69,11 +69,13 @@ class Controller:
         '''
         coordinates = np.copy(coordinates)
         coordinates += self.correct_shoulder_displacement()
+        coordinates += self.state.true_com[:, np.newaxis]
         angle = self.hardware_config.inverse_kinematics(coordinates, rpy)
         # save values in state
         self.state.joint_angle = angle
         self.state.rpy = rpy
         self.set_leg_angle(angle)
+        self.state.absolute_foot_position = coordinates
         
     def set_leg_angle(self, angle):
         '''check and save angles to hardware interface'''
