@@ -62,7 +62,8 @@ class Controller:
             # no update is needed
             pass
         
-    def set_leg_position(self, coordinates, rpy=np.zeros(3)):
+    def set_leg_position(self, coordinates, rpy=np.zeros(3),
+                         rotation_center=np.zeros(3)):
         '''
         calculates angles out of absolute cartesian leg positions 
         and sends them
@@ -70,7 +71,7 @@ class Controller:
         coordinates = np.copy(coordinates)
         coordinates += self.correct_shoulder_displacement()
         coordinates += self.state.true_com[:, np.newaxis]
-        angle = self.hardware_config.inverse_kinematics(coordinates, rpy)
+        angle = self.hardware_config.inverse_kinematics(coordinates, rpy, rotation_center)
         # save values in state
         self.state.joint_angle = angle
         self.state.rpy = rpy
@@ -98,8 +99,8 @@ class Controller:
     def calibrate(self):
         calibration.calibration_menu(self, self.hardware_interface);
         
-    def start_demo(self):
-        demo.start_demo(self);
+    def start_demo(self, demo_type="rpy"):
+        demo.start_demo(self, demo_type);
         
     def correct_shoulder_displacement(self):
         '''

@@ -39,6 +39,8 @@ class UserInterface:
                     self.state.debug()
                 elif inp in ["demo"]:
                     self.controller.start_demo()
+                elif inp in ["twerk"]:
+                    self.controller.start_demo("twerk")
                 elif inp in ["z", "zero", "zeropos"]:
                     self.hardware_config.zero_pos_menu(self.controller)
                 else:

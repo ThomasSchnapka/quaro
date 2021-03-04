@@ -81,7 +81,8 @@ class HardwareConfig:
         return self.rot_z(rpy[0])@self.rot_y(rpy[1])@self.rot_x(rpy[2])
     
     
-    def inverse_kinematics(self, coordinates, rpy=np.zeros(3)):
+    def inverse_kinematics(self, coordinates, rpy=np.zeros(3), 
+                           rotation_center=np.zeros(3)):
         '''
         Vectorised inverse kinematics
         
@@ -90,6 +91,8 @@ class HardwareConfig:
         Parameters
         ----------
         coordinates : (3,4) numpy.ndarray, absolute coordinates for each leg
+        rpy : 3 numpy.ndarray, roll, pitch and yaw in DEG
+        rotation_center : 3 numpy.ndarray, axis the rotations are done around
 
         Returns
         -------
@@ -105,15 +108,18 @@ class HardwareConfig:
         # convert coordinates into transformable form
         coordinates = np.vstack((coordinates, np.ones(4)))
         leg_location = np.vstack((self.leg_location, np.ones(4)))
+        rotation_location = np.ones((4,4))
+        rotation_location[:, :3] *= rotation_center
+        rotation_location = rotation_location.T
         
         # transform coordinates into body coordinate system
-        foot_tips = coordinates + leg_location
+        foot_tips = coordinates + leg_location + rotation_location
         
         # rotate coordinates in body coordinate system
         foot_tips = self.rot_rpy(-rpy)@foot_tips
         
         # transform back to shoulder coordinate system
-        foot_tips = foot_tips - leg_location
+        foot_tips = foot_tips - leg_location - rotation_location
         
         
         x = foot_tips[0]

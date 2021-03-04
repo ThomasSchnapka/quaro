@@ -11,12 +11,16 @@ import time
 
 
 
-def start_demo(controller, demo="rpy"):
+def start_demo(controller, demo_type="rpy"):
     '''initated demo depending on demanded demo type'''
-    if demo == "rpy":
+    if demo_type == "rpy":
         do_rpy_demo(controller)
-    elif demo == "pushups":
+    elif demo_type == "pushups":
         do_pushups(controller)
+    elif demo_type == "twerk":
+        do_twerk(controller)
+
+
 
 def do_rpy_demo(controller):
     '''changes roll, pitch and yaw'''
@@ -31,7 +35,7 @@ def do_rpy_demo(controller):
     
     # calculation
     coordinates = np.zeros((3,4))
-    coordinates[0] = -20
+    coordinates[0] = 0
     coordinates[2] = 220
     start_time = current_time()
     last_time = 0
@@ -64,6 +68,38 @@ def do_rpy_demo(controller):
                 angle = YAW*np.sin(2*np.pi*t)
                 controller.set_leg_position(coordinates, np.array([0, 0, angle]))
                 last_time = current_time()
+                
+       
+                
+def do_twerk(controller):
+    ''' rapidly move the back up and down to arouse other robots interest'''
+    # parameters
+    UPDATE_TIME = 30
+    TWERK_AMOUNT = 10
+    TWERK_TIME = 800     # ms, total time per iteration
+    # amplitudes
+    MAX_ANGLE = 3
+    CENTER_OF_ROTATION = np.array([-186/2, 0, 0])
+    
+    # calculation
+    coordinates = np.zeros((3,4))
+    coordinates[2] = 220
+    start_time = current_time()
+    last_time = 0
+    print("[Demo] twerking: rapidly move the back up and down to arouse "\
+          "other robots interest")
+    for n in range(TWERK_AMOUNT):
+        # pitch
+        start_time = current_time()
+        while (current_time() - start_time) < TWERK_TIME:
+            if (current_time() - last_time) > UPDATE_TIME:
+                t = (current_time() - start_time)/(TWERK_TIME)
+                angle = MAX_ANGLE*np.sin(2*np.pi*t)
+                controller.set_leg_position(coordinates,
+                                            np.array([0, angle, 0]),
+                                            CENTER_OF_ROTATION)
+                last_time = current_time()
+    
     
     
 def do_pushups(controller):
