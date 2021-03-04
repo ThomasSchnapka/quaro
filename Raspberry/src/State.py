@@ -13,13 +13,14 @@ class State:
         self.support_ratio = 0.85
         self.stability_ratio = 0.5
         self.stability_amplitude = 15
-        #self.phase = np.array([0.0, 0.25, 0.75, 0.5])
-        self.phase = np.array([0.0, 0.5, 0.5, 0])
-        self.true_com = np.array([-15, 0, 0])
+        #self.phase = np.array([0.0, 0.25, 0.75, 0.5])  # walk
+        self.phase = np.array([0.0, 0.5, 0.5, 0])       # trot
+        self.true_com = np.array([-28, 0, 0])
         
         
         # Robot schedule
-        self.cycle_time       = 4000.0
+        #self.cycle_time       = 3000.0   # walk
+        self.cycle_time       = 1500.0    # trot
         self.update_time      = 20.0
         self.true_update_time = 0.0
         
@@ -30,7 +31,7 @@ class State:
         self.leg_time  = np.array([0, 0, 0, 0])
         self.velocity  = np.array([0.00, 0.00])    # x and y direction, in m/s
         self.rpy       = np.array([0.0, 0.0, 0.0]) # roll, pitch, yaw of body
-        self.operating_hight = 0.95                # operation z distance
+        self.operating_hight = 0.90                # operation z distance
         
         
         # Robot movement parameters
