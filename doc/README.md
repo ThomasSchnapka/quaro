@@ -1,5 +1,12 @@
 # Quaro Documentation
 
-<img src="https://raw.githubusercontent.com/ThomasSchnapka/quaro/master/doc/quaro_main_workflow.png">
+* [Basic structure of control workflow](#Basic structure)
+* [Forward kinematics](#Forward-kinematics)
 
-<img src="https://raw.githubusercontent.com/ThomasSchnapka/quaro/master/doc/Quaro_Kinematics.png">
+## Basic structure of control workflow
+
+![gif RPY simulation](https://raw.githubusercontent.com/ThomasSchnapka/quaro/master/doc/quaro_main_workflow.png)
+
+## Forward kinematics
+
+![gif RPY simulation](https://raw.githubusercontent.com/ThomasSchnapka/quaro/master/doc/Quaro_Kinematics.png")
