@@ -1,6 +1,6 @@
 # Quaro Documentation
 
-* [Basic structure of control workflow](#Basic structure)
+* [Basic structure of control workflow](#Basic-structure)
 * [Forward kinematics](#Forward-kinematics)
 
 ## Basic structure of control workflow
