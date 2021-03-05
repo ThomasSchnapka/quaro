@@ -47,7 +47,7 @@ The robot follows the conventions introduced in this [book](https://mitpress.mit
 ```
 quaro
 │
-├── Raspberry
+├── Raspberry       # software running on Raspberry Pi
 │   ├── main.py
 │   ├── src         # general functionalities that can be applied on all quadruped robots
 │   │    └── ...
