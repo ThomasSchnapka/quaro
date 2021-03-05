@@ -18,15 +18,12 @@ def main():
     controller = Controller(hardware_config,
                             state,
                             hardware_interface)
-    user_interface = UserInterface(controller, state)
+    user_interface = UserInterface(controller, state, hardware_config)
     
     # calling UI, which handles the whole robot control
-    
     user_interface.run()
     
-    # user interface runs in loop, if closed the whole programm has to stop
     # shutdown procedure:
-    hardware_interface.shutdown()
     controller.shutdown()
     
 main()

@@ -1,17 +1,21 @@
+from .QuaroServerHandler import QuaroServerHandler
+
 class UserInterface:
-    def __init__(self, controller, state):
+    def __init__(self, controller, state, hardware_config):
         self.controller = controller
         self.state = state
+        self.hardware_config = hardware_config
+        self.quaro_server_handler = QuaroServerHandler(self.state)
         
     def run(self):
         '''
         runs user interface in while-true-loop
         other programm parts need single threads
         '''
-        print header
+        print(header)
         try:
             while True:         
-                inp = raw_input("[UserInterface]-> ")
+                inp = input("[UserInterface]-> ")
                 if inp in ["s","start","go"]:
                     self.controller.start_gait()
                 elif inp in ["stop"]:
@@ -21,28 +25,30 @@ class UserInterface:
                 elif inp in ["q","quit","exit"]:
                     print("[main] initalizing shutdown!")
                     self.controller.stop_gait()
+                    self.quaro_server_handler.stop()
                     break
                 elif inp in ["c","calibrate"]:
                     self.controller.calibrate()
+                elif inp in ["server"]:
+                    self.quaro_server_handler.start()
+                elif inp in ["stopserver"]:
+                    self.quaro_server_handler.stop()
                 elif inp in ["help", "h"]:
-                    print "[help] No help available. Help has to be extended!"
+                    print("[help] No help available. Help has to be extended!")
                 elif inp in ["debug", "d"]:
                     self.state.debug()
                 elif inp in ["demo"]:
                     self.controller.start_demo()
-                else:
-                    print "[UserInterface] There is no command for '", inp, "'"
-                '''
-                elif inp == "send":
-                    #"send messages directly via serial"
-                    inp = raw_input("[Message without '<>']->")
-                    communication.send_command(inp)
+                elif inp in ["twerk"]:
+                    self.controller.start_demo("twerk")
                 elif inp in ["z", "zero", "zeropos"]:
-                    zeropos_menu()
-                '''
+                    self.hardware_config.zero_pos_menu(self.controller)
+                else:
+                    print("[UserInterface] There is no command for '", inp, "'")
+    
                     
         except KeyboardInterrupt:
-            print "[main] end"
+            print("[main] end")
             
             
 # longer texts:

@@ -1,10 +1,10 @@
 import numpy as np
 import time
 
-from SwingController import SwingController
-from SupportController import SupportController
-from TouchdownLocalizer import TouchdownLocalizer
-from Stabilizer import Stabilizer
+from .SwingController import SwingController
+from .SupportController import SupportController
+from .TouchdownLocalizer import TouchdownLocalizer
+from .Stabilizer import Stabilizer
 
 
 class GaitController:
@@ -25,7 +25,7 @@ class GaitController:
         self.touchdown_localizer = TouchdownLocalizer(self.state)
         self.swing_controller = SwingController(self.touchdown_localizer)
         self.support_controller = SupportController(self.touchdown_localizer)
-        self.stabilizer = Stabilizer(self.state)
+        self.stabilizer = Stabilizer(self.state, self.hardware_config)
         
         self.last_cycle  =    0.0
         self.last_update =    0.0
@@ -39,10 +39,7 @@ class GaitController:
         if leg_state is not None:
             normalized_position = self.get_norm_position(leg_state, leg_time)
             abs_position = self.norm2abs_position(normalized_position)
-            abs_position += self.correct_shoulder_displacement()
-            abs_position = self.stabilizer.stabilize_gait(leg_state, leg_time, 
-                                                          abs_position)
-            self.state.absolute_foot_position = abs_position
+            abs_position += self.stabilizer.stability_shift(leg_state, leg_time)
         else:
             abs_position = None
         return abs_position
@@ -103,21 +100,10 @@ class GaitController:
         '''maps normalized to absolute coordinates, uses 3x4 np.arrays'''
         stride = self.state.velocity * self.state.cycle_time
         # add information for movement in z direction
-        stride3 = np.append(stride, 2*self.hardware_config.leg_length)
+        max_height = self.hardware_config.l1 + self.hardware_config.l2
+        stride3 = np.append(stride, max_height)
         
         return (normalized_position * stride3[:, None])
-    
-    def correct_shoulder_displacement(self):
-        '''
-        Returns needed translation in y directionfor every foot position. 
-        Foottips will be placed right under coxa or femur joint of inbetween
-        (based on correct_shoulder_displacement, which is between 1 and 0)
-        '''
-        pos = np.zeros((3,4))
-        pos[1] = ( self.hardware_config.shoulder_displacement
-                 * np.abs(np.sign(self.hardware_config.leg_locations[1]))
-                 * self.state.correct_shoulder_displacement)
-        return pos
         
         
         

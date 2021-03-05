@@ -1,9 +1,9 @@
 import threading
 import numpy as np
 
-from GaitController import GaitController
-import calibration
-import demo
+from .GaitController import GaitController
+from . import calibration
+from . import demo
 
 
 class Controller:
@@ -37,8 +37,9 @@ class Controller:
         
     def shun(self):
         self.stop_gait();
-        self.state.joint_angle = np.zeros((3, 4))
-        self.hardware_interface.send_command("d")
+        angle_shun = np.zeros((3, 4))
+        self.set_leg_angle(angle_shun)
+        self.state.joint_angle = angle_shun
         pass
     
     def shutdown(self):
@@ -47,10 +48,13 @@ class Controller:
     
     def gait_loop(self):
         while self.allow_loop:
-            self.update_leg_position()
+            self.check_for_position_updates()
         
-    def update_leg_position(self):
-        '''updates leg positons if neccessary'''
+    def check_for_position_updates(self):
+        '''
+        checks if it is time to update the leg position and updates is
+        use this function in gait generation only!
+        '''
         position = self.gait_controller.get_position()
         if position is not None:
             self.set_leg_position(position)
@@ -58,17 +62,25 @@ class Controller:
             # no update is needed
             pass
         
-    def set_leg_position(self, position):
+    def set_leg_position(self, coordinates, rpy=np.zeros(3),
+                         rotation_center=np.zeros(3)):
         '''
         calculates angles out of absolute cartesian leg positions 
         and sends them
         '''
-        angle = self.hardware_config.inverse_kinematics(position)
+        coordinates = np.copy(coordinates)
+        coordinates += self.correct_shoulder_displacement()
+        coordinates += self.state.true_com[:, np.newaxis]
+        angle = self.hardware_config.inverse_kinematics(coordinates, rpy, rotation_center)
+        # save values in state
+        self.state.joint_angle = angle
+        self.state.rpy = rpy
         self.set_leg_angle(angle)
+        self.state.absolute_foot_position = coordinates
         
     def set_leg_angle(self, angle):
         '''check and save angles to hardware interface'''
-        self.state.joint_angle = angle
+        angle += self.hardware_config.zero_pos
         self.sanity_check_angle(angle)
         self.hardware_interface.send_angle(angle)
         
@@ -80,13 +92,25 @@ class Controller:
             or  np.any(np.abs(angle[2]) > 60)
             or  np.any(np.isnan(angle))):
             self.state.debug()
-            print "[controller] bad angle value"
-            print angle
+            print("[controller] bad angle value")
+            print(angle)
             raise Exception("[controller] unreachable angle detected!")
     
     def calibrate(self):
         calibration.calibration_menu(self, self.hardware_interface);
         
-    def start_demo(self):
-        demo.start_demo(self);
+    def start_demo(self, demo_type="rpy"):
+        demo.start_demo(self, demo_type);
+        
+    def correct_shoulder_displacement(self):
+        '''
+        Returns needed translation in y directionfor every foot position. 
+        Foottips will be placed right under coxa or femur joint of inbetween
+        (based on correct_shoulder_displacement, which is between 1 and 0)
+        '''
+        pos = np.zeros((3,4))
+        pos[1] = ( self.hardware_config.g
+                 * np.sign(self.hardware_config.leg_location[1])
+                 * self.state.correct_shoulder_displacement)
+        return pos
         
