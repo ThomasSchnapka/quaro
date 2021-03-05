@@ -1,4 +1,4 @@
-# Quaro Quadruped Robot v4
+# Quaro Quadruped Robot
 Control software for quadrupedal robots with a focus on tidy kinematics and motion.
 
 
