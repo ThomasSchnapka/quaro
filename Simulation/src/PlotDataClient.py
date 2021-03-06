@@ -19,23 +19,39 @@ class PlotDataClient:
         # setup socket
         self.HEADERSIZE = 10
         self.IP = "192.168.2.111"
+        self.IP_COMPUTER = "127.0.0.1"
         self.PORT = 1276
+        self.server_running = False
         print("[PlotDataClient] Searching for server. Use 'server' command "\
               "to start server on Quaro Controller")
+        # nested try-except to check connection to Raspberry and Computer
         for attempt in range(1, 5+1):
             try:
+            # when ran on Raspberry
                 self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 self.s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-                self.s.connect((self.IP, self.PORT)) # server binds, sockets connect
+                self.s.settimeout(0.5)
+                self.s.connect((self.IP, self.PORT))
                 print("[PlotDataClient] sucessful connection!")
-                break
+                self.server_running = True
             except:
-                print("[PlotDataClient] connection not possible, "\
-                      f"will try again in five seconds (attempt: {attempt}/5)")
-                time.sleep(5)
-                if attempt == 5:
-                    raise Exception("[PlotDataClient] connection failed. "\
-                                    "Is the server running?") 
+                try:
+                    # when ran on computer
+                    self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                    self.s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+                    self.s.settimeout(0.5)
+                    self.s.connect((self.IP_COMPUTER, self.PORT))
+                    print("[PlotDataClient] sucessful connection!")
+                    self.server_running = True
+                    break
+                except:
+                    print("[PlotDataClient] connection not possible, "\
+                          f"will try again in five seconds (attempt: {attempt}/5)")
+                    time.sleep(5)
+                    if attempt == 5:
+                        self.s.close()
+                        print("[PlotDataClient] connection failed. "\
+                                        "Is the server running?") 
         
           
     def receive(self):

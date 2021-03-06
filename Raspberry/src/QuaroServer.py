@@ -18,13 +18,20 @@ class QuaroServer:
         self.allow_server_loop = True
         # server params
         self.IP = "192.168.2.111"
+        self.IP_COMPUTER = "127.0.0.1"
         self.PORT = 1276
         self.TIMEOUT = 30
         self.HEADERSIZE = 10
         # setup server
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.sock.bind((self.IP, self.PORT)) # server binds, clients connect
+        try:
+            # when ran on Raspberry
+            self.sock.bind((self.IP, self.PORT))
+        except:
+            # when ran on Computer
+            self.IP = self.IP_COMPUTER
+            self.sock.bind((self.IP, self.PORT))
         print("[QuaroServer] started server at", self.IP, self.PORT)
         self.sock.listen(1) # allow only one connection
         print(f"[QuaroServer] searching for sockets for max {self.TIMEOUT}s")

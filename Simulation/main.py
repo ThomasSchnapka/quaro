@@ -15,12 +15,12 @@ If plot does not show up, use the %matplotlib qt command in IPython
 from src.PlotDataClient import PlotDataClient
 from src.QuaroPlot3D import QuaroPlot3D
 
-# create objects for server connection and plotting
+# create server client
 plot_data_client = PlotDataClient()
-qp3 = QuaroPlot3D(plot_data_client)    
 
-# start plot
-ani = qp3.start_plot()
-
-# close connection with server tidily
-plot_data_client.close()
+# start plot is server is running
+if plot_data_client.server_running == True:
+    plot = QuaroPlot3D(plot_data_client)  
+    # this functions runs as long as plot window is open
+    ani = plot.start_plot()
+    plot_data_client.close()
