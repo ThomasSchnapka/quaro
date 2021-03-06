@@ -75,8 +75,8 @@ class Controller:
         # save values in state
         self.state.joint_angle = angle
         self.state.rpy = rpy
-        self.set_leg_angle(angle)
         self.state.absolute_foot_position = coordinates
+        self.set_leg_angle(angle)
         
     def set_leg_angle(self, angle):
         '''check and save angles to hardware interface'''

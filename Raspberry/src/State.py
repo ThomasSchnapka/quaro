@@ -30,6 +30,7 @@ class State:
         self.last_leg_state = np.array([1, 1, 1, 1]).astype(bool)
         self.leg_time  = np.array([0, 0, 0, 0])
         self.velocity  = np.array([0.00, 0.00])    # x and y direction, in m/s
+        self.angular_velocity = 0.0                # rotation around z-axis in DEG/s
         self.rpy       = np.array([0.0, 0.0, 0.0]) # roll, pitch, yaw of body
         self.operating_hight = 0.90                # operation z distance
         

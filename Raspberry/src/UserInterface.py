@@ -88,6 +88,8 @@ class UserInterface:
                 self.state.cycle_time = float(value)
             elif parameter in ["stability_ratio", "str"]:
                 self.state.stability_ratio = float(value)
+            elif parameter in ["stability_amplitude", "sa"]:
+                self.state.stability_amplitude= float(value)
             elif parameter in ["shoulder_dis", "sd"]:
                 self.state.correct_shoulder_displacement = float(value)
             elif parameter in ["operating_hight", "oh"]:
@@ -104,6 +106,8 @@ class UserInterface:
                 self.state.true_com[0] = float(value)
             elif parameter in ["true_com_y", "tcy"]:
                 self.state.true_com[1] = float(value)
+            elif parameter in ["angular_velocity", "av"]:
+                self.state.angular_velocity = float(value)
             else:
                 print(f"[UserInterface] could not match {parameter}:{value}")
                 print("Use 'h' to show available parameters")
@@ -129,7 +133,9 @@ class UserInterface:
               f"true_com:      {self.state.true_com}")
         print(f"shoulder_dis': {self.state.correct_shoulder_displacement}".ljust(30),
               f"swing_h'_fact':{self.state.swing_hight_factor}")
-        print(f"server_status':{self.state.allow_server_loop}".ljust(30))
+        print(f"server_status':{self.state.allow_server_loop}".ljust(30),
+              f"ang'_velocity':{self.state.angular_velocity}")
+        print(f"stab'_ampl':   {self.state.stability_amplitude}".ljust(30))
         print("--------------------------------------------------------------")
             
 
@@ -153,6 +159,7 @@ class UserInterface:
                "  velocity_y:    vy\n"\
                "  cycle_time:    ctv\n"\
                "  stab'_ratio:   str\n"\
+               "  stab'_ampl:    sa\n"\
                "  shoulder_dis:  sd\n"\
                "  op'_hight:     oh\n"\
                "  swing_h_fact': shf\n"\
@@ -160,7 +167,8 @@ class UserInterface:
                "  pitch:         p\n"\
                "  yaw:           y\n"\
                "  true_com_x:    tcx\n"\
-               "  true_com_y:    tcy\n")
+               "  true_com_y:    tcy\n"\
+               "  angular_vel'': av\n")
 
         
         

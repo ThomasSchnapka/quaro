@@ -3,6 +3,7 @@ import time
 
 from .SwingController import SwingController
 from .SupportController import SupportController
+from .RotationController import RotationController
 from .TouchdownLocalizer import TouchdownLocalizer
 from .Stabilizer import Stabilizer
 
@@ -25,6 +26,8 @@ class GaitController:
         self.touchdown_localizer = TouchdownLocalizer(self.state)
         self.swing_controller = SwingController(self.touchdown_localizer)
         self.support_controller = SupportController(self.touchdown_localizer)
+        self.rotation_controller = RotationController(self.state,
+                                                      self.hardware_config)
         self.stabilizer = Stabilizer(self.state, self.hardware_config)
         
         self.last_cycle  =    0.0
@@ -39,6 +42,8 @@ class GaitController:
         if leg_state is not None:
             normalized_position = self.get_norm_position(leg_state, leg_time)
             abs_position = self.norm2abs_position(normalized_position)
+            abs_position = self.rotation_controller.rotate(abs_position,
+                                                           leg_state, leg_time)
             abs_position += self.stabilizer.stability_shift(leg_state, leg_time)
         else:
             abs_position = None
