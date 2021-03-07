@@ -60,7 +60,7 @@ class TransitionController:
             for n in to_be_moved:
                 target_pos[:,n] = align_pos[:,n]
                 self.quadratic_transition(old_pos, target_pos, t_align_xy/amount)
-                old_pos = target_pos
+                old_pos = np.copy(target_pos)
         # check if legs are on requested z hight and change them
         if np.any(np.abs(old_pos[2] - new_pos[2]) > self.TOLERANCE):
             self.linear_transition(old_pos, new_pos, transition_time)
@@ -83,6 +83,8 @@ class TransitionController:
         middle_pos = (old_pos + new_pos)/2
         middle_pos[2] *= 0.95 
         start_time = self.current_time()
+        # save legs that remain on location in order to not move them
+        remaining = np.all(old_pos == new_pos, axis=0)
         last_time = 0
         while (self.current_time() - start_time) < transition_time:
             if (self.current_time() - last_time) > self.state.update_time:
@@ -90,6 +92,7 @@ class TransitionController:
                 pos = (  (old_pos - 2*middle_pos + new_pos)*t**2 
                        + (-2*old_pos + 2*middle_pos)*t 
                        + old_pos)
+                pos[:, remaining] = old_pos[:, remaining]
                 self.controller.set_leg_position(pos)
                 last_time = self.current_time()
                 

@@ -30,15 +30,22 @@ class GaitController:
                                                       self.hardware_config)
         self.stabilizer = Stabilizer(self.state, self.hardware_config)
         
-        self.last_cycle  =    0.0
-        self.last_update =    0.0
+        self.last_cycle  = self.current_time()
+        self.last_update = self.current_time()
         
-    def get_position(self):
+    def get_position(self, initial=False):
         '''
         returns absolute leg coordinates in a 4x3 array
         if no update is needed, None is returned
+        
+        Args:
+            initial: bool, if set to true returns initial leg position
         '''
-        leg_state, leg_time = self.get_timing()
+        if not initial:
+            leg_state, leg_time = self.get_timing()
+        else:
+            leg_state = np.array([True, True, True, True])
+            leg_time = self.state.phase
         if leg_state is not None:
             normalized_position = self.get_norm_position(leg_state, leg_time)
             abs_position = self.norm2abs_position(normalized_position)

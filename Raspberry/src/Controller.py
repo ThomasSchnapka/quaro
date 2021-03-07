@@ -30,7 +30,10 @@ class Controller:
         self.allow_loop = False
         
     def start_gait(self):
-        # start thread
+        # move legs to initial position
+        initial_position = self.gait_controller.get_position(initial=True)
+        self.transition_controller.leg_transition(initial_position, 4000)
+        # start gait loop in own thread
         self.allow_loop = True
         self.gait_loop_thread = threading.Thread(target=self.gait_loop,)
         self.gait_loop_thread.start()

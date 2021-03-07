@@ -25,7 +25,7 @@ class UserInterface:
                     self.controller.shun()
                 elif inp in ["q","quit","exit"]:
                     print("[main] initalizing shutdown!")
-                    self.controller.stop_gait()
+                    self.controller.shutdown()
                     self.quaro_server_handler.stop()
                     break
                 elif inp in ["c","calibrate"]:
