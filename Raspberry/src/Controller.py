@@ -107,6 +107,8 @@ class Controller:
         calibration.calibration_menu(self, self.hardware_interface);
         
     def start_demo(self, demo_type="rpy"):
+        initial_position = demo.get_initial_position()
+        self.transition_controller.leg_transition(initial_position, 4000)
         demo.start_demo(self, demo_type);
         
     def raise_up(self):

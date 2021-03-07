@@ -20,7 +20,12 @@ def start_demo(controller, demo_type="rpy"):
     elif demo_type == "twerk":
         do_twerk(controller)
 
-
+def get_initial_position():
+    '''leg position the demo starts with, used for transition'''
+    coordinates = np.zeros((3,4))
+    coordinates[0] = 0
+    coordinates[2] = 220
+    return coordinates
 
 def do_rpy_demo(controller):
     '''changes roll, pitch and yaw'''
@@ -34,9 +39,7 @@ def do_rpy_demo(controller):
     YAW = 15             # degree
     
     # calculation
-    coordinates = np.zeros((3,4))
-    coordinates[0] = 0
-    coordinates[2] = 220
+    coordinates = get_initial_position()
     start_time = current_time()
     last_time = 0
     print("[Demo] starting demo: RPY demonstration")

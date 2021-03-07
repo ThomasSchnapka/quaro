@@ -39,12 +39,16 @@ class UserInterface:
                 elif inp in ["debug", "d"]:
                     self.state.debug()
                 elif inp in ["demo"]:
+                    self.controller.stop_gait()
                     self.controller.start_demo()
                 elif inp in ["raise", "raise up"]:
+                    self.controller.stop_gait()
                     self.controller.raise_up()
                 elif inp in ["lay", "lay down"]:
+                    self.controller.stop_gait()
                     self.controller.lay_down()
                 elif inp in ["twerk"]:
+                    self.controller.stop_gait()
                     self.controller.start_demo("twerk")
                 elif inp in ["z", "zero", "zeropos"]:
                     self.hardware_config.zero_pos_menu(self.controller)
