@@ -33,6 +33,7 @@ class State:
         self.angular_velocity = 0.0                # rotation around z-axis in DEG/s
         self.rpy       = np.array([0.0, 0.0, 0.0]) # roll, pitch, yaw of body
         self.operating_hight = 0.90                # operation z distance
+        self.lay_down_hight = 0.80
         
         
         # Robot movement parameters
@@ -42,7 +43,12 @@ class State:
         self.swing_hight_factor = 0.95
         
         # Robot location
-        self.absolute_foot_position   = np.zeros((3, 4))
+        self.absolute_foot_position   = np.array([[  0,   0,   0,   0],
+                                                  [-55,  55, -55,  55],
+                                                  [200, 200, 200, 200]])
+        self.uncorrected_foot_position   = np.array([[  0,   0,   0,   0],
+                                                     [  0,   0,   0,   0],
+                                                     [200, 200, 200, 200]])
         self.normalized_foot_position = np.zeros((3, 4))
         self.joint_angle              = np.zeros((3, 4))
         self.last_touchdown_point = np.array([[-0.5, -0.5, -0.5, -0.5],

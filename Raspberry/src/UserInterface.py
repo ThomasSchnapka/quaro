@@ -40,6 +40,10 @@ class UserInterface:
                     self.state.debug()
                 elif inp in ["demo"]:
                     self.controller.start_demo()
+                elif inp in ["raise", "raise up"]:
+                    self.controller.raise_up()
+                elif inp in ["lay", "lay down"]:
+                    self.controller.lay_down()
                 elif inp in ["twerk"]:
                     self.controller.start_demo("twerk")
                 elif inp in ["z", "zero", "zeropos"]:

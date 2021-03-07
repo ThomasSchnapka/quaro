@@ -5,7 +5,6 @@ from src.State import State
 from src.Controller import Controller
 from src.UserInterface import UserInterface
 
-# To-Do: import threading
 
 
 def main():

@@ -2,6 +2,7 @@ import threading
 import numpy as np
 
 from .GaitController import GaitController
+from .TransitionController import TransitionController
 from . import calibration
 from . import demo
 
@@ -23,6 +24,8 @@ class Controller:
         self.hardware_config = hardware_config
         
         self.gait_controller = GaitController(state, hardware_config)
+        self.transition_controller = TransitionController(state, self, 
+                                                          hardware_config)
         
         self.allow_loop = False
         
@@ -69,6 +72,7 @@ class Controller:
         and sends them
         '''
         coordinates = np.copy(coordinates)
+        self.state.uncorrected_foot_position = np.copy(coordinates)
         coordinates += self.correct_shoulder_displacement()
         coordinates += self.state.true_com[:, np.newaxis]
         angle = self.hardware_config.inverse_kinematics(coordinates, rpy, rotation_center)
@@ -102,9 +106,17 @@ class Controller:
     def start_demo(self, demo_type="rpy"):
         demo.start_demo(self, demo_type);
         
+    def raise_up(self):
+        '''forwards function to TransitionController'''
+        self.transition_controller.raise_up()
+        
+    def lay_down(self):
+        '''forwards function to TransitionController'''
+        self.transition_controller.lay_down()
+        
     def correct_shoulder_displacement(self):
         '''
-        Returns needed translation in y directionfor every foot position. 
+        Returns needed translation in y direction for every foot position. 
         Foottips will be placed right under coxa or femur joint of inbetween
         (based on correct_shoulder_displacement, which is between 1 and 0)
         '''
