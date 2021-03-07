@@ -32,7 +32,7 @@ class State:
         self.velocity  = np.array([0.00, 0.00])    # x and y direction, in m/s
         self.angular_velocity = 0.0                # rotation around z-axis in DEG/s
         self.rpy       = np.array([0.0, 0.0, 0.0]) # roll, pitch, yaw of body
-        self.operating_hight = 0.90                # operation z distance
+        self.operating_hight = 0.95                # operation z distance
         self.lay_down_hight = 0.80
         
         
