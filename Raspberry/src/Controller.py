@@ -38,15 +38,15 @@ class Controller:
     def stop_gait(self):
         self.allow_loop = False
         
+    def shutdown(self):
+        self.stop_gait()
+        self.lay_down()
+        
     def shun(self):
         self.stop_gait();
         angle_shun = np.zeros((3, 4))
         self.set_leg_angle(angle_shun)
         self.state.joint_angle = angle_shun
-        pass
-    
-    def shutdown(self):
-        # To-Do
         pass
     
     def gait_loop(self):
