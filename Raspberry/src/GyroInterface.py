@@ -39,8 +39,8 @@ else:
         def get_inclination(self):
             '''return inclination measured around x and y'''
             acc_x, acc_y, acc_z = self.mpu.acceleration
-            inc_x = np.arctan2(acc_x, acc_z) * 360/(2*np.pi)
-            inc_y = np.arctan2(acc_y, acc_z) * 360/(2*np.pi)
+            inc_x = np.arctan2(acc_y, acc_z) * 360/(2*np.pi)
+            inc_y = -np.arctan2(acc_x, acc_z) * 360/(2*np.pi)
             return inc_x, inc_y
 
 

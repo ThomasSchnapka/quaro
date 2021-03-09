@@ -2,8 +2,9 @@ import numpy as np
 
 
 class SwingController:
-    def __init__(self, touchdown_localizer):
+    def __init__(self, state, touchdown_localizer):
         
+        self.state = state
         self.touchdown_localizer = touchdown_localizer
         self.last_leg_state = np.array([1, 1, 1, 1]).astype(bool)
         
@@ -32,7 +33,7 @@ class SwingController:
         
         # Calculate the middle point
         p1 = (p0 + p2)/2
-        p1[2] *= 0.95 # TODO: find better way to get z coordinate of middle point
+        p1[2] *= self.state.swing_hight_factor
         
         pos = self.bezier(leg_time, p0, p1, p2)
         

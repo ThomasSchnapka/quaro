@@ -34,6 +34,8 @@ class TransitionController:
         transition_time : in ms, maximal time for leg transition
 
         '''
+        if not self.state.allow_transitions:
+            return
         print("[TransitionController] moving legs to new position")
         old_pos = np.copy(self.state.uncorrected_foot_position)
         # check if any legs are still in air and set them on ground
@@ -98,6 +100,8 @@ class TransitionController:
                 
     def raise_up(self, transition_time=3000):
         '''move robot from current to initial position'''
+        if not self.state.allow_transitions:
+            return
         print("[TransitionController] raising up")
         pos = np.zeros((3,4))
         pos[2] = (  self.state.operating_hight
@@ -106,6 +110,8 @@ class TransitionController:
         
     def lay_down(self, transition_time=3000):
         '''move robot from current to lay down position'''
+        if not self.state.allow_transitions:
+            return
         print("[TransitionController] laying down")
         pos = np.zeros((3,4))
         pos[2] = (  self.state.lay_down_hight

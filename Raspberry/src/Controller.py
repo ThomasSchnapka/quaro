@@ -90,20 +90,28 @@ class Controller:
     def set_leg_angle(self, angle):
         '''check and save angles to hardware interface'''
         angle += self.hardware_config.zero_pos
-        self.sanity_check_angle(angle)
+        angle = self.sanity_check_angle(angle)
         self.hardware_interface.send_angle(angle)
         
     def sanity_check_angle(self, angle):
-        '''check if angles can be used without flaws'''
-        # TODO: add direct kinematics for a better verification
+        '''check if angles can be used without flaws and limit them'''
+        ## check
         if (    np.any(np.abs(angle[0]) > 60)
             or  np.any(np.abs(angle[1]) > 120)
             or  np.any(np.abs(angle[2]) > 60)
             or  np.any(np.isnan(angle))):
-            self.state.debug()
             print("[controller] bad angle value")
-            print(angle)
-            raise Exception("[controller] unreachable angle detected!")
+        ## limits
+        # femur
+        angle[0][angle[0] >  60] =  60
+        angle[0][angle[0] < -60] = -60
+        # tibia
+        angle[1][angle[0] > 120] = 120
+        angle[1][angle[0] <-120] =-120
+        # coxa
+        angle[2][angle[0] >  60] =  60
+        angle[2][angle[0] < -60] = -60
+        return angle
     
     def calibrate(self):
         calibration.calibration_menu(self, self.hardware_interface);

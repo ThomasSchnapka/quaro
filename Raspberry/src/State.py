@@ -22,14 +22,16 @@ class State:
         # Robot schedule
         #self.cycle_time       = 3000.0   # walk
         self.cycle_time       = 1500.0    # trot
-        self.update_time      = 50.0
+        self.update_time      = 20.0
         self.true_update_time = 0.0
         
-        # PID parameters for inclilation controll
-        self.inc_kp = 1
-        self.inc_ki = 0.1
+        # PID parameters for inclilation control
+        self.inc_kp = 0.05
+        self.inc_ki = 0.0
         self.inc_kd = 1e-4
-        self.inc_setpoint = 0
+        self.inc_setpoint_x = 0
+        self.inc_setpoint_y = 0
+        self.inc_x, self.inc_y = 0, 0
         
         
         # Robot states
@@ -39,15 +41,17 @@ class State:
         self.velocity  = np.array([0.00, 0.00])    # x and y direction, in m/s
         self.angular_velocity = 0.0                # rotation around z-axis in DEG/s
         self.rpy       = np.array([0.0, 0.0, 0.0]) # roll, pitch, yaw of body
-        self.operating_hight = 0.90                # operation z distance
-        self.lay_down_hight = 0.80
+        self.operating_hight = 0.9                # operation z distance
+        self.lay_down_hight = 0.85
+        self.allow_transitions = False
         
         
         # Robot movement parameters
         self.z_stride = 0.0       # maximal step height, currently unused
         self.correct_shoulder_displacement = 1 # 1 = foottip under C0/1
                                                # 0 = foottip under C4/5
-        self.swing_hight_factor = 0.95
+        self.swing_hight_factor = 1
+        # self.swing_hight_factor = 0.95
         
         # Robot location
         self.absolute_foot_position   = np.array([[  0,   0,   0,   0],
