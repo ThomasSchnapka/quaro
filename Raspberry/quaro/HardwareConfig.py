@@ -85,8 +85,6 @@ class HardwareConfig:
                            rotation_center=np.zeros(3)):
         '''
         Vectorised inverse kinematics
-        
-        TODO: implement IK of SpotMicro, values already given above
 
         Parameters
         ----------

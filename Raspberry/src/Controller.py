@@ -3,6 +3,7 @@ import numpy as np
 
 from .GaitController import GaitController
 from .TransitionController import TransitionController
+from .InclinationController import InclinationController
 from . import calibration
 from . import demo
 
@@ -11,9 +12,6 @@ class Controller:
     '''
     Manages timing, calculates coordinates with gait_controller
     and sends them to hardware_interface
-    
-    To-Do: - implement IMU
-           - implement control-loop with pressure sensors
     '''
     
     
@@ -26,6 +24,9 @@ class Controller:
         self.gait_controller = GaitController(state, hardware_config)
         self.transition_controller = TransitionController(state, self, 
                                                           hardware_config)
+        self.inclination_controller = InclinationController(state,
+                                                            hardware_interface,
+                                                            hardware_config)
         
         self.allow_loop = False
         
@@ -40,7 +41,11 @@ class Controller:
         
     def stop_gait(self):
         self.allow_loop = False
-        
+    
+    def gait_loop(self):
+        while self.allow_loop:
+            self.check_for_position_updates()
+    
     def shutdown(self):
         self.stop_gait()
         self.lay_down()
@@ -52,10 +57,6 @@ class Controller:
         self.state.joint_angle = angle_shun
         pass
     
-    def gait_loop(self):
-        while self.allow_loop:
-            self.check_for_position_updates()
-        
     def check_for_position_updates(self):
         '''
         checks if it is time to update the leg position and updates is
@@ -78,6 +79,7 @@ class Controller:
         self.state.uncorrected_foot_position = np.copy(coordinates)
         coordinates += self.correct_shoulder_displacement()
         coordinates += self.state.true_com[:, np.newaxis]
+        coordinates = self.inclination_controller.correct_inclination(coordinates)
         angle = self.hardware_config.inverse_kinematics(coordinates, rpy, rotation_center)
         # save values in state
         self.state.joint_angle = angle

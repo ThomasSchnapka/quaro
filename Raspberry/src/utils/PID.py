@@ -42,19 +42,20 @@ class PID:
         return output_value
         
 # TEST -----------------------------------------------------------------------
-       
-import numpy as np
-import matplotlib.pyplot as plt
 
-N = 100
-SETPOINT = 10
-pid = PID(1, 0.1, 1e-4, SETPOINT)
-
-x = np.zeros(N)
-
-for n in range(1, N):
-    x[n] = x[n-1] + pid.compute(x[n-1])
-    time.sleep(0.02)
+if __name__ == "__main__":
+    import numpy as np
+    import matplotlib.pyplot as plt
     
-plt.plot(x)
+    N = 100
+    SETPOINT = 10
+    pid = PID(1, 0.1, 1e-4, SETPOINT)
+    
+    x = np.zeros(N)
+    
+    for n in range(1, N):
+        x[n] = x[n-1] + pid.compute(x[n-1])
+        time.sleep(0.02)
+        
+    plt.plot(x)
 
