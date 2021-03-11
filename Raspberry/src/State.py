@@ -26,11 +26,11 @@ class State:
         self.true_update_time = 0.0
         
         # PID parameters for inclilation control
-        self.inc_kp = 0.05
-        self.inc_ki = 0.0
+        self.inc_kp = 0.1#0.05
+        self.inc_ki = 0.02#0.01
         self.inc_kd = 1e-4
-        self.inc_setpoint_x = 0
-        self.inc_setpoint_y = 0
+        self.max_inc_x = 15#8
+        self.max_inc_y = 15#5
         self.inc_x, self.inc_y = 0, 0
         
         

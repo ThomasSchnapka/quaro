@@ -54,20 +54,31 @@ class HardwareConfig:
                                         [1, 5, 9, 13],  # coxa
                                         [2, 6,10, 14]]) # tibia
         
+    def translate(self, coordinates):
+        return np.array([[1, 0, 0, coordinates[0]],
+                         [0, 1, 0, coordinates[1]],
+                         [0, 0, 1, coordinates[2]],
+                         [0, 0, 0,              1]])
     
     def rot_z(self, angle):
+        # conversion to RAD
+        angle = np.copy(angle*2*pi/360)
         return np.array([[cos(angle), -sin(angle),           0,           0],
                          [sin(angle),  cos(angle),           0,           0],
                          [         0,           0,           1,           0],
                          [         0,           0,           0,           1]])
+    
     def rot_x(self, angle):
-        
+        # conversion to RAD
+        angle = np.copy(angle*2*pi/360)
         return np.array([[         1,           0,           0,           0],
                          [         0,  cos(angle), -sin(angle),           0],
                          [         0,  sin(angle),  cos(angle),           0],
                          [         0,            0,          0,           1]])
     
     def rot_y(self, angle):
+        # conversion to RAD
+        angle = np.copy(angle*2*pi/360)
         return np.array([[ cos(angle),            0,  sin(angle),           0],
                          [          0,            1,           0,           0],
                          [-sin(angle),            0,  cos(angle),           0],
@@ -75,9 +86,6 @@ class HardwareConfig:
     
     
     def rot_rpy(self, rpy):
-        rpy = np.copy(rpy)
-        # conversion to RAD
-        rpy = rpy*2*pi/360
         return self.rot_z(rpy[0])@self.rot_y(rpy[1])@self.rot_x(rpy[2])
     
     
@@ -150,6 +158,10 @@ class HardwareConfig:
         angles = np.array([alpha, beta, gamma])
         # convert to deg
         angles *= 360.0/(2.0*np.pi)
+        
+        # replace NaN with zero
+        angles = np.nan_to_num(angles)
+        
         return angles
     
     def zero_pos_menu(self, controller):
