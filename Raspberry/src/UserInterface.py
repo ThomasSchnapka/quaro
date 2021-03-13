@@ -141,7 +141,7 @@ class UserInterface:
               f"true_com:      {self.state.true_com}")
         print(f"shoulder_dis': {self.state.correct_shoulder_displacement}".ljust(30),
               f"swing_h'_fact':{self.state.swing_hight_factor}")
-        print(f"server_status':{self.state.allow_server_loop}".ljust(30),
+        print(f"server_status':{self.state.enable_server_loop}".ljust(30),
               f"ang'_velocity':{self.state.angular_velocity}")
         print(f"stab'_ampl':   {self.state.stability_amplitude}".ljust(30))
         print("--------------------------------------------------------------")

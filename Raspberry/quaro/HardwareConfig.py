@@ -145,8 +145,8 @@ class HardwareConfig:
         C1 = ( self.l1**2 - self.l2**2 + C**2)/(2*C)
         C2 = (-self.l1**2 + self.l2**2 + C**2)/(2*C)
         alpha1 = -arctan(-x/A)
-        alpha2 = -arccos(C1/self.l1)
-        teta = -arccos(C2/self.l2)
+        alpha2 = -arccos(np.clip(C1/self.l1, -1, 1))
+        teta = -arccos(np.clip(C2/self.l2, -1, 1))
         alpha = alpha1 + alpha2
         beta = -(teta + alpha2)
         

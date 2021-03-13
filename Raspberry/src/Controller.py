@@ -28,22 +28,22 @@ class Controller:
                                                             hardware_interface,
                                                             hardware_config)
         
-        self.allow_loop = False
+        self.enable_loop = False
         
     def start_gait(self):
         # move legs to initial position
         initial_position = self.gait_controller.get_position(initial=True)
         self.transition_controller.leg_transition(initial_position, 4000)
         # start gait loop in own thread
-        self.allow_loop = True
+        self.enable_loop = True
         self.gait_loop_thread = threading.Thread(target=self.gait_loop,)
         self.gait_loop_thread.start()
         
     def stop_gait(self):
-        self.allow_loop = False
+        self.enable_loop = False
     
     def gait_loop(self):
-        while self.allow_loop:
+        while self.enable_loop:
             self.check_for_position_updates()
     
     def shutdown(self):
@@ -76,11 +76,18 @@ class Controller:
         and sends them
         '''
         coordinates = np.copy(coordinates)
+        self.state.rpy = rpy
+        
+        # correct coordinates
         self.state.uncorrected_foot_position = np.copy(coordinates)
         coordinates += self.correct_shoulder_displacement()
         coordinates += self.state.true_com[:, np.newaxis]
-        coordinates = self.inclination_controller.correct_inclination(coordinates)
+        if self.state.enable_inclination_controller:
+            coordinates = self.inclination_controller.correct_inclination(coordinates)
+        
+        # inverse kinematics
         angle = self.hardware_config.inverse_kinematics(coordinates, rpy, rotation_center)
+        
         # save values in state
         self.state.joint_angle = angle
         self.state.rpy = rpy

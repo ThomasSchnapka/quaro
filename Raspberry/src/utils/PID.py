@@ -6,9 +6,10 @@ import time
 
 
 class PID:
-    def __init__(self, kp, ki, kd, setpoint=0):
+    def __init__(self, kp, ki, kd, setpoint=0, f=None):
         '''
-        classical PID controller
+        TODO
+        f is LP cutoff freq
         '''
         
         self.kp = kp
@@ -18,13 +19,23 @@ class PID:
         self.err_sum = 0
         self.last_err = 0
         self.last_time = time.time()
+        self.f = f
+        self.last_value = 0
         
         
     def compute(self, current_value):
         # How long since we last calculated
         now = time.time()
-        time_change = now - self.last_time;
-      
+        time_change = now - self.last_time
+        
+        # filter values if specified
+        if self.f != None:
+            # apply LP filter (Simple_infinite_impulse_response_filter)
+            c = ((  2.0*3.1415*time_change*self.f     )
+                  /(2.0*3.1415*time_change*self.f + 1 ))
+            current_value = c*current_value + (1.0-c)*self.last_value
+            self.last_value = current_value
+            
         # Compute all the working error variables
         error = (self.setpoint - current_value)
         self.err_sum += (error * time_change)

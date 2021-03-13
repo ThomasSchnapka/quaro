@@ -6,6 +6,7 @@ https://github.com/adafruit/Adafruit_CircuitPython_MPU6050
 '''
 
 import numpy as np
+import time
 
 # conditional import to make this script runnable without connected hardware
 try:
@@ -24,7 +25,7 @@ except ModuleNotFoundError:
             pass
         
         def get_inclination(self):
-            return 0, 0
+            return 0.0, 0.0
 else:
     class GyroInterface:
         def __init__(self):
@@ -33,7 +34,14 @@ else:
         
             # settings for filtering if data becomes too noisy:
             # self.mpu.cycle_Rate = adafruit_mpu6050.Rate.CYCLE_5_HZ
-            # self.mpu.filter_bandwidth = adafruit_mpu6050.Bandwidth.BAND_260_HZ
+            self.mpu.filter_bandwidth = adafruit_mpu6050.Bandwidth.BAND_5_HZ
+            
+            # own LP filter
+            self.f_cut = 1.0 # Hz
+            self.last_inc_x = 0.0
+            self.last_inc_y = 0.0
+            self.last_time = time.time()
+            
         
         
         def get_inclination(self):
@@ -41,6 +49,7 @@ else:
             acc_x, acc_y, acc_z = self.mpu.acceleration
             inc_x = -np.arctan2(acc_y, acc_z) * 360/(2*np.pi)
             inc_y = -np.arctan2(acc_x, acc_z) * 360/(2*np.pi)
+            
             return inc_x, inc_y
 
 

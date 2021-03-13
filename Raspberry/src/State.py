@@ -16,7 +16,7 @@ class State:
         self.stability_amplitude = 0
         #self.phase = np.array([0.0, 0.25, 0.75, 0.5])  # walk
         self.phase = np.array([0.0, 0.5, 0.5, 0])       # trot
-        self.true_com = np.array([-28, 0, 0])
+        self.true_com = np.array([-20, -2, 0])
         
         
         # Robot schedule
@@ -26,32 +26,36 @@ class State:
         self.true_update_time = 0.0
         
         # PID parameters for inclilation control
-        self.inc_kp = 0.1#0.05
-        self.inc_ki = 0.02#0.01
-        self.inc_kd = 1e-4
+        self.inc_x_kp = 0.03#0.05
+        self.inc_x_ki = 0#0.02#0.01
+        self.inc_x_kd = -1e-3#-5e-5
         self.max_inc_x = 15#8
+        self.inc_y_kp = 0.02#0.05#0.05
+        self.inc_y_ki = 0#0.02#0.01
+        self.inc_y_kd = -1e-3#-5e-5
         self.max_inc_y = 15#5
         self.inc_x, self.inc_y = 0, 0
+        self.enable_inclination_controller = True
         
         
         # Robot states
         self.leg_state      = np.array([1, 1, 1, 1]).astype(bool) # supporting or not
         self.last_leg_state = np.array([1, 1, 1, 1]).astype(bool)
         self.leg_time  = np.array([0, 0, 0, 0])
-        self.velocity  = np.array([0.00, 0.00])    # x and y direction, in m/s
+        self.velocity  = np.array([0.02, 0.00])    # x and y direction, in m/s
         self.angular_velocity = 0.0                # rotation around z-axis in DEG/s
         self.rpy       = np.array([0.0, 0.0, 0.0]) # roll, pitch, yaw of body
         self.operating_hight = 0.9                # operation z distance
         self.lay_down_hight = 0.85
-        self.allow_transitions = False
+        self.enable_transitions = False
         
         
         # Robot movement parameters
         self.z_stride = 0.0       # maximal step height, currently unused
         self.correct_shoulder_displacement = 1 # 1 = foottip under C0/1
                                                # 0 = foottip under C4/5
-        self.swing_hight_factor = 1
-        # self.swing_hight_factor = 0.95
+        #self.swing_hight_factor = 1
+        self.swing_hight_factor = 0.95
         
         # Robot location
         self.absolute_foot_position   = np.array([[  0,   0,   0,   0],
@@ -73,7 +77,7 @@ class State:
         self.debug_communication = False # Force HI to print communication
         
         # Server
-        self.allow_server_loop = False
+        self.enable_server_loop = False
     
         
     def debug(self):

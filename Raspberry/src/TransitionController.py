@@ -34,10 +34,11 @@ class TransitionController:
         transition_time : in ms, maximal time for leg transition
 
         '''
-        if not self.state.allow_transitions:
+        if not self.state.enable_transitions:
             return
         print("[TransitionController] moving legs to new position")
         old_pos = np.copy(self.state.uncorrected_foot_position)
+        
         # check if any legs are still in air and set them on ground
         if np.any(np.abs(old_pos[2] - np.min(old_pos[2])) > self.TOLERANCE):
             t_align_z = transition_time*0.2
@@ -46,6 +47,7 @@ class TransitionController:
             align_pos[2] = np.max(old_pos[2])
             self.linear_transition(old_pos, align_pos, t_align_z)
             old_pos[2] = align_pos[2]
+            
         # check if any legs have different x/y coordinates and change them
         if np.any(np.abs(old_pos[[0,1]] - new_pos[[0,1]]) > self.TOLERANCE):
             t_align_xy = transition_time*0.6
@@ -63,6 +65,7 @@ class TransitionController:
                 target_pos[:,n] = align_pos[:,n]
                 self.quadratic_transition(old_pos, target_pos, t_align_xy/amount)
                 old_pos = np.copy(target_pos)
+                
         # check if legs are on requested z hight and change them
         if np.any(np.abs(old_pos[2] - new_pos[2]) > self.TOLERANCE):
             self.linear_transition(old_pos, new_pos, transition_time)
@@ -100,7 +103,7 @@ class TransitionController:
                 
     def raise_up(self, transition_time=3000):
         '''move robot from current to initial position'''
-        if not self.state.allow_transitions:
+        if not self.state.enable_transitions:
             return
         print("[TransitionController] raising up")
         pos = np.zeros((3,4))
@@ -110,7 +113,7 @@ class TransitionController:
         
     def lay_down(self, transition_time=3000):
         '''move robot from current to lay down position'''
-        if not self.state.allow_transitions:
+        if not self.state.enable_transitions:
             return
         print("[TransitionController] laying down")
         pos = np.zeros((3,4))

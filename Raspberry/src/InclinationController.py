@@ -14,14 +14,17 @@ class InclinationController:
         self.hardware_interface = hardware_interface
         self.hardware_config = hardware_config
         
-        # PID values
-        self.kp = self.state.inc_kp
-        self.ki = self.state.inc_ki
-        self.kd = self.state.inc_kd
-        self.setpoint_x = 0
-        self.setpoint_y = 0
-        self.pid_x = PID(self.kp, self.ki, self.kd, self.setpoint_x)
-        self.pid_y = PID(self.kp, self.ki, self.kd, self.setpoint_y)
+        # PID controller instances
+        self.pid_x = PID(self.state.inc_x_kp,
+                         self.state.inc_x_ki,
+                         self.state.inc_x_kd, 
+                         setpoint = 0,
+                         f=0.5)
+        self.pid_y = PID(self.state.inc_y_kp,
+                         self.state.inc_y_ki,
+                         self.state.inc_y_kd, 
+                         setpoint = 0,
+                         f=0.5)
         
         # maximum values
         self.max_inc_x = self.state.max_inc_x
@@ -55,10 +58,14 @@ class InclinationController:
         
         measured_inc_x, measured_inc_y = self.hardware_interface.gyro.get_inclination()
         
-        #inc_x = self.last_inc_x + self.pid_x.compute(measured_inc_x)
-        #inc_y = self.last_inc_y + self.pid_y.compute(measured_inc_y)
-        inc_x = self.pid_x.compute(measured_inc_x)
-        inc_y = self.pid_y.compute(measured_inc_y)
+        # influence of pitch and yaw
+        measured_inc_x += self.state.rpy[2]
+        measured_inc_y += self.state.rpy[1]
+        
+        inc_x = self.last_inc_x + self.pid_x.compute(measured_inc_x)
+        inc_y = self.last_inc_y + self.pid_y.compute(measured_inc_y)
+        #inc_x = self.pid_x.compute(measured_inc_x)
+        #inc_y = self.pid_y.compute(measured_inc_y)
         
         
         # limit extreme values
@@ -81,7 +88,9 @@ class InclinationController:
         # foot_tips = np.vstack((foot_tips, np.ones(4)))
         #print("-------------")
         #print("before", coordinates)
-        foot_tips = coordinates + self.hardware_config.leg_location
+        foot_tips = (  coordinates
+                     + self.hardware_config.leg_location
+                     + self.state.true_com[:, np.newaxis])
         # add row of ones for transformation
         foot_tips = np.vstack((foot_tips, np.ones(4)))
         #print("foot_tips", foot_tips)
@@ -105,7 +114,9 @@ class InclinationController:
         foot_tips = foot_tips[:3, :]
         
         # subtract leg_pos to get coordinates in leg frame
-        coordinates = foot_tips - self.hardware_config.leg_location
+        coordinates = (  foot_tips 
+                       - self.hardware_config.leg_location 
+                       - self.state.true_com[:, np.newaxis])
         
         #print("after", coordinates)
         
