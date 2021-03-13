@@ -42,7 +42,7 @@ class State:
         self.leg_state      = np.array([1, 1, 1, 1]).astype(bool) # supporting or not
         self.last_leg_state = np.array([1, 1, 1, 1]).astype(bool)
         self.leg_time  = np.array([0, 0, 0, 0])
-        self.velocity  = np.array([0.02, 0.00])    # x and y direction, in m/s
+        self.velocity  = np.array([0.00, 0.00])    # x and y direction, in m/s
         self.angular_velocity = 0.0                # rotation around z-axis in DEG/s
         self.rpy       = np.array([0.0, 0.0, 0.0]) # roll, pitch, yaw of body
         self.operating_hight = 0.9                # operation z distance
@@ -54,8 +54,8 @@ class State:
         self.z_stride = 0.0       # maximal step height, currently unused
         self.correct_shoulder_displacement = 1 # 1 = foottip under C0/1
                                                # 0 = foottip under C4/5
-        #self.swing_hight_factor = 1
-        self.swing_hight_factor = 0.95
+        self.swing_hight_factor = 1
+        #self.swing_hight_factor = 0.95
         
         # Robot location
         self.absolute_foot_position   = np.array([[  0,   0,   0,   0],
