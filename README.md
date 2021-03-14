@@ -19,7 +19,7 @@ This repo contains the control software that runs my version of KDY0523's [SpotM
 * [Future work](#future-work)
 * [Additional resources](#additional-resources)
 
-### features:
+### Features:
 * parameterizable gait generator
 * maintains stability
   * static stability
