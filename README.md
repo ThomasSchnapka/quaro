@@ -1,5 +1,5 @@
 # Quaro Quadruped Robot
-Control software for quadrupedal robots with a focus on tidy kinematics and motion.
+Control software for quadrupedal robots with a focus on tidy kinematics and motion. Includes sensor feedback
 
 
 <p float="left">
@@ -76,6 +76,7 @@ the `--recurse-submodules` option:
 ```
 git clone --branch v4 --recurse-submodules https://github.com/ThomasSchnapka/quaro.git
 ```
+It is no problem to install the software without IMU, PWM-board or any hardware at all. The software detects which hardware is connected and creates a dummy instance if necessary.
 
 ### Execution
 The menu looks like this:
