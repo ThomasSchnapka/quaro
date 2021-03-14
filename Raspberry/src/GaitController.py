@@ -24,7 +24,7 @@ class GaitController:
         self.hardware_config = hardware_config
         
         self.touchdown_localizer = TouchdownLocalizer(self.state)
-        self.swing_controller = SwingController(self.touchdown_localizer)
+        self.swing_controller = SwingController(self.state, self.touchdown_localizer)
         self.support_controller = SupportController(self.touchdown_localizer)
         self.rotation_controller = RotationController(self.state,
                                                       self.hardware_config)

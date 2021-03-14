@@ -30,7 +30,7 @@ def get_initial_position():
 def do_rpy_demo(controller):
     '''changes roll, pitch and yaw'''
     # parameters
-    UPDATE_TIME = 30
+    UPDATE_TIME = 50
     RPY_AMOUNT = 2
     RPY_TIME = 8000     # ms, total time per iteration
     # amplitudes

@@ -3,6 +3,7 @@ import numpy as np
 
 from .GaitController import GaitController
 from .TransitionController import TransitionController
+from .InclinationController import InclinationController
 from . import calibration
 from . import demo
 
@@ -11,9 +12,6 @@ class Controller:
     '''
     Manages timing, calculates coordinates with gait_controller
     and sends them to hardware_interface
-    
-    To-Do: - implement IMU
-           - implement control-loop with pressure sensors
     '''
     
     
@@ -26,21 +24,28 @@ class Controller:
         self.gait_controller = GaitController(state, hardware_config)
         self.transition_controller = TransitionController(state, self, 
                                                           hardware_config)
+        self.inclination_controller = InclinationController(state,
+                                                            hardware_interface,
+                                                            hardware_config)
         
-        self.allow_loop = False
+        self.enable_loop = False
         
     def start_gait(self):
         # move legs to initial position
         initial_position = self.gait_controller.get_position(initial=True)
         self.transition_controller.leg_transition(initial_position, 4000)
         # start gait loop in own thread
-        self.allow_loop = True
+        self.enable_loop = True
         self.gait_loop_thread = threading.Thread(target=self.gait_loop,)
         self.gait_loop_thread.start()
         
     def stop_gait(self):
-        self.allow_loop = False
-        
+        self.enable_loop = False
+    
+    def gait_loop(self):
+        while self.enable_loop:
+            self.check_for_position_updates()
+    
     def shutdown(self):
         self.stop_gait()
         self.lay_down()
@@ -52,10 +57,6 @@ class Controller:
         self.state.joint_angle = angle_shun
         pass
     
-    def gait_loop(self):
-        while self.allow_loop:
-            self.check_for_position_updates()
-        
     def check_for_position_updates(self):
         '''
         checks if it is time to update the leg position and updates is
@@ -75,10 +76,18 @@ class Controller:
         and sends them
         '''
         coordinates = np.copy(coordinates)
+        self.state.rpy = rpy
+        
+        # correct coordinates
         self.state.uncorrected_foot_position = np.copy(coordinates)
         coordinates += self.correct_shoulder_displacement()
         coordinates += self.state.true_com[:, np.newaxis]
+        if self.state.enable_inclination_controller:
+            coordinates = self.inclination_controller.correct_inclination(coordinates)
+        
+        # inverse kinematics
         angle = self.hardware_config.inverse_kinematics(coordinates, rpy, rotation_center)
+        
         # save values in state
         self.state.joint_angle = angle
         self.state.rpy = rpy
@@ -88,20 +97,28 @@ class Controller:
     def set_leg_angle(self, angle):
         '''check and save angles to hardware interface'''
         angle += self.hardware_config.zero_pos
-        self.sanity_check_angle(angle)
+        angle = self.sanity_check_angle(angle)
         self.hardware_interface.send_angle(angle)
         
     def sanity_check_angle(self, angle):
-        '''check if angles can be used without flaws'''
-        # TODO: add direct kinematics for a better verification
+        '''check if angles can be used without flaws and limit them'''
+        ## check
         if (    np.any(np.abs(angle[0]) > 60)
             or  np.any(np.abs(angle[1]) > 120)
             or  np.any(np.abs(angle[2]) > 60)
             or  np.any(np.isnan(angle))):
-            self.state.debug()
             print("[controller] bad angle value")
-            print(angle)
-            raise Exception("[controller] unreachable angle detected!")
+        ## limits
+        # femur
+        angle[0][angle[0] >  60] =  60
+        angle[0][angle[0] < -60] = -60
+        # tibia
+        angle[1][angle[0] > 120] = 120
+        angle[1][angle[0] <-120] =-120
+        # coxa
+        angle[2][angle[0] >  60] =  60
+        angle[2][angle[0] < -60] = -60
+        return angle
     
     def calibrate(self):
         calibration.calibration_menu(self, self.hardware_interface);

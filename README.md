@@ -1,10 +1,10 @@
 # Quaro Quadruped Robot
-Control software for quadrupedal robots with a focus on tidy kinematics and motion.
+Control software for quadrupedal robots with a focus on tidy kinematics and motion. Includes sensor feedback
 
 
 <p float="left">
-  <img src="https://raw.githubusercontent.com/ThomasSchnapka/quaro/v4/media/gif_rpy.gif">
-  <img src="https://raw.githubusercontent.com/ThomasSchnapka/quaro/v4/media/hardware_image_side.jpeg" width="250">
+  <img src="https://raw.githubusercontent.com/ThomasSchnapka/quaro/master/media/gif_rpy.gif">
+  <img src="https://raw.githubusercontent.com/ThomasSchnapka/quaro/master/media/hardware_image_side.jpeg" width="250">
 </p>
 
 _Made by user Thomas Schnapka_
@@ -19,14 +19,16 @@ This repo contains the control software that runs my version of KDY0523's [SpotM
 * [Future work](#future-work)
 * [Additional resources](#additional-resources)
 
-### capabilities:
+### features:
 * parameterizable gait generator
-* maintains stability _(so far only static stability is considered)_
+* maintains stability
+  * static stability
+  * stability during slopes  
 * servo protection
 * interactive menu
 * simulation and state visualization for testing and during robot operation
 
-![gif RPY simulation](https://raw.githubusercontent.com/ThomasSchnapka/quaro/v4/media/RPY_simulation.gif) 
+![gif RPY simulation](https://raw.githubusercontent.com/ThomasSchnapka/quaro/master/media/RPY_simulation.gif) 
 
 All scripts are written in Python. The code is highly vectorized, thus I think it would make little to no difference to port some parts into C++. However, I did not check this yet.
 
@@ -35,13 +37,14 @@ All scripts are written in Python. The code is highly vectorized, thus I think i
 * Raspberry Pi 3
 * 12 JX HV5932MG Servos
 * PCA9685 servo board
+* MPU6050 IMU
 * customized [SpotMicro](https://www.thingiverse.com/thing:3445283) parts with [shoulder reinforcements](https://www.thingiverse.com/thing:4591999).
 
 
 ## Gait generation
 The robot follows the conventions introduced in this [book](https://mitpress.mit.edu/books/legged-robots-balance) by Marc Raibert. The robot's gait can be altered in the `state.py` module by changing each leg's individual phase. If everything works right and the values are not in an extreme region, the control software should be able to maintain stability on its own.
 
-<img src="https://github.com/ThomasSchnapka/quaro/blob/v4/media/gif_walking.gif">
+<img src="https://github.com/ThomasSchnapka/quaro/blob/master/media/walking_with_inclination_control.gif" width="500">
 
 ## Structure of this repo
 
@@ -73,6 +76,7 @@ the `--recurse-submodules` option:
 ```
 git clone --branch v4 --recurse-submodules https://github.com/ThomasSchnapka/quaro.git
 ```
+It is no problem to install the software without IMU, PWM-board or any hardware at all. The software detects which hardware is connected and creates a dummy instance if necessary.
 
 ### Execution
 The menu looks like this:
@@ -99,9 +103,11 @@ Most parameters can be changed during runtime. They are changed with `change [pa
 
 ## Future work
 - [x] add a block diagram about the control software workflow in this repo
+- [x] implement IMU to close control loop
+  - [x] controlled slope walking
+  - [ ] balance while robot is nudged
+- [ ] add foot contact switches similar to [these](https://github.com/open-dynamic-robot-initiative/open_robot_actuator_hardware/blob/master/mechanics/foot_contact_switch_v1/README.md)
 - [ ] implement (inverse) dynamic model
-- [ ] implement IMU support
-- [ ] add foot contact switches similar to [these here](https://github.com/open-dynamic-robot-initiative/open_robot_actuator_hardware/blob/master/mechanics/foot_contact_switch_v1/README.md)
 - [ ] add a nice blinking light
 
 _long term:_

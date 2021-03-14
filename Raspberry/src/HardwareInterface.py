@@ -11,6 +11,7 @@ The PCA9685 library is quite old, thus we have to handle it somehow ... special
 
 
 import numpy as np
+from src.GyroInterface import GyroInterface
 
 # conditional import to make this script runnable without connected hardware
 try:
@@ -56,6 +57,9 @@ class HardwareInterface:
         # initialize board
         self.pwm_board = PCA9685(address=self.i2c_address)
         self.pwm_board.set_pwm_freq(self.servo_pwm_freq)
+        
+        # gyro
+        self.gyro = GyroInterface()
             
     
             

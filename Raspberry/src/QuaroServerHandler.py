@@ -26,15 +26,15 @@ class QuaroServerHandler:
     def server_thread_control(self):
         '''prepares parameters and starts server loop'''
         self.server_running = True
-        self.state.allow_server_loop = True
+        self.state.enable_server_loop = True
         self.quaro_server = QuaroServer(self.state)
-        if self.state.allow_server_loop == True:
+        if self.state.enable_server_loop == True:
             self.quaro_server.server_loop()
         
     def stop(self):
         '''stops server'''
-        if self.server_running == True and self.state.allow_server_loop == True:
-            self.state.allow_server_loop = False
+        if self.server_running == True and self.state.enable_server_loop == True:
+            self.state.enable_server_loop = False
             self.server_running = False
             print("[QuaroServerHandler] requested server to stop")
         
