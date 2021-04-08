@@ -12,11 +12,11 @@ _Made by user Thomas Schnapka_
 
 ## Overview
 This repo contains the control software that runs my version of KDY0523's [SpotMicro](https://www.thingiverse.com/thing:3445283). 
-* [Hardware](#hardware)
 * [Gait generation](#gait)
 * [Structure of this repo](#structure)
 * [Installation and execution](#installation-and-execution)
 * [Future work](#future-work)
+* [Hardware](#hardware)
 * [Additional resources](#additional-resources)
 
 ### Features:
@@ -31,14 +31,6 @@ This repo contains the control software that runs my version of KDY0523's [SpotM
 ![gif RPY simulation](https://raw.githubusercontent.com/ThomasSchnapka/quaro/master/media/RPY_simulation.gif) 
 
 All scripts are written in Python. The code is highly vectorized, thus I think it would make little to no difference to port some parts into C++. However, I did not check this yet.
-
-
-## Hardware
-* Raspberry Pi 3
-* 12 JX HV5932MG Servos
-* PCA9685 servo board
-* MPU6050 IMU
-* customized [SpotMicro](https://www.thingiverse.com/thing:3445283) parts with [shoulder reinforcements](https://www.thingiverse.com/thing:4591999).
 
 
 ## Gait generation
@@ -105,14 +97,30 @@ Most parameters can be changed during runtime. They are changed with `change [pa
 - [x] add a block diagram about the control software workflow in this repo
 - [x] implement IMU to close control loop
   - [x] controlled slope walking
-  - [ ] balance while robot is nudged
+  - [ ] balance while robot is nudged/disturbed
 - [ ] add foot contact switches similar to [these](https://github.com/open-dynamic-robot-initiative/open_robot_actuator_hardware/blob/master/mechanics/foot_contact_switch_v1/README.md)
-- [ ] implement (inverse) dynamic model
+  - [x] develope a reliable way to sense foot contact while keeping the SpotMicro design
+  - [ ] be able to walk on uneven terrain 
+- [ ] implement dynamic model for [Model Predictive Control](https://de.wikipedia.org/wiki/Model_Predictive_Control)
+  - [ ] understand MPC by building and controlling an inverted pendulum
 - [ ] add a nice blinking light
 
 _long term:_
 - [ ] buy [better actuators](https://mjbots.com/) that can handle higher loads and give sensor feedback to enable closed-loop control
 
+
+## Hardware
+* Raspberry Pi 3
+* 12 JX HV5932MG Servos
+* PCA9685 servo board
+* MPU6050 IMU
+* customized [SpotMicro](https://www.thingiverse.com/thing:3445283) parts with [shoulder reinforcements](https://www.thingiverse.com/thing:4591999).
+
+### Foot Contact Switches
+
+After testing [this approach](https://github.com/open-dynamic-robot-initiative/open_robot_actuator_hardware/blob/master/mechanics/foot_contact_switch_v1/README.md) with Phototransistors, I found out that using force-sensitive resistors is more feasible if one wants to maintain the Spot Micro design and avoid buying SMD boards. I will upload the CAD files and information about the used electronics as soon as possible. However, there is still some testing to do in order to see if this approach is still working during normal operation.
+
+<img src="https://raw.githubusercontent.com/ThomasSchnapka/quaro/master/media/foot_contact_switches_test.gif" width="250">
 
 ## Additional resources 
 1. book with basics and definitions this software follows [link](https://mitpress.mit.edu/books/legged-robots-balance)
