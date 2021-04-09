@@ -115,11 +115,15 @@ _long term:_
 * PCA9685 servo board
 * MPU6050 IMU
 * customized [SpotMicro](https://www.thingiverse.com/thing:3445283) parts with [shoulder reinforcements](https://www.thingiverse.com/thing:4591999).
+_optional for foot contact switches:_
+* customized [legs](https://www.thingiverse.com/thing:4821239)
+* Arduino Mini
+* Force Sensible Resistors (FSR)
+* additional electronics
 
 ### Foot Contact Switches
 
-After testing [this approach](https://github.com/open-dynamic-robot-initiative/open_robot_actuator_hardware/blob/master/mechanics/foot_contact_switch_v1/README.md) with Phototransistors, I found out that using force-sensitive resistors is more feasible if one wants to maintain the Spot Micro design and avoid buying SMD boards. I will upload the CAD files and information about the used electronics as soon as possible. However, there is still some testing to do in order to see if this approach is still working during normal operation.
-
+After testing [this approach](https://github.com/open-dynamic-robot-initiative/open_robot_actuator_hardware/blob/master/mechanics/foot_contact_switch_v1/README.md) with Phototransistors, I found out that using force-sensitive resistors is more feasible if one wants to maintain the Spot Micro design and avoid buying SMD boards. Instructions and files are available on [Thingivese](https://www.thingiverse.com/thing:4821239). Currently, I am waiting for additional electronics to equip all feet with sensors. 
 <img src="https://raw.githubusercontent.com/ThomasSchnapka/quaro/master/media/foot_contact_switches_test.gif" width="250">
 
 ## Additional resources 
