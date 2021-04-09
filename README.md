@@ -50,6 +50,8 @@ quaro
 │   └── quaro       # hardware specific functionalities for this certain robot
 │        └── ...
 │
+├── Arduino         # script for foot contact switch sensors
+│
 ├── Simulation      # plot of the robots state
 │    └── main.py
 │
@@ -114,7 +116,8 @@ _long term:_
 * 12 JX HV5932MG Servos
 * PCA9685 servo board
 * MPU6050 IMU
-* customized [SpotMicro](https://www.thingiverse.com/thing:3445283) parts with [shoulder reinforcements](https://www.thingiverse.com/thing:4591999).
+* customized [SpotMicro](https://www.thingiverse.com/thing:3445283) parts with [shoulder reinforcements](https://www.thingiverse.com/thing:4591999)
+
 _optional for foot contact switches:_
 * customized [legs](https://www.thingiverse.com/thing:4821239)
 * Arduino Mini
