@@ -1,3 +1,13 @@
+/*
+ *  Filter for foot contact switches. 
+ *  
+ *  Firstly, the analogValue reading is filtered using a discrete LP with
+ *  coefficients alpha_u. The voltage reading is converted into a force
+ *  asuming a given physical model. Sn extended Kalman Filter is applied 
+ *  on this force with filter coefficient alpha_f. The prediction value is
+ *  estimated by linear interpolation.
+ */
+
 #ifndef PredictiveFilter_h
 #define PredictiveFilter_h
 

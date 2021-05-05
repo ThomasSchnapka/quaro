@@ -1,5 +1,11 @@
 /*
- *  DESCRIPTION
+ *  Filter for foot contact switches. 
+ *  
+ *  Firstly, the analogValue reading is filtered using a discrete LP with
+ *  coefficients alpha_u. The voltage reading is converted into a force
+ *  asuming a given physical model. Sn extended Kalman Filter is applied 
+ *  on this force with filter coefficient alpha_f. The prediction value is
+ *  estimated by linear interpolation.
  */
 
 
@@ -37,7 +43,8 @@ void PredictiveFilter::calcSlope(){
 }
 
 float PredictiveFilter::voltage2force(int u_meas){
-  // physical model, calculates force from measured voltage
+  // Physical model, calculates force from measured voltage
+  // Equations are derived empirically assuming RP-S5-ST FSRs
   float r = _R0 / ((1024.0 / u_meas) - 1.0);
   float f = 200 + ((13000/r) - 0.6) / 0.003;
   //Serial.println(String(u_meas) + " " + String(r) + " " + String(f));
