@@ -10,19 +10,19 @@ class State:
     def __init__(self):
         
         # Robot gait
-        self.support_ratio = 0.85
+        self.support_ratio = 0.80
         self.stability_ratio = 0.5
         #self.stability_amplitude = 15
         self.stability_amplitude = 0
-        #self.phase = np.array([0.0, 0.25, 0.75, 0.5])  # walk
-        self.phase = np.array([0.0, 0.5, 0.5, 0])       # trot
+        self.phase = np.array([0.0, 0.25, 0.75, 0.5])  # walk
+        #self.phase = np.array([0.0, 0.5, 0.5, 0])       # trot
         self.true_com = np.array([-20, -2, 0])
         
         
         # Robot schedule
-        #self.cycle_time       = 3000.0   # walk
-        self.cycle_time       = 1500.0    # trot
-        self.update_time      = 20.0
+        #self.cycle_time       = 3.0   # walk
+        self.cycle_time       = 1.5    # trot
+        self.update_time      = 0.02
         self.true_update_time = 0.0
         
         # PID parameters for inclilation control
@@ -42,10 +42,11 @@ class State:
         self.leg_state      = np.array([1, 1, 1, 1]).astype(bool) # supporting or not
         self.last_leg_state = np.array([1, 1, 1, 1]).astype(bool)
         self.leg_time  = np.array([0, 0, 0, 0])
-        self.velocity  = np.array([0.00, 0.00])    # x and y direction, in m/s
-        self.angular_velocity = 0.0                # rotation around z-axis in DEG/s
-        self.rpy       = np.array([0.0, 0.0, 0.0]) # roll, pitch, yaw of body
-        self.operating_hight = 0.9                # operation z distance
+        self.x_com     = np.array([  0.0, 0.0, 0.0]) # COM position
+        self.dx_com    = np.array([ 0.04, 0.0, 0.0]) # COM velocity
+        self.rpy       = np.array([  0.0, 0.0, 0.0]) # COM rotation
+        self.drpy      = np.array([  0.0, 0.0, 0.0]) # COM rotation velocity
+        self.operating_hight = 180                   # operation z distance
         self.lay_down_hight = 0.85
         self.enable_transitions = False
         
@@ -54,7 +55,7 @@ class State:
         self.z_stride = 0.0       # maximal step height, currently unused
         self.correct_shoulder_displacement = 1 # 1 = foottip under C0/1
                                                # 0 = foottip under C4/5
-        self.swing_hight_factor = 1
+        self.swing_hight = 0.03
         #self.swing_hight_factor = 0.95
         
         # Robot location

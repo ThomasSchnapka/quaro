@@ -12,16 +12,17 @@ from scipy.interpolate import make_interp_spline as spline
 
 class SwingSpline:
     
-    def __init__(self, support_ratio, swing_hight, touchdown_pos, liftoff_pos):
-        self.support_ratio = support_ratio
-        self.midpoint = support_ratio + 0.5*(1-support_ratio)
-        self.swing_hight = swing_hight
+    def __init__(self, state, touchdown_pos, liftoff_pos):
+        self.state = state
+        self.support_ratio = state.support_ratio
+        self.midpoint = self.support_ratio + 0.5*(1-self.support_ratio)
+        self.swing_hight = state.swing_hight
         
         self.splines = [[0,0,0,0],[0,0,0,0],[0,0,0,0]]
         self.change_swing_spline(np.ones(4).astype(bool), touchdown_pos, liftoff_pos)
         
     def get_leg_position(self, t):
-        '''retrun 3x4 array with swing positions at time t'''
+        '''retrun 3x4 array with swing positions at normalzed time t (1x4)'''
         pos = np.zeros((3,4))
         for l in range(4):
             pos[0, l] = self.splines[0][l](t[l])
@@ -40,6 +41,8 @@ class SwingSpline:
             self.splines[2][i] = spline([self.support_ratio, self.midpoint, 1],
                                         [liftoff_pos[2][i], self.swing_hight, touchdown_pos[2][i]],
                                         bc_type="natural")
+
+
 
 ### module test ###############################################################
 
