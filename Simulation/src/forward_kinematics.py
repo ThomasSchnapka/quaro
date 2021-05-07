@@ -20,12 +20,12 @@ pi = np.pi
 
 
 ## Geometric definitions (in mm)
-a = 186     # body length
-b = 78      # body width
-h = 11      # vertical shoulder displacement
-g = 55      # horizontal shoulder displacement
-l1 = 108    # upper leg length
-l2 = 130    # lower leg length
+a = 0.186     # body length
+b = 0.078      # body width
+h = 0.011      # vertical shoulder displacement
+g = 0.055      # horizontal shoulder displacement
+l1 = 0.108    # upper leg length
+l2 = 0.130    # lower leg length
 
 leg_location = np.array([a*0.5*np.array([ 1, 1, -1, -1]),
                          b*0.5*np.array([-1, 1, -1,  1]),

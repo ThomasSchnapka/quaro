@@ -26,4 +26,8 @@ class COMTrajectory:
         self.x_com += self.dx_com*dt
         self.rpy += self.drpy*dt
         self.last_time = t
+        
+    def estimate_x_com(self, t):
+        '''return estimated x aussuming the velocity does not change'''
+        return self.x_com + (t - self.last_time)
     

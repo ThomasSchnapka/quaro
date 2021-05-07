@@ -134,15 +134,15 @@ class UserInterface:
         print(f"support_ratio: {self.state.support_ratio}".ljust(30),
               f"phase:         {self.state.phase}")
         print(f"cycle_time:    {self.state.cycle_time}".ljust(30),
-              f"velocity:      {self.state.velocity}")
+              f"velocity:      {self.state.dx_com}")
         print(f"stab'_ratio:   {self.state.stability_ratio}".ljust(30),
               f"rpy:           {self.state.rpy}")
         print(f"op'_hight:     {self.state.operating_hight}".ljust(30),
               f"true_com:      {self.state.true_com}")
         print(f"shoulder_dis': {self.state.correct_shoulder_displacement}".ljust(30),
-              f"swing_h'_fact':{self.state.swing_hight_factor}")
+              f"swing_h'_fact':")
         print(f"server_status':{self.state.enable_server_loop}".ljust(30),
-              f"ang'_velocity':{self.state.angular_velocity}")
+              f"ang'_velocity':{self.state.drpy}")
         print(f"stab'_ampl':   {self.state.stability_amplitude}".ljust(30))
         print("--------------------------------------------------------------")
             

@@ -4,6 +4,7 @@ import numpy as np
 from .GaitController import GaitController
 from .TransitionController import TransitionController
 from .InclinationController import InclinationController
+from .ContactSensor import ContactSensor
 from . import calibration
 from . import demo
 
@@ -21,7 +22,9 @@ class Controller:
         self.hardware_interface = hardware_interface
         self.hardware_config = hardware_config
         
-        self.gait_controller = GaitController(state, hardware_config)
+        self.contact_sensor = ContactSensor()
+        self.gait_controller = GaitController(state, hardware_config, 
+                                              self.contact_sensor)
         self.transition_controller = TransitionController(state, self, 
                                                           hardware_config)
         self.inclination_controller = InclinationController(state,
@@ -77,14 +80,13 @@ class Controller:
         '''
         coordinates = np.copy(coordinates)
         self.state.rpy = rpy
-        
         # correct coordinates
         self.state.uncorrected_foot_position = np.copy(coordinates)
         coordinates += self.correct_shoulder_displacement()
         coordinates += self.state.true_com[:, np.newaxis]
         if self.state.enable_inclination_controller:
             coordinates = self.inclination_controller.correct_inclination(coordinates)
-        
+
         # inverse kinematics
         angle = self.hardware_config.inverse_kinematics(coordinates, rpy, rotation_center)
         
@@ -94,11 +96,13 @@ class Controller:
         self.state.absolute_foot_position = coordinates
         self.set_leg_angle(angle)
         
+        
     def set_leg_angle(self, angle):
         '''check and save angles to hardware interface'''
         angle += self.hardware_config.zero_pos
         angle = self.sanity_check_angle(angle)
         self.hardware_interface.send_angle(angle)
+        
         
     def sanity_check_angle(self, angle):
         '''check if angles can be used without flaws and limit them'''

@@ -30,12 +30,12 @@ class HardwareConfig:
     def __init__(self):
         
         ## Geometric definitions (in mm)
-        self.a = 186     # body length
-        self.b = 78      # body width
-        self.h = 11      # vertical shoulder displacement
-        self.g = 55      # horizontal shoulder displacement
-        self.l1 = 108    # upper leg length
-        self.l2 = 130    # lower leg length
+        self.a = 0.186     # body length
+        self.b = 0.078      # body width
+        self.h = 0.011      # vertical shoulder displacement
+        self.g = 0.055      # horizontal shoulder displacement
+        self.l1 = 0.108    # upper leg length
+        self.l2 = 0.130    # lower leg length
         
         
         self.leg_location = np.array([self.a*0.5*np.array([ 1, 1, -1, -1]),
