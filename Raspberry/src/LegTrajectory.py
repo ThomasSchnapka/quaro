@@ -31,9 +31,6 @@ class LegTrajectory:
          self.contact_sensor = contact_sensor
          self.leg_state = state.leg_state
          
-         # modules
-         self.swingSpline = SwingSpline(state, self.touchdown_pos, self.liftoff_pos)
-         
          # working varables
          self.liftoff_pos   = np.array([[-0.01,-0.01,-0.01,-0.01],
                                         [ 0.0,  0.0,  0.0,  0.0],
@@ -49,6 +46,9 @@ class LegTrajectory:
          # finite state machine
          self.fsm = np.zeros(4)         
          self.fsm_last = np.zeros(4)
+         
+          # modules
+         self.swingSpline = SwingSpline(state, self.touchdown_pos, self.liftoff_pos)
          
          
     def get_leg_position(self, t):

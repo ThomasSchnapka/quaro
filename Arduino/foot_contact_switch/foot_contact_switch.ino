@@ -23,6 +23,8 @@
 
 */
 #include "PredictiveFilter.h"
+#include <Wire.h>
+#define I2C_ADDRESS 0x8
 
 // Hardware setup
 const int analog_pins[] = {A3, A2, A1, A0};
@@ -52,6 +54,9 @@ void setup() {
   }
   pinMode(LED_BUILTIN, OUTPUT);
   setup_lights(4);
+  Wire.begin(I2C_ADDRESS);
+  Wire.onRequest(requestEvent);
+  //Wire.onReceive(receiveEvent);
 }
 
 void loop() {
@@ -59,7 +64,7 @@ void loop() {
     for (int i = 0; i < 4; i++) {
       get_legstate(i);
     }
-    print_status();
+    //print_status();
     last_time = millis();
     // using internal LED
     digitalWrite(LED_BUILTIN, (leg_state[0] || leg_state[1] || leg_state[2] || leg_state[3]));
@@ -100,4 +105,16 @@ void setup_lights(int cycles){
     }
   }
 }
+
+void requestEvent(){
+  // send leg_state via I2C
+  // leg_state is converted to byte
+  byte msg = leg_state[0] | (leg_state[1] << 1) | (leg_state[2] << 2) | (leg_state[3] << 3);
+  Wire.write(msg);
+}
+
+// currently unused
+//void receiveEvents(int numBytes){  
+//  n = Wire.read();
+//}
 
