@@ -89,9 +89,9 @@ class UserInterface:
             if parameter in ["support_ratio", "sr", "spr"]:
                 self.state.support_ratio = float(value)
             elif parameter in ["velocity_x", "vx"]:
-                self.state.velocity[0] = float(value)
+                self.state.dx_com[0] = float(value)
             elif parameter in ["velocity_y", "vy"]:
-                self.state.velocity[1] = float(value)
+                self.state.dx_com[1] = float(value)
             elif parameter in ["cycle_time", "ct"]:
                 self.state.cycle_time = float(value)
             elif parameter in ["stability_ratio", "str"]:
@@ -115,7 +115,7 @@ class UserInterface:
             elif parameter in ["true_com_y", "tcy"]:
                 self.state.true_com[1] = float(value)
             elif parameter in ["angular_velocity", "av"]:
-                self.state.angular_velocity = float(value)
+                self.state.drpy[2] = float(value)
             else:
                 print(f"[UserInterface] could not match {parameter}:{value}")
                 print("Use 'h' to show available parameters")
@@ -135,7 +135,7 @@ class UserInterface:
               f"phase:         {self.state.phase}")
         print(f"cycle_time:    {self.state.cycle_time}".ljust(30),
               f"velocity:      {self.state.dx_com}")
-        print(f"stab'_ratio:   {self.state.stability_ratio}".ljust(30),
+        print(f"stab'_ratio:   ".ljust(30),
               f"rpy:           {self.state.rpy}")
         print(f"op'_hight:     {self.state.operating_hight}".ljust(30),
               f"true_com:      {self.state.true_com}")

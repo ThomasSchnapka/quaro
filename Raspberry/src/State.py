@@ -11,18 +11,18 @@ class State:
         
         # Robot gait
         self.support_ratio = 0.8
-        self.stability_ratio = 0.8
-        self.stability_amplitude = 0.01
-        #self.stability_amplitude = 0
-        self.phase = np.array([0.0, 0.25, 0.75, 0.5])  # walk
-        #self.phase = np.array([0.0, 0.5, 0.5, 0])       # trot
-        self.true_com = np.array([0, 0, 0])
+        #self.stability_ratio = 0.8
+        #self.stability_amplitude = 0.015
+        self.stability_amplitude = 0
+        #self.phase = np.array([0.0, 0.25, 0.75, 0.5])  # walk
+        self.phase = np.array([0.0, 0.5, 0.5, 0])       # trot
+        self.true_com = np.array([-0.01, 0.0, 0.0])
         
         
         # Robot schedule
-        #self.cycle_time       = 3.0   # walk
-        self.cycle_time       = 1.5    # trot
-        self.update_time      = 0.02
+        #self.cycle_time       = 5.0   # walk
+        self.cycle_time       = 2    # trot
+        self.update_time      = 0.001
         self.true_update_time = 0.0
         
         # PID parameters for inclilation control
@@ -43,7 +43,7 @@ class State:
         #self.last_leg_state = np.array([1, 1, 1, 1]).astype(bool)
         self.leg_time  = np.array([  0.0, 0.0, 0.0])
         self.x_com     = np.array([  0.0, 0.0, 0.0]) # COM position
-        self.dx_com    = np.array([ 0.04, 0.0, 0.0]) # COM velocity
+        self.dx_com    = np.array([ 0.02, 0.0, 0.0]) # COM velocity   0.005
         self.rpy       = np.array([  0.0, 0.0, 0.0]) # COM rotation
         self.drpy      = np.array([  0.0, 0.0, 0.0]) # COM rotation velocity
         self.operating_hight = 0.22                  # operation z distance
@@ -53,9 +53,9 @@ class State:
         
         # Robot movement parameters
         #self.z_stride = 0.0       # maximal step height, currently unused
-        self.correct_shoulder_displacement = 1 # 1 = foottip under C0/1
+        self.correct_shoulder_displacement = 0.9 # 1 = foottip under C0/1
                                                # 0 = foottip under C4/5
-        self.swing_hight = 0.03                # z-distance during swing
+        self.swing_hight = 0.025                # z-distance during swing
         #self.swing_hight_factor = 0.95
         
         # Robot location

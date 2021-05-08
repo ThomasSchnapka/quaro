@@ -23,8 +23,7 @@ class Controller:
         self.hardware_config = hardware_config
         
         self.contact_sensor = ContactSensor()
-        self.gait_controller = GaitController(state, hardware_config, 
-                                              self.contact_sensor)
+        self.gait_controller = GaitController(state, self.contact_sensor)
         self.transition_controller = TransitionController(state, self, 
                                                           hardware_config)
         self.inclination_controller = InclinationController(state,
@@ -93,7 +92,7 @@ class Controller:
         # save values in state
         self.state.joint_angle = angle
         self.state.rpy = rpy
-        self.state.absolute_foot_position = coordinates
+        self.state.absolute_foot_position = np.copy(coordinates)
         self.set_leg_angle(angle)
         
         
@@ -111,7 +110,7 @@ class Controller:
             or  np.any(np.abs(angle[1]) > 120)
             or  np.any(np.abs(angle[2]) > 60)
             or  np.any(np.isnan(angle))):
-            print("[controller] bad angle value")
+            print("[controller] bad angle value", self.state.absolute_foot_position)
         ## limits
         # femur
         angle[0][angle[0] >  60] =  60
