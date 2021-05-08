@@ -42,13 +42,10 @@ class GaitController:
         t = self.get_time()
         if t is not None:
             self.comtraj.update_state(t)
-            if t%4 > 0.47 and t%4 < 0.6:
-                self.contact_sensor.leg_state = np.ones(4).astype(bool)
-                print("[GaitController] contact")
-            else:
-                self.contact_sensor.leg_state = np.zeros(4).astype(bool)
             pos = self.leg_trajectory.get_leg_position(t)
-            print(pos[2,:])
+            #pos = self.rotation_controller.rotate(abs_position,
+            #                                      leg_state, leg_time)
+            pos += self.stabilizer.stability_shift(t)
             return pos
         else:
             return None

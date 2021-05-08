@@ -10,10 +10,10 @@ class State:
     def __init__(self):
         
         # Robot gait
-        self.support_ratio = 0.50
-        self.stability_ratio = 0.5
-        #self.stability_amplitude = 15
-        self.stability_amplitude = 0
+        self.support_ratio = 0.8
+        self.stability_ratio = 0.8
+        self.stability_amplitude = 0.01
+        #self.stability_amplitude = 0
         self.phase = np.array([0.0, 0.25, 0.75, 0.5])  # walk
         #self.phase = np.array([0.0, 0.5, 0.5, 0])       # trot
         self.true_com = np.array([0, 0, 0])

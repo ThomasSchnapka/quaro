@@ -88,13 +88,13 @@ class QuaroPlot3D:
                                      leg_points[n,2,:])
             # plot leg numbers
             leg_numbers[n].set_position((edges[0, n], edges[1, n]))
-            leg_numbers[n].set_3d_properties(edges[2, n] - 30)
+            leg_numbers[n].set_3d_properties(edges[2, n] - 0.03)
         
         ## plot stability triangle
         ground_points = leg_points[:,:-1,-1].T
         # points of legs that touch the ground
         lowest_coordinate = np.max(ground_points[-1])
-        leg_on_ground = np.abs(ground_points[2]-lowest_coordinate) < 5 #tolerance
+        leg_on_ground = np.abs(ground_points[2]-lowest_coordinate) < 0.01 #tolerance
         ground_points = ground_points[:, leg_on_ground]
         # check if there is more than one ground points to draw something
         if ground_points.shape[1] > 1:
