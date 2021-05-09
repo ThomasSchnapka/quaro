@@ -10,7 +10,7 @@ class State:
     def __init__(self):
         
         # Robot gait
-        self.support_ratio = 0.8
+        self.support_ratio = 0.7
         #self.stability_ratio = 0.8
         #self.stability_amplitude = 0.015
         self.stability_amplitude = 0
@@ -21,7 +21,7 @@ class State:
         
         # Robot schedule
         #self.cycle_time       = 5.0   # walk
-        self.cycle_time       = 2    # trot
+        self.cycle_time       = 20.0    # trot
         self.update_time      = 0.001
         self.true_update_time = 0.0
         
@@ -43,7 +43,7 @@ class State:
         #self.last_leg_state = np.array([1, 1, 1, 1]).astype(bool)
         self.leg_time  = np.array([  0.0, 0.0, 0.0])
         self.x_com     = np.array([  0.0, 0.0, 0.0]) # COM position
-        self.dx_com    = np.array([ 0.02, 0.0, 0.0]) # COM velocity   0.005
+        self.dx_com    = np.array([ 0.0, 0.0, 0.0]) # COM velocity   0.005
         self.rpy       = np.array([  0.0, 0.0, 0.0]) # COM rotation
         self.drpy      = np.array([  0.0, 0.0, 0.0]) # COM rotation velocity
         self.operating_hight = 0.22                  # operation z distance
