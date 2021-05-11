@@ -4,7 +4,8 @@
 # Variables to control Makefile operation
  
 CC = g++
-CFLAGS = -Wall -g
+# CFLAGS = -Wall -g
+CFLAGS = -g
 INC = -I eigen-3.4-rc1
  
 # ****************************************************
@@ -17,7 +18,7 @@ test.o: test.cpp
 	$(CC) $(CFLAGS) $(INC) -c test.cpp
 
 SwingSpline.o: SwingSpline.cpp
-	$(CC) $(CFLAGS) -c SwingSpline.cpp
+	$(CC) $(CFLAGS) $(INC) -c SwingSpline.cpp
 
 clean:
 	rm -r *.o

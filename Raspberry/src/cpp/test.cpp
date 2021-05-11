@@ -1,18 +1,27 @@
 #include <iostream>
 #include "SwingSpline.h"
-#include <Eigen/Dense>
+#include "Coordinates.h"
+
  
-using Eigen::MatrixXd;
+//using namespace Eigen;
+using namespace std;
 
 int main(){
 	
-	quaro::SwingSpline ss = quaro::SwingSpline();
+	SwingSpline ss = SwingSpline();
 	
 	float t = 0.1;
-	int s = ss.get_leg_position(t);
-	ss.change_spline(0, 0, 0);
+	Coordinates s = ss.get_leg_position(t);
+	//ss.change_spline(0, 0, 0);
 	//int s = 0;
+	cout << s << endl;
+	cout << s(0, 0) << endl;
 	
-	std::cout << s <<" ok";
-	std::cout << std::endl;
+	//Matrix<float, 3, 4> m;
+	//Coordinates m;
+	//m << 0, 0, 0, 0,
+	//	 0, 0, 0, 0,
+	//	 0, 0, 0, 0;
+	
+	//cout << m << endl;
 }

@@ -1,9 +1,12 @@
+''' "Python header" for SwingSpline.h'''
+
+from Coordinates_py cimport Coordinates
+
 cdef extern from "SwingSpline.cpp": # tell cython that this is the source
     pass
 
-# Declare the class with cdef
-cdef extern from "SwingSpline.h" namespace "quaro":
+cdef extern from "SwingSpline.h":
     cdef cppclass SwingSpline:
         SwingSpline() except +
-        int get_leg_position(float t)
+        Coordinates get_leg_position(float t)
         void change_spline(int, int, int)
