@@ -10,14 +10,13 @@
 SingleLegTrajectory::SingleLegTrajectory(State* pstate,
 										 COMTrajectory* pcomtrajectory,
 										 int pnum) 
-										 : swingspline(pstate)
+										 : swingspline(pstate, pcomtrajectory)
 										 {
 	state = pstate;
 	comtrajectory = pcomtrajectory;
 	num = pnum;
 	
 	liftoff_pos << 0, 0, 0;
-	touchdown_pos << 0, 0, 0;
 	current_pos << 0, 0, 0;
 	com_at_touchdown << 0, 0, 0;
 	fsm = 0;
@@ -34,16 +33,19 @@ Coordinate SingleLegTrajectory::get_leg_position(float t) {
 	float tn = std::fmodf((t+state->phase(num)), 1.0);
 	update_fsm(tn);
 	
-	Coordinate c;
+	
 	// retrieve current leg position depending on state
+	Coordinate c;
 	if(fsm==0){
 		c = comtrajectory->x_com;		// subtraction in a single line results in a compilation error
 		c -= com_at_touchdown;
 	}else{
 		c = swingspline.get_leg_position(tn);
 	}
+	current_pos = c;
 	return c;
 }
+
 
 void SingleLegTrajectory::update_fsm(float tn){
 	// see doc for finite statemachine
@@ -61,6 +63,7 @@ void SingleLegTrajectory::update_fsm(float tn){
 		update_touchdown_pos();
 	}
 }
+
 
 void SingleLegTrajectory::update_touchdown_pos(){
 	// save COM position as leg touches ground

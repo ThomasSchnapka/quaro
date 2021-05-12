@@ -11,7 +11,7 @@ using namespace std;
 int main(){
 	
 	State state;
-	COMTrajectory comtrajectory;
+	COMTrajectory comtrajectory(&state);
 	LegTrajectory ss = LegTrajectory(&state, &comtrajectory);
 	
 	float t = 0.1;

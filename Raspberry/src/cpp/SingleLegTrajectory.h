@@ -14,7 +14,6 @@ class SingleLegTrajectory {
 		Coordinate get_leg_position(float t);
 		
 		Coordinate liftoff_pos;
-		Coordinate touchdown_pos;
 		Coordinate current_pos;
 		Coordinate com_at_touchdown;
 		

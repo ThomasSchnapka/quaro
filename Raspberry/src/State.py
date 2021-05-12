@@ -10,7 +10,7 @@ class State:
     def __init__(self):
         
         # Robot gait
-        self.support_ratio = 0.7
+        self.support_ratio = 0.8
         #self.stability_ratio = 0.8
         #self.stability_amplitude = 0.015
         self.stability_amplitude = 0
@@ -21,7 +21,7 @@ class State:
         
         # Robot schedule
         #self.cycle_time       = 5.0   # walk
-        self.cycle_time       = 20.0    # trot
+        self.cycle_time       = 1.5    # trot
         self.update_time      = 0.001
         self.true_update_time = 0.0
         

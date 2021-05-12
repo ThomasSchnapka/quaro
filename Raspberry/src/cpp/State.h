@@ -13,6 +13,7 @@ class State {
 		float support_ratio;
 		float support_midpoint;
 		float swing_hight;
+		int cycle_time;
 		Vector4f phase;
 		
 };

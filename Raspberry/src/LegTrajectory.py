@@ -12,9 +12,10 @@ TODO:
 """
 
 import numpy as np
-from .SwingSpline import SwingSpline
+from .cpp.gen_ssp import SwingSpline_py
 from .COMTrajectory import COMTrajectory
 from .ContactSensor import ContactSensor
+
 
 
 
@@ -41,7 +42,8 @@ class LegTrajectory:
          self.fsm_last = np.zeros(4)
          
           # modules
-         self.swingSpline = SwingSpline(self.state, self.comtraj, self.liftoff_pos, 0)
+         #self.swingSpline = SwingSpline(self.state, self.comtraj, self.liftoff_pos, 0)
+         self.swingSpline = SwingSpline_py()
          
          
          
@@ -73,7 +75,6 @@ class LegTrajectory:
         self.current_position = np.copy(pos)
         
         return pos
-    
     
     def update_statemachine(self, fsm, t_n):
         '''see doc for finite statemachine
@@ -120,16 +121,17 @@ class LegTrajectory:
         diff = (self.comtraj.get_stab_com() - self.com_at_touchdown)
         pos = self.touchdown_pos - diff
         return pos
-    
         
     def get_position_swing(self, t_n):
         '''returns 3x4 array with leg positions at time t (normalized, 1x4) in swing'''
         # when moving downwards, check foot contact switch and set touchdown pos
-        pos = self.swingSpline.get_leg_position(t_n)
+        a = self.swingSpline.get_leg_position(0.0)
+        pos = np.ones((3,4))
         return pos
         
     
     def create_new_swing_splines(self, swing_new, t):
         '''changes spline representing swing trajectory'''
-        self.touchdown_pos[:,swing_new] = self.swingSpline.change_spline(swing_new, self.liftoff_pos, t)
+        self.swingSpline.change_spline(0, 0, 0)
+        self.touchdown_pos[:,swing_new] = np.zeros((3,4))[:,swing_new]
         

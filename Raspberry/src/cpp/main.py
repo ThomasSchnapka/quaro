@@ -1,5 +1,5 @@
-import SwingSpline_py
+from LegTrajectory_py import LegTrajectory_py
 
-ssp = SwingSpline_py.SwingSpline_py()
+lt = LegTrajectory_py()
 
-print(ssp.get_leg_position(0.0))
+print(lt.get_leg_position(0.5))

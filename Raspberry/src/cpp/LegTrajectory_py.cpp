@@ -4,21 +4,27 @@
 {
     "distutils": {
         "depends": [
+            "COMTrajectory.cpp",
+            "COMTrajectory.h",
             "Coordinates.h",
-            "SwingSpline.cpp",
-            "SwingSpline.h"
+            "LegTrajectory.cpp",
+            "LegTrajectory.h",
+            "State.cpp",
+            "State.h"
         ],
         "include_dirs": [
-            "eigen-3.4-rc1",
-            "."
+            ".",
+            "eigen-3.4-rc1"
         ],
         "language": "c++",
-        "name": "SwingSpline_py",
+        "name": "LegTrajectory_py",
         "sources": [
-            "SwingSpline_py.pyx"
+            "LegTrajectory_py.pyx",
+            "SingleLegTrajectory.cpp",
+            "SwingSpline.cpp"
         ]
     },
-    "module_name": "SwingSpline_py"
+    "module_name": "LegTrajectory_py"
 }
 END: Cython Metadata */
 
@@ -638,16 +644,20 @@ static CYTHON_INLINE float __PYX_NAN() {
   #endif
 #endif
 
-#define __PYX_HAVE__SwingSpline_py
-#define __PYX_HAVE_API__SwingSpline_py
+#define __PYX_HAVE__LegTrajectory_py
+#define __PYX_HAVE_API__LegTrajectory_py
 /* Early includes */
 #include "ios"
 #include "new"
 #include "stdexcept"
 #include "typeinfo"
 #include "Coordinates.h"
-#include "SwingSpline.cpp"
-#include "SwingSpline.h"
+#include "State.cpp"
+#include "State.h"
+#include "COMTrajectory.cpp"
+#include "COMTrajectory.h"
+#include "LegTrajectory.cpp"
+#include "LegTrajectory.h"
 #ifdef _OPENMP
 #include <omp.h>
 #endif /* _OPENMP */
@@ -856,23 +866,25 @@ static const char *__pyx_filename;
 
 
 static const char *__pyx_f[] = {
-  "SwingSpline_py.pyx",
+  "LegTrajectory_py.pyx",
   "stringsource",
 };
 
 /*--- Type declarations ---*/
-struct __pyx_obj_14SwingSpline_py_SwingSpline_py;
+struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py;
 
-/* "SwingSpline_py.pyx":12
+/* "LegTrajectory_py.pyx":10
  * # as an attribute and create a bunch of forwarding methods
  * # Python extension type.
- * cdef class SwingSpline_py:             # <<<<<<<<<<<<<<
- *     cdef SwingSpline ssp # Hold a C++ instance which we're wrapping
- * 
+ * cdef class LegTrajectory_py:             # <<<<<<<<<<<<<<
+ *     #cdef LegTrajectory(State*, COMTrajectory*) lt# Hold a C++ instance which we're wrapping
+ *     #the following classes do not have nullary constructors, so we have to manually allocate them
  */
-struct __pyx_obj_14SwingSpline_py_SwingSpline_py {
+struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py {
   PyObject_HEAD
-  SwingSpline ssp;
+  State st;
+  COMTrajectory *ct;
+  LegTrajectory *lt;
 };
 
 
@@ -1052,14 +1064,6 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_CallMethO(PyObject *func, PyObject
 /* PyObjectCallOneArg.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyObject_CallOneArg(PyObject *func, PyObject *arg);
 
-/* RaiseDoubleKeywords.proto */
-static void __Pyx_RaiseDoubleKeywordsError(const char* func_name, PyObject* kw_name);
-
-/* ParseKeywords.proto */
-static int __Pyx_ParseOptionalKeywords(PyObject *kwds, PyObject **argnames[],\
-    PyObject *kwds2, PyObject *values[], Py_ssize_t num_pos_args,\
-    const char* function_name);
-
 /* PyThreadStateGet.proto */
 #if CYTHON_FAST_THREAD_STATE
 #define __Pyx_PyThreadState_declare  PyThreadState *__pyx_tstate;
@@ -1235,18 +1239,21 @@ static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
 /* Module declarations from 'Coordinates_py' */
 
-/* Module declarations from 'SwingSpline' */
+/* Module declarations from 'State' */
 
-/* Module declarations from 'SwingSpline_py' */
-static PyTypeObject *__pyx_ptype_14SwingSpline_py_SwingSpline_py = 0;
-#define __Pyx_MODULE_NAME "SwingSpline_py"
-extern int __pyx_module_is_main_SwingSpline_py;
-int __pyx_module_is_main_SwingSpline_py = 0;
+/* Module declarations from 'COMTrajectory_py' */
 
-/* Implementation of 'SwingSpline_py' */
+/* Module declarations from 'State_py' */
+
+/* Module declarations from 'LegTrajectory_py' */
+static PyTypeObject *__pyx_ptype_16LegTrajectory_py_LegTrajectory_py = 0;
+#define __Pyx_MODULE_NAME "LegTrajectory_py"
+extern int __pyx_module_is_main_LegTrajectory_py;
+int __pyx_module_is_main_LegTrajectory_py = 0;
+
+/* Implementation of 'LegTrajectory_py' */
 static PyObject *__pyx_builtin_range;
 static PyObject *__pyx_builtin_TypeError;
-static const char __pyx_k_t[] = "t";
 static const char __pyx_k_np[] = "np";
 static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_name[] = "__name__";
@@ -1260,19 +1267,16 @@ static const char __pyx_k_getstate[] = "__getstate__";
 static const char __pyx_k_setstate[] = "__setstate__";
 static const char __pyx_k_TypeError[] = "TypeError";
 static const char __pyx_k_reduce_ex[] = "__reduce_ex__";
-static const char __pyx_k_liftoff_pos[] = "liftoff_pos";
 static const char __pyx_k_reduce_cython[] = "__reduce_cython__";
-static const char __pyx_k_to_be_changed[] = "to_be_changed";
-static const char __pyx_k_SwingSpline_py[] = "SwingSpline_py";
 static const char __pyx_k_setstate_cython[] = "__setstate_cython__";
+static const char __pyx_k_LegTrajectory_py[] = "LegTrajectory_py";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
 static const char __pyx_k_no_default___reduce___due_to_non[] = "no default __reduce__ due to non-trivial __cinit__";
-static PyObject *__pyx_n_s_SwingSpline_py;
+static PyObject *__pyx_n_s_LegTrajectory_py;
 static PyObject *__pyx_n_s_TypeError;
 static PyObject *__pyx_n_s_cline_in_traceback;
 static PyObject *__pyx_n_s_getstate;
 static PyObject *__pyx_n_s_import;
-static PyObject *__pyx_n_s_liftoff_pos;
 static PyObject *__pyx_n_s_main;
 static PyObject *__pyx_n_s_name;
 static PyObject *__pyx_kp_s_no_default___reduce___due_to_non;
@@ -1284,16 +1288,14 @@ static PyObject *__pyx_n_s_reduce_cython;
 static PyObject *__pyx_n_s_reduce_ex;
 static PyObject *__pyx_n_s_setstate;
 static PyObject *__pyx_n_s_setstate_cython;
-static PyObject *__pyx_n_s_t;
 static PyObject *__pyx_n_s_test;
-static PyObject *__pyx_n_s_to_be_changed;
 static PyObject *__pyx_n_s_zeros;
-static int __pyx_pf_14SwingSpline_py_14SwingSpline_py___cinit__(struct __pyx_obj_14SwingSpline_py_SwingSpline_py *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_14SwingSpline_py_14SwingSpline_py_2get_leg_position(struct __pyx_obj_14SwingSpline_py_SwingSpline_py *__pyx_v_self, float __pyx_v_t); /* proto */
-static PyObject *__pyx_pf_14SwingSpline_py_14SwingSpline_py_4change_spline(struct __pyx_obj_14SwingSpline_py_SwingSpline_py *__pyx_v_self, int __pyx_v_to_be_changed, int __pyx_v_liftoff_pos, int __pyx_v_t); /* proto */
-static PyObject *__pyx_pf_14SwingSpline_py_14SwingSpline_py_6__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_14SwingSpline_py_SwingSpline_py *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_14SwingSpline_py_14SwingSpline_py_8__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_14SwingSpline_py_SwingSpline_py *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_tp_new_14SwingSpline_py_SwingSpline_py(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static int __pyx_pf_16LegTrajectory_py_16LegTrajectory_py___cinit__(struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_2get_leg_position(struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self, float __pyx_v_t); /* proto */
+static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_4update_com(struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self, float __pyx_v_t); /* proto */
+static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_6__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_8__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_tp_new_16LegTrajectory_py_LegTrajectory_py(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_int_3;
 static PyObject *__pyx_int_4;
 static PyObject *__pyx_tuple_;
@@ -1301,84 +1303,116 @@ static PyObject *__pyx_tuple__2;
 static PyObject *__pyx_tuple__3;
 /* Late includes */
 
-/* "SwingSpline_py.pyx":15
- *     cdef SwingSpline ssp # Hold a C++ instance which we're wrapping
+/* "LegTrajectory_py.pyx":17
+ *     cdef LegTrajectory* lt
  * 
  *     def __cinit__(self):             # <<<<<<<<<<<<<<
- *         self.ssp = SwingSpline()
- * 
+ *         self.st = State()
+ *         self.ct = new COMTrajectory(&self.st)
  */
 
 /* Python wrapper */
-static int __pyx_pw_14SwingSpline_py_14SwingSpline_py_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_pw_14SwingSpline_py_14SwingSpline_py_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static int __pyx_pw_16LegTrajectory_py_16LegTrajectory_py_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_pw_16LegTrajectory_py_16LegTrajectory_py_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__cinit__ (wrapper)", 0);
   if (unlikely(PyTuple_GET_SIZE(__pyx_args) > 0)) {
     __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 0, 0, PyTuple_GET_SIZE(__pyx_args)); return -1;}
   if (unlikely(__pyx_kwds) && unlikely(PyDict_Size(__pyx_kwds) > 0) && unlikely(!__Pyx_CheckKeywordStrings(__pyx_kwds, "__cinit__", 0))) return -1;
-  __pyx_r = __pyx_pf_14SwingSpline_py_14SwingSpline_py___cinit__(((struct __pyx_obj_14SwingSpline_py_SwingSpline_py *)__pyx_v_self));
+  __pyx_r = __pyx_pf_16LegTrajectory_py_16LegTrajectory_py___cinit__(((struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_14SwingSpline_py_14SwingSpline_py___cinit__(struct __pyx_obj_14SwingSpline_py_SwingSpline_py *__pyx_v_self) {
+static int __pyx_pf_16LegTrajectory_py_16LegTrajectory_py___cinit__(struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
-  SwingSpline __pyx_t_1;
+  State __pyx_t_1;
+  COMTrajectory *__pyx_t_2;
+  LegTrajectory *__pyx_t_3;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__cinit__", 0);
 
-  /* "SwingSpline_py.pyx":16
+  /* "LegTrajectory_py.pyx":18
  * 
  *     def __cinit__(self):
- *         self.ssp = SwingSpline()             # <<<<<<<<<<<<<<
- * 
+ *         self.st = State()             # <<<<<<<<<<<<<<
+ *         self.ct = new COMTrajectory(&self.st)
+ *         self.lt = new LegTrajectory(&self.st, self.ct)
+ */
+  try {
+    __pyx_t_1 = State();
+  } catch(...) {
+    __Pyx_CppExn2PyErr();
+    __PYX_ERR(0, 18, __pyx_L1_error)
+  }
+  __pyx_v_self->st = __pyx_t_1;
+
+  /* "LegTrajectory_py.pyx":19
+ *     def __cinit__(self):
+ *         self.st = State()
+ *         self.ct = new COMTrajectory(&self.st)             # <<<<<<<<<<<<<<
+ *         self.lt = new LegTrajectory(&self.st, self.ct)
  * 
  */
   try {
-    __pyx_t_1 = SwingSpline();
+    __pyx_t_2 = new COMTrajectory(((State *)(&__pyx_v_self->st)));
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    __PYX_ERR(0, 16, __pyx_L1_error)
+    __PYX_ERR(0, 19, __pyx_L1_error)
   }
-  __pyx_v_self->ssp = __pyx_t_1;
+  __pyx_v_self->ct = __pyx_t_2;
 
-  /* "SwingSpline_py.pyx":15
- *     cdef SwingSpline ssp # Hold a C++ instance which we're wrapping
+  /* "LegTrajectory_py.pyx":20
+ *         self.st = State()
+ *         self.ct = new COMTrajectory(&self.st)
+ *         self.lt = new LegTrajectory(&self.st, self.ct)             # <<<<<<<<<<<<<<
+ * 
+ *     def get_leg_position(self, float t):
+ */
+  try {
+    __pyx_t_3 = new LegTrajectory(((State *)(&__pyx_v_self->st)), __pyx_v_self->ct);
+  } catch(...) {
+    __Pyx_CppExn2PyErr();
+    __PYX_ERR(0, 20, __pyx_L1_error)
+  }
+  __pyx_v_self->lt = __pyx_t_3;
+
+  /* "LegTrajectory_py.pyx":17
+ *     cdef LegTrajectory* lt
  * 
  *     def __cinit__(self):             # <<<<<<<<<<<<<<
- *         self.ssp = SwingSpline()
- * 
+ *         self.st = State()
+ *         self.ct = new COMTrajectory(&self.st)
  */
 
   /* function exit code */
   __pyx_r = 0;
   goto __pyx_L0;
   __pyx_L1_error:;
-  __Pyx_AddTraceback("SwingSpline_py.SwingSpline_py.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("LegTrajectory_py.LegTrajectory_py.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "SwingSpline_py.pyx":19
- * 
+/* "LegTrajectory_py.pyx":22
+ *         self.lt = new LegTrajectory(&self.st, self.ct)
  * 
  *     def get_leg_position(self, float t):             # <<<<<<<<<<<<<<
- *         cdef Coordinates inp = self.ssp.get_leg_position(t)
+ *         cdef Coordinates inp = self.lt.get_leg_position(t)
  *         cdef int i, j
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_14SwingSpline_py_14SwingSpline_py_3get_leg_position(PyObject *__pyx_v_self, PyObject *__pyx_arg_t); /*proto*/
-static PyObject *__pyx_pw_14SwingSpline_py_14SwingSpline_py_3get_leg_position(PyObject *__pyx_v_self, PyObject *__pyx_arg_t) {
+static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_3get_leg_position(PyObject *__pyx_v_self, PyObject *__pyx_arg_t); /*proto*/
+static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_3get_leg_position(PyObject *__pyx_v_self, PyObject *__pyx_arg_t) {
   float __pyx_v_t;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -1387,22 +1421,22 @@ static PyObject *__pyx_pw_14SwingSpline_py_14SwingSpline_py_3get_leg_position(Py
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("get_leg_position (wrapper)", 0);
   assert(__pyx_arg_t); {
-    __pyx_v_t = __pyx_PyFloat_AsFloat(__pyx_arg_t); if (unlikely((__pyx_v_t == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 19, __pyx_L3_error)
+    __pyx_v_t = __pyx_PyFloat_AsFloat(__pyx_arg_t); if (unlikely((__pyx_v_t == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 22, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
-  __Pyx_AddTraceback("SwingSpline_py.SwingSpline_py.get_leg_position", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("LegTrajectory_py.LegTrajectory_py.get_leg_position", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_14SwingSpline_py_14SwingSpline_py_2get_leg_position(((struct __pyx_obj_14SwingSpline_py_SwingSpline_py *)__pyx_v_self), ((float)__pyx_v_t));
+  __pyx_r = __pyx_pf_16LegTrajectory_py_16LegTrajectory_py_2get_leg_position(((struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *)__pyx_v_self), ((float)__pyx_v_t));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_14SwingSpline_py_14SwingSpline_py_2get_leg_position(struct __pyx_obj_14SwingSpline_py_SwingSpline_py *__pyx_v_self, float __pyx_v_t) {
+static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_2get_leg_position(struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self, float __pyx_v_t) {
   Coordinates __pyx_v_inp;
   int __pyx_v_i;
   int __pyx_v_j;
@@ -1420,25 +1454,25 @@ static PyObject *__pyx_pf_14SwingSpline_py_14SwingSpline_py_2get_leg_position(st
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("get_leg_position", 0);
 
-  /* "SwingSpline_py.pyx":20
+  /* "LegTrajectory_py.pyx":23
  * 
  *     def get_leg_position(self, float t):
- *         cdef Coordinates inp = self.ssp.get_leg_position(t)             # <<<<<<<<<<<<<<
+ *         cdef Coordinates inp = self.lt.get_leg_position(t)             # <<<<<<<<<<<<<<
  *         cdef int i, j
  * 
  */
-  __pyx_v_inp = __pyx_v_self->ssp.get_leg_position(__pyx_v_t);
+  __pyx_v_inp = __pyx_v_self->lt->get_leg_position(__pyx_v_t);
 
-  /* "SwingSpline_py.pyx":23
+  /* "LegTrajectory_py.pyx":26
  *         cdef int i, j
  * 
  *         out = np.zeros((3,4))             # <<<<<<<<<<<<<<
  *         for i in range(3):
  *             for j in range(4):
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 26, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 26, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -1453,13 +1487,13 @@ static PyObject *__pyx_pf_14SwingSpline_py_14SwingSpline_py_2get_leg_position(st
   }
   __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_2, __pyx_tuple_) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_tuple_);
   __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 23, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 26, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_out = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "SwingSpline_py.pyx":24
+  /* "LegTrajectory_py.pyx":27
  * 
  *         out = np.zeros((3,4))
  *         for i in range(3):             # <<<<<<<<<<<<<<
@@ -1469,7 +1503,7 @@ static PyObject *__pyx_pf_14SwingSpline_py_14SwingSpline_py_2get_leg_position(st
   for (__pyx_t_4 = 0; __pyx_t_4 < 3; __pyx_t_4+=1) {
     __pyx_v_i = __pyx_t_4;
 
-    /* "SwingSpline_py.pyx":25
+    /* "LegTrajectory_py.pyx":28
  *         out = np.zeros((3,4))
  *         for i in range(3):
  *             for j in range(4):             # <<<<<<<<<<<<<<
@@ -1479,20 +1513,20 @@ static PyObject *__pyx_pf_14SwingSpline_py_14SwingSpline_py_2get_leg_position(st
     for (__pyx_t_5 = 0; __pyx_t_5 < 4; __pyx_t_5+=1) {
       __pyx_v_j = __pyx_t_5;
 
-      /* "SwingSpline_py.pyx":26
+      /* "LegTrajectory_py.pyx":29
  *         for i in range(3):
  *             for j in range(4):
  *                 out[i, j] = inp(i, j)             # <<<<<<<<<<<<<<
  *         return out
  * 
  */
-      __pyx_t_1 = PyFloat_FromDouble(__pyx_v_inp(__pyx_v_i, __pyx_v_j)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 26, __pyx_L1_error)
+      __pyx_t_1 = PyFloat_FromDouble(__pyx_v_inp(__pyx_v_i, __pyx_v_j)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 29, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_i); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 26, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_i); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 29, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_j); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 26, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_j); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 29, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 26, __pyx_L1_error)
+      __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 29, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_GIVEREF(__pyx_t_3);
       PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_3);
@@ -1500,29 +1534,29 @@ static PyObject *__pyx_pf_14SwingSpline_py_14SwingSpline_py_2get_leg_position(st
       PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_t_2);
       __pyx_t_3 = 0;
       __pyx_t_2 = 0;
-      if (unlikely(PyObject_SetItem(__pyx_v_out, __pyx_t_6, __pyx_t_1) < 0)) __PYX_ERR(0, 26, __pyx_L1_error)
+      if (unlikely(PyObject_SetItem(__pyx_v_out, __pyx_t_6, __pyx_t_1) < 0)) __PYX_ERR(0, 29, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     }
   }
 
-  /* "SwingSpline_py.pyx":27
+  /* "LegTrajectory_py.pyx":30
  *             for j in range(4):
  *                 out[i, j] = inp(i, j)
  *         return out             # <<<<<<<<<<<<<<
  * 
- * 
+ *     def update_com(self, float t):
  */
   __Pyx_XDECREF(__pyx_r);
   __Pyx_INCREF(__pyx_v_out);
   __pyx_r = __pyx_v_out;
   goto __pyx_L0;
 
-  /* "SwingSpline_py.pyx":19
- * 
+  /* "LegTrajectory_py.pyx":22
+ *         self.lt = new LegTrajectory(&self.st, self.ct)
  * 
  *     def get_leg_position(self, float t):             # <<<<<<<<<<<<<<
- *         cdef Coordinates inp = self.ssp.get_leg_position(t)
+ *         cdef Coordinates inp = self.lt.get_leg_position(t)
  *         cdef int i, j
  */
 
@@ -1532,7 +1566,7 @@ static PyObject *__pyx_pf_14SwingSpline_py_14SwingSpline_py_2get_leg_position(st
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_6);
-  __Pyx_AddTraceback("SwingSpline_py.SwingSpline_py.get_leg_position", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("LegTrajectory_py.LegTrajectory_py.get_leg_position", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_out);
@@ -1541,122 +1575,63 @@ static PyObject *__pyx_pf_14SwingSpline_py_14SwingSpline_py_2get_leg_position(st
   return __pyx_r;
 }
 
-/* "SwingSpline_py.pyx":30
+/* "LegTrajectory_py.pyx":32
+ *         return out
  * 
- * 
- *     def change_spline(self, int to_be_changed, int liftoff_pos, int t):             # <<<<<<<<<<<<<<
- *         return self.ssp.change_spline(to_be_changed, liftoff_pos, t)
+ *     def update_com(self, float t):             # <<<<<<<<<<<<<<
+ *         '''helper to update COM position to avoid linking an outside COM trajectory
+ *         object with leg trajectory'''
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_14SwingSpline_py_14SwingSpline_py_5change_spline(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_pw_14SwingSpline_py_14SwingSpline_py_5change_spline(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
-  int __pyx_v_to_be_changed;
-  int __pyx_v_liftoff_pos;
-  int __pyx_v_t;
+static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_5update_com(PyObject *__pyx_v_self, PyObject *__pyx_arg_t); /*proto*/
+static char __pyx_doc_16LegTrajectory_py_16LegTrajectory_py_4update_com[] = "helper to update COM position to avoid linking an outside COM trajectory\n        object with leg trajectory";
+static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_5update_com(PyObject *__pyx_v_self, PyObject *__pyx_arg_t) {
+  float __pyx_v_t;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("change_spline (wrapper)", 0);
-  {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_to_be_changed,&__pyx_n_s_liftoff_pos,&__pyx_n_s_t,0};
-    PyObject* values[3] = {0,0,0};
-    if (unlikely(__pyx_kwds)) {
-      Py_ssize_t kw_args;
-      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
-      switch (pos_args) {
-        case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
-        CYTHON_FALLTHROUGH;
-        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
-        CYTHON_FALLTHROUGH;
-        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
-        CYTHON_FALLTHROUGH;
-        case  0: break;
-        default: goto __pyx_L5_argtuple_error;
-      }
-      kw_args = PyDict_Size(__pyx_kwds);
-      switch (pos_args) {
-        case  0:
-        if (likely((values[0] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_to_be_changed)) != 0)) kw_args--;
-        else goto __pyx_L5_argtuple_error;
-        CYTHON_FALLTHROUGH;
-        case  1:
-        if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_liftoff_pos)) != 0)) kw_args--;
-        else {
-          __Pyx_RaiseArgtupleInvalid("change_spline", 1, 3, 3, 1); __PYX_ERR(0, 30, __pyx_L3_error)
-        }
-        CYTHON_FALLTHROUGH;
-        case  2:
-        if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_t)) != 0)) kw_args--;
-        else {
-          __Pyx_RaiseArgtupleInvalid("change_spline", 1, 3, 3, 2); __PYX_ERR(0, 30, __pyx_L3_error)
-        }
-      }
-      if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "change_spline") < 0)) __PYX_ERR(0, 30, __pyx_L3_error)
-      }
-    } else if (PyTuple_GET_SIZE(__pyx_args) != 3) {
-      goto __pyx_L5_argtuple_error;
-    } else {
-      values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
-      values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
-      values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
-    }
-    __pyx_v_to_be_changed = __Pyx_PyInt_As_int(values[0]); if (unlikely((__pyx_v_to_be_changed == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 30, __pyx_L3_error)
-    __pyx_v_liftoff_pos = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_liftoff_pos == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 30, __pyx_L3_error)
-    __pyx_v_t = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_t == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 30, __pyx_L3_error)
+  __Pyx_RefNannySetupContext("update_com (wrapper)", 0);
+  assert(__pyx_arg_t); {
+    __pyx_v_t = __pyx_PyFloat_AsFloat(__pyx_arg_t); if (unlikely((__pyx_v_t == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 32, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
-  __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("change_spline", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 30, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("SwingSpline_py.SwingSpline_py.change_spline", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("LegTrajectory_py.LegTrajectory_py.update_com", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_14SwingSpline_py_14SwingSpline_py_4change_spline(((struct __pyx_obj_14SwingSpline_py_SwingSpline_py *)__pyx_v_self), __pyx_v_to_be_changed, __pyx_v_liftoff_pos, __pyx_v_t);
+  __pyx_r = __pyx_pf_16LegTrajectory_py_16LegTrajectory_py_4update_com(((struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *)__pyx_v_self), ((float)__pyx_v_t));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_14SwingSpline_py_14SwingSpline_py_4change_spline(struct __pyx_obj_14SwingSpline_py_SwingSpline_py *__pyx_v_self, int __pyx_v_to_be_changed, int __pyx_v_liftoff_pos, int __pyx_v_t) {
+static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_4update_com(struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self, float __pyx_v_t) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("change_spline", 0);
+  __Pyx_RefNannySetupContext("update_com", 0);
 
-  /* "SwingSpline_py.pyx":31
- * 
- *     def change_spline(self, int to_be_changed, int liftoff_pos, int t):
- *         return self.ssp.change_spline(to_be_changed, liftoff_pos, t)             # <<<<<<<<<<<<<<
+  /* "LegTrajectory_py.pyx":35
+ *         '''helper to update COM position to avoid linking an outside COM trajectory
+ *         object with leg trajectory'''
+ *         self.ct.update(t)             # <<<<<<<<<<<<<<
  */
-  __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_void_to_None(__pyx_v_self->ssp.change_spline(__pyx_v_to_be_changed, __pyx_v_liftoff_pos, __pyx_v_t)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 31, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_r = __pyx_t_1;
-  __pyx_t_1 = 0;
-  goto __pyx_L0;
+  __pyx_v_self->ct->update(__pyx_v_t);
 
-  /* "SwingSpline_py.pyx":30
+  /* "LegTrajectory_py.pyx":32
+ *         return out
  * 
- * 
- *     def change_spline(self, int to_be_changed, int liftoff_pos, int t):             # <<<<<<<<<<<<<<
- *         return self.ssp.change_spline(to_be_changed, liftoff_pos, t)
+ *     def update_com(self, float t):             # <<<<<<<<<<<<<<
+ *         '''helper to update COM position to avoid linking an outside COM trajectory
+ *         object with leg trajectory'''
  */
 
   /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("SwingSpline_py.SwingSpline_py.change_spline", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  __pyx_L0:;
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
@@ -1669,19 +1644,19 @@ static PyObject *__pyx_pf_14SwingSpline_py_14SwingSpline_py_4change_spline(struc
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_14SwingSpline_py_14SwingSpline_py_7__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_14SwingSpline_py_14SwingSpline_py_7__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_7__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_7__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__reduce_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_14SwingSpline_py_14SwingSpline_py_6__reduce_cython__(((struct __pyx_obj_14SwingSpline_py_SwingSpline_py *)__pyx_v_self));
+  __pyx_r = __pyx_pf_16LegTrajectory_py_16LegTrajectory_py_6__reduce_cython__(((struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_14SwingSpline_py_14SwingSpline_py_6__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_14SwingSpline_py_SwingSpline_py *__pyx_v_self) {
+static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_6__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1711,7 +1686,7 @@ static PyObject *__pyx_pf_14SwingSpline_py_14SwingSpline_py_6__reduce_cython__(C
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("SwingSpline_py.SwingSpline_py.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("LegTrajectory_py.LegTrajectory_py.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
@@ -1726,19 +1701,19 @@ static PyObject *__pyx_pf_14SwingSpline_py_14SwingSpline_py_6__reduce_cython__(C
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_14SwingSpline_py_14SwingSpline_py_9__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
-static PyObject *__pyx_pw_14SwingSpline_py_14SwingSpline_py_9__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_9__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
+static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_9__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__setstate_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_14SwingSpline_py_14SwingSpline_py_8__setstate_cython__(((struct __pyx_obj_14SwingSpline_py_SwingSpline_py *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
+  __pyx_r = __pyx_pf_16LegTrajectory_py_16LegTrajectory_py_8__setstate_cython__(((struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_14SwingSpline_py_14SwingSpline_py_8__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_14SwingSpline_py_SwingSpline_py *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_8__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1768,15 +1743,15 @@ static PyObject *__pyx_pf_14SwingSpline_py_14SwingSpline_py_8__setstate_cython__
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("SwingSpline_py.SwingSpline_py.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("LegTrajectory_py.LegTrajectory_py.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_tp_new_14SwingSpline_py_SwingSpline_py(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
-  struct __pyx_obj_14SwingSpline_py_SwingSpline_py *p;
+static PyObject *__pyx_tp_new_16LegTrajectory_py_LegTrajectory_py(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+  struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *p;
   PyObject *o;
   if (likely((t->tp_flags & Py_TPFLAGS_IS_ABSTRACT) == 0)) {
     o = (*t->tp_alloc)(t, 0);
@@ -1784,40 +1759,40 @@ static PyObject *__pyx_tp_new_14SwingSpline_py_SwingSpline_py(PyTypeObject *t, C
     o = (PyObject *) PyBaseObject_Type.tp_new(t, __pyx_empty_tuple, 0);
   }
   if (unlikely(!o)) return 0;
-  p = ((struct __pyx_obj_14SwingSpline_py_SwingSpline_py *)o);
-  new((void*)&(p->ssp)) SwingSpline();
-  if (unlikely(__pyx_pw_14SwingSpline_py_14SwingSpline_py_1__cinit__(o, __pyx_empty_tuple, NULL) < 0)) goto bad;
+  p = ((struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *)o);
+  new((void*)&(p->st)) State();
+  if (unlikely(__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_1__cinit__(o, __pyx_empty_tuple, NULL) < 0)) goto bad;
   return o;
   bad:
   Py_DECREF(o); o = 0;
   return NULL;
 }
 
-static void __pyx_tp_dealloc_14SwingSpline_py_SwingSpline_py(PyObject *o) {
-  struct __pyx_obj_14SwingSpline_py_SwingSpline_py *p = (struct __pyx_obj_14SwingSpline_py_SwingSpline_py *)o;
+static void __pyx_tp_dealloc_16LegTrajectory_py_LegTrajectory_py(PyObject *o) {
+  struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *p = (struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *)o;
   #if CYTHON_USE_TP_FINALIZE
   if (unlikely(PyType_HasFeature(Py_TYPE(o), Py_TPFLAGS_HAVE_FINALIZE) && Py_TYPE(o)->tp_finalize) && (!PyType_IS_GC(Py_TYPE(o)) || !_PyGC_FINALIZED(o))) {
     if (PyObject_CallFinalizerFromDealloc(o)) return;
   }
   #endif
-  __Pyx_call_destructor(p->ssp);
+  __Pyx_call_destructor(p->st);
   (*Py_TYPE(o)->tp_free)(o);
 }
 
-static PyMethodDef __pyx_methods_14SwingSpline_py_SwingSpline_py[] = {
-  {"get_leg_position", (PyCFunction)__pyx_pw_14SwingSpline_py_14SwingSpline_py_3get_leg_position, METH_O, 0},
-  {"change_spline", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_14SwingSpline_py_14SwingSpline_py_5change_spline, METH_VARARGS|METH_KEYWORDS, 0},
-  {"__reduce_cython__", (PyCFunction)__pyx_pw_14SwingSpline_py_14SwingSpline_py_7__reduce_cython__, METH_NOARGS, 0},
-  {"__setstate_cython__", (PyCFunction)__pyx_pw_14SwingSpline_py_14SwingSpline_py_9__setstate_cython__, METH_O, 0},
+static PyMethodDef __pyx_methods_16LegTrajectory_py_LegTrajectory_py[] = {
+  {"get_leg_position", (PyCFunction)__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_3get_leg_position, METH_O, 0},
+  {"update_com", (PyCFunction)__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_5update_com, METH_O, __pyx_doc_16LegTrajectory_py_16LegTrajectory_py_4update_com},
+  {"__reduce_cython__", (PyCFunction)__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_7__reduce_cython__, METH_NOARGS, 0},
+  {"__setstate_cython__", (PyCFunction)__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_9__setstate_cython__, METH_O, 0},
   {0, 0, 0, 0}
 };
 
-static PyTypeObject __pyx_type_14SwingSpline_py_SwingSpline_py = {
+static PyTypeObject __pyx_type_16LegTrajectory_py_LegTrajectory_py = {
   PyVarObject_HEAD_INIT(0, 0)
-  "SwingSpline_py.SwingSpline_py", /*tp_name*/
-  sizeof(struct __pyx_obj_14SwingSpline_py_SwingSpline_py), /*tp_basicsize*/
+  "LegTrajectory_py.LegTrajectory_py", /*tp_name*/
+  sizeof(struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py), /*tp_basicsize*/
   0, /*tp_itemsize*/
-  __pyx_tp_dealloc_14SwingSpline_py_SwingSpline_py, /*tp_dealloc*/
+  __pyx_tp_dealloc_16LegTrajectory_py_LegTrajectory_py, /*tp_dealloc*/
   #if PY_VERSION_HEX < 0x030800b4
   0, /*tp_print*/
   #endif
@@ -1850,7 +1825,7 @@ static PyTypeObject __pyx_type_14SwingSpline_py_SwingSpline_py = {
   0, /*tp_weaklistoffset*/
   0, /*tp_iter*/
   0, /*tp_iternext*/
-  __pyx_methods_14SwingSpline_py_SwingSpline_py, /*tp_methods*/
+  __pyx_methods_16LegTrajectory_py_LegTrajectory_py, /*tp_methods*/
   0, /*tp_members*/
   0, /*tp_getset*/
   0, /*tp_base*/
@@ -1860,7 +1835,7 @@ static PyTypeObject __pyx_type_14SwingSpline_py_SwingSpline_py = {
   0, /*tp_dictoffset*/
   0, /*tp_init*/
   0, /*tp_alloc*/
-  __pyx_tp_new_14SwingSpline_py_SwingSpline_py, /*tp_new*/
+  __pyx_tp_new_16LegTrajectory_py_LegTrajectory_py, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -1888,17 +1863,17 @@ static PyMethodDef __pyx_methods[] = {
 #if PY_MAJOR_VERSION >= 3
 #if CYTHON_PEP489_MULTI_PHASE_INIT
 static PyObject* __pyx_pymod_create(PyObject *spec, PyModuleDef *def); /*proto*/
-static int __pyx_pymod_exec_SwingSpline_py(PyObject* module); /*proto*/
+static int __pyx_pymod_exec_LegTrajectory_py(PyObject* module); /*proto*/
 static PyModuleDef_Slot __pyx_moduledef_slots[] = {
   {Py_mod_create, (void*)__pyx_pymod_create},
-  {Py_mod_exec, (void*)__pyx_pymod_exec_SwingSpline_py},
+  {Py_mod_exec, (void*)__pyx_pymod_exec_LegTrajectory_py},
   {0, NULL}
 };
 #endif
 
 static struct PyModuleDef __pyx_moduledef = {
     PyModuleDef_HEAD_INIT,
-    "SwingSpline_py",
+    "LegTrajectory_py",
     0, /* m_doc */
   #if CYTHON_PEP489_MULTI_PHASE_INIT
     0, /* m_size */
@@ -1927,12 +1902,11 @@ static struct PyModuleDef __pyx_moduledef = {
 #endif
 
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
-  {&__pyx_n_s_SwingSpline_py, __pyx_k_SwingSpline_py, sizeof(__pyx_k_SwingSpline_py), 0, 0, 1, 1},
+  {&__pyx_n_s_LegTrajectory_py, __pyx_k_LegTrajectory_py, sizeof(__pyx_k_LegTrajectory_py), 0, 0, 1, 1},
   {&__pyx_n_s_TypeError, __pyx_k_TypeError, sizeof(__pyx_k_TypeError), 0, 0, 1, 1},
   {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
   {&__pyx_n_s_getstate, __pyx_k_getstate, sizeof(__pyx_k_getstate), 0, 0, 1, 1},
   {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
-  {&__pyx_n_s_liftoff_pos, __pyx_k_liftoff_pos, sizeof(__pyx_k_liftoff_pos), 0, 0, 1, 1},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
   {&__pyx_n_s_name, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
   {&__pyx_kp_s_no_default___reduce___due_to_non, __pyx_k_no_default___reduce___due_to_non, sizeof(__pyx_k_no_default___reduce___due_to_non), 0, 0, 1, 0},
@@ -1944,14 +1918,12 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_reduce_ex, __pyx_k_reduce_ex, sizeof(__pyx_k_reduce_ex), 0, 0, 1, 1},
   {&__pyx_n_s_setstate, __pyx_k_setstate, sizeof(__pyx_k_setstate), 0, 0, 1, 1},
   {&__pyx_n_s_setstate_cython, __pyx_k_setstate_cython, sizeof(__pyx_k_setstate_cython), 0, 0, 1, 1},
-  {&__pyx_n_s_t, __pyx_k_t, sizeof(__pyx_k_t), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
-  {&__pyx_n_s_to_be_changed, __pyx_k_to_be_changed, sizeof(__pyx_k_to_be_changed), 0, 0, 1, 1},
   {&__pyx_n_s_zeros, __pyx_k_zeros, sizeof(__pyx_k_zeros), 0, 0, 1, 1},
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 24, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 27, __pyx_L1_error)
   __pyx_builtin_TypeError = __Pyx_GetBuiltinName(__pyx_n_s_TypeError); if (!__pyx_builtin_TypeError) __PYX_ERR(1, 2, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
@@ -1962,14 +1934,14 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "SwingSpline_py.pyx":23
+  /* "LegTrajectory_py.pyx":26
  *         cdef int i, j
  * 
  *         out = np.zeros((3,4))             # <<<<<<<<<<<<<<
  *         for i in range(3):
  *             for j in range(4):
  */
-  __pyx_tuple_ = PyTuple_Pack(2, __pyx_int_3, __pyx_int_4); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(2, __pyx_int_3, __pyx_int_4); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 26, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 
@@ -2046,16 +2018,16 @@ static int __Pyx_modinit_type_init_code(void) {
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__Pyx_modinit_type_init_code", 0);
   /*--- Type init code ---*/
-  if (PyType_Ready(&__pyx_type_14SwingSpline_py_SwingSpline_py) < 0) __PYX_ERR(0, 12, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_16LegTrajectory_py_LegTrajectory_py) < 0) __PYX_ERR(0, 10, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
-  __pyx_type_14SwingSpline_py_SwingSpline_py.tp_print = 0;
+  __pyx_type_16LegTrajectory_py_LegTrajectory_py.tp_print = 0;
   #endif
-  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_14SwingSpline_py_SwingSpline_py.tp_dictoffset && __pyx_type_14SwingSpline_py_SwingSpline_py.tp_getattro == PyObject_GenericGetAttr)) {
-    __pyx_type_14SwingSpline_py_SwingSpline_py.tp_getattro = __Pyx_PyObject_GenericGetAttr;
+  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_16LegTrajectory_py_LegTrajectory_py.tp_dictoffset && __pyx_type_16LegTrajectory_py_LegTrajectory_py.tp_getattro == PyObject_GenericGetAttr)) {
+    __pyx_type_16LegTrajectory_py_LegTrajectory_py.tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_SwingSpline_py, (PyObject *)&__pyx_type_14SwingSpline_py_SwingSpline_py) < 0) __PYX_ERR(0, 12, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_14SwingSpline_py_SwingSpline_py) < 0) __PYX_ERR(0, 12, __pyx_L1_error)
-  __pyx_ptype_14SwingSpline_py_SwingSpline_py = &__pyx_type_14SwingSpline_py_SwingSpline_py;
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_LegTrajectory_py, (PyObject *)&__pyx_type_16LegTrajectory_py_LegTrajectory_py) < 0) __PYX_ERR(0, 10, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_16LegTrajectory_py_LegTrajectory_py) < 0) __PYX_ERR(0, 10, __pyx_L1_error)
+  __pyx_ptype_16LegTrajectory_py_LegTrajectory_py = &__pyx_type_16LegTrajectory_py_LegTrajectory_py;
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -2106,11 +2078,11 @@ static int __Pyx_modinit_function_import_code(void) {
 
 
 #if PY_MAJOR_VERSION < 3
-__Pyx_PyMODINIT_FUNC initSwingSpline_py(void) CYTHON_SMALL_CODE; /*proto*/
-__Pyx_PyMODINIT_FUNC initSwingSpline_py(void)
+__Pyx_PyMODINIT_FUNC initLegTrajectory_py(void) CYTHON_SMALL_CODE; /*proto*/
+__Pyx_PyMODINIT_FUNC initLegTrajectory_py(void)
 #else
-__Pyx_PyMODINIT_FUNC PyInit_SwingSpline_py(void) CYTHON_SMALL_CODE; /*proto*/
-__Pyx_PyMODINIT_FUNC PyInit_SwingSpline_py(void)
+__Pyx_PyMODINIT_FUNC PyInit_LegTrajectory_py(void) CYTHON_SMALL_CODE; /*proto*/
+__Pyx_PyMODINIT_FUNC PyInit_LegTrajectory_py(void)
 #if CYTHON_PEP489_MULTI_PHASE_INIT
 {
   return PyModuleDef_Init(&__pyx_moduledef);
@@ -2177,7 +2149,7 @@ bad:
 }
 
 
-static CYTHON_SMALL_CODE int __pyx_pymod_exec_SwingSpline_py(PyObject *__pyx_pyinit_module)
+static CYTHON_SMALL_CODE int __pyx_pymod_exec_LegTrajectory_py(PyObject *__pyx_pyinit_module)
 #endif
 #endif
 {
@@ -2189,7 +2161,7 @@ static CYTHON_SMALL_CODE int __pyx_pymod_exec_SwingSpline_py(PyObject *__pyx_pyi
   #if CYTHON_PEP489_MULTI_PHASE_INIT
   if (__pyx_m) {
     if (__pyx_m == __pyx_pyinit_module) return 0;
-    PyErr_SetString(PyExc_RuntimeError, "Module 'SwingSpline_py' has already been imported. Re-initialisation is not supported.");
+    PyErr_SetString(PyExc_RuntimeError, "Module 'LegTrajectory_py' has already been imported. Re-initialisation is not supported.");
     return -1;
   }
   #elif PY_MAJOR_VERSION >= 3
@@ -2204,7 +2176,7 @@ if (!__Pyx_RefNanny) {
       Py_FatalError("failed to import 'refnanny' module");
 }
 #endif
-  __Pyx_RefNannySetupContext("__Pyx_PyMODINIT_FUNC PyInit_SwingSpline_py(void)", 0);
+  __Pyx_RefNannySetupContext("__Pyx_PyMODINIT_FUNC PyInit_LegTrajectory_py(void)", 0);
   if (__Pyx_check_binary_version() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #ifdef __Pxy_PyFrame_Initialize_Offsets
   __Pxy_PyFrame_Initialize_Offsets();
@@ -2243,7 +2215,7 @@ if (!__Pyx_RefNanny) {
   Py_INCREF(__pyx_m);
   #else
   #if PY_MAJOR_VERSION < 3
-  __pyx_m = Py_InitModule4("SwingSpline_py", __pyx_methods, 0, 0, PYTHON_API_VERSION); Py_XINCREF(__pyx_m);
+  __pyx_m = Py_InitModule4("LegTrajectory_py", __pyx_methods, 0, 0, PYTHON_API_VERSION); Py_XINCREF(__pyx_m);
   #else
   __pyx_m = PyModule_Create(&__pyx_moduledef);
   #endif
@@ -2261,14 +2233,14 @@ if (!__Pyx_RefNanny) {
   #if PY_MAJOR_VERSION < 3 && (__PYX_DEFAULT_STRING_ENCODING_IS_ASCII || __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT)
   if (__Pyx_init_sys_getdefaultencoding_params() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
-  if (__pyx_module_is_main_SwingSpline_py) {
+  if (__pyx_module_is_main_LegTrajectory_py) {
     if (PyObject_SetAttr(__pyx_m, __pyx_n_s_name, __pyx_n_s_main) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   }
   #if PY_MAJOR_VERSION >= 3
   {
     PyObject *modules = PyImport_GetModuleDict(); if (unlikely(!modules)) __PYX_ERR(0, 1, __pyx_L1_error)
-    if (!PyDict_GetItemString(modules, "SwingSpline_py")) {
-      if (unlikely(PyDict_SetItemString(modules, "SwingSpline_py", __pyx_m) < 0)) __PYX_ERR(0, 1, __pyx_L1_error)
+    if (!PyDict_GetItemString(modules, "LegTrajectory_py")) {
+      if (unlikely(PyDict_SetItemString(modules, "LegTrajectory_py", __pyx_m) < 0)) __PYX_ERR(0, 1, __pyx_L1_error)
     }
   }
   #endif
@@ -2289,22 +2261,21 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "SwingSpline_py.pyx":6
- * 
- * from SwingSpline cimport SwingSpline
+  /* "LegTrajectory_py.pyx":1
  * import numpy as np             # <<<<<<<<<<<<<<
  * from Coordinates_py cimport Coordinates
- * 
+ * from LegTrajectory_py cimport LegTrajectory
  */
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 6, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 6, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "SwingSpline_py.pyx":1
- * # distutils: language = c++             # <<<<<<<<<<<<<<
- * # distutils: include_dirs = eigen-3.4-rc1
- * # cython: language_level=3
+  /* "(tree fragment)":3
+ * def __reduce_cython__(self):
+ *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")
+ * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
+ *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")
  */
   __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -2318,11 +2289,11 @@ if (!__Pyx_RefNanny) {
   __Pyx_XDECREF(__pyx_t_1);
   if (__pyx_m) {
     if (__pyx_d) {
-      __Pyx_AddTraceback("init SwingSpline_py", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      __Pyx_AddTraceback("init LegTrajectory_py", __pyx_clineno, __pyx_lineno, __pyx_filename);
     }
     Py_CLEAR(__pyx_m);
   } else if (!PyErr_Occurred()) {
-    PyErr_SetString(PyExc_ImportError, "init SwingSpline_py");
+    PyErr_SetString(PyExc_ImportError, "init LegTrajectory_py");
   }
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
@@ -2758,122 +2729,6 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_CallOneArg(PyObject *func, PyObjec
     return result;
 }
 #endif
-
-/* RaiseDoubleKeywords */
-static void __Pyx_RaiseDoubleKeywordsError(
-    const char* func_name,
-    PyObject* kw_name)
-{
-    PyErr_Format(PyExc_TypeError,
-        #if PY_MAJOR_VERSION >= 3
-        "%s() got multiple values for keyword argument '%U'", func_name, kw_name);
-        #else
-        "%s() got multiple values for keyword argument '%s'", func_name,
-        PyString_AsString(kw_name));
-        #endif
-}
-
-/* ParseKeywords */
-static int __Pyx_ParseOptionalKeywords(
-    PyObject *kwds,
-    PyObject **argnames[],
-    PyObject *kwds2,
-    PyObject *values[],
-    Py_ssize_t num_pos_args,
-    const char* function_name)
-{
-    PyObject *key = 0, *value = 0;
-    Py_ssize_t pos = 0;
-    PyObject*** name;
-    PyObject*** first_kw_arg = argnames + num_pos_args;
-    while (PyDict_Next(kwds, &pos, &key, &value)) {
-        name = first_kw_arg;
-        while (*name && (**name != key)) name++;
-        if (*name) {
-            values[name-argnames] = value;
-            continue;
-        }
-        name = first_kw_arg;
-        #if PY_MAJOR_VERSION < 3
-        if (likely(PyString_Check(key))) {
-            while (*name) {
-                if ((CYTHON_COMPILING_IN_PYPY || PyString_GET_SIZE(**name) == PyString_GET_SIZE(key))
-                        && _PyString_Eq(**name, key)) {
-                    values[name-argnames] = value;
-                    break;
-                }
-                name++;
-            }
-            if (*name) continue;
-            else {
-                PyObject*** argname = argnames;
-                while (argname != first_kw_arg) {
-                    if ((**argname == key) || (
-                            (CYTHON_COMPILING_IN_PYPY || PyString_GET_SIZE(**argname) == PyString_GET_SIZE(key))
-                             && _PyString_Eq(**argname, key))) {
-                        goto arg_passed_twice;
-                    }
-                    argname++;
-                }
-            }
-        } else
-        #endif
-        if (likely(PyUnicode_Check(key))) {
-            while (*name) {
-                int cmp = (**name == key) ? 0 :
-                #if !CYTHON_COMPILING_IN_PYPY && PY_MAJOR_VERSION >= 3
-                    (__Pyx_PyUnicode_GET_LENGTH(**name) != __Pyx_PyUnicode_GET_LENGTH(key)) ? 1 :
-                #endif
-                    PyUnicode_Compare(**name, key);
-                if (cmp < 0 && unlikely(PyErr_Occurred())) goto bad;
-                if (cmp == 0) {
-                    values[name-argnames] = value;
-                    break;
-                }
-                name++;
-            }
-            if (*name) continue;
-            else {
-                PyObject*** argname = argnames;
-                while (argname != first_kw_arg) {
-                    int cmp = (**argname == key) ? 0 :
-                    #if !CYTHON_COMPILING_IN_PYPY && PY_MAJOR_VERSION >= 3
-                        (__Pyx_PyUnicode_GET_LENGTH(**argname) != __Pyx_PyUnicode_GET_LENGTH(key)) ? 1 :
-                    #endif
-                        PyUnicode_Compare(**argname, key);
-                    if (cmp < 0 && unlikely(PyErr_Occurred())) goto bad;
-                    if (cmp == 0) goto arg_passed_twice;
-                    argname++;
-                }
-            }
-        } else
-            goto invalid_keyword_type;
-        if (kwds2) {
-            if (unlikely(PyDict_SetItem(kwds2, key, value))) goto bad;
-        } else {
-            goto invalid_keyword;
-        }
-    }
-    return 0;
-arg_passed_twice:
-    __Pyx_RaiseDoubleKeywordsError(function_name, key);
-    goto bad;
-invalid_keyword_type:
-    PyErr_Format(PyExc_TypeError,
-        "%.200s() keywords must be strings", function_name);
-    goto bad;
-invalid_keyword:
-    PyErr_Format(PyExc_TypeError,
-    #if PY_MAJOR_VERSION < 3
-        "%.200s() got an unexpected keyword argument '%.200s'",
-        function_name, PyString_AsString(key));
-    #else
-        "%s() got an unexpected keyword argument '%U'",
-        function_name, key);
-    #endif
-bad:
-    return -1;
-}
 
 /* PyErrFetchRestore */
 #if CYTHON_FAST_THREAD_STATE

@@ -116,11 +116,11 @@ class Controller:
         angle[0][angle[0] >  60] =  60
         angle[0][angle[0] < -60] = -60
         # tibia
-        angle[1][angle[0] > 120] = 120
-        angle[1][angle[0] <-120] =-120
+        angle[1][angle[1] > 120] = 120
+        angle[1][angle[1] <-120] =-120
         # coxa
-        angle[2][angle[0] >  60] =  60
-        angle[2][angle[0] < -60] = -60
+        angle[2][angle[2] >  60] =  60
+        angle[2][angle[2] < -60] = -60
         return angle
     
     def calibrate(self):
