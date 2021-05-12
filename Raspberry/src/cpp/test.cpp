@@ -1,6 +1,8 @@
 #include <iostream>
-#include "SwingSpline.h"
+#include "LegTrajectory.h"
 #include "Coordinates.h"
+#include "COMTrajectory.h"
+#include "State.h"
 
  
 //using namespace Eigen;
@@ -8,20 +10,15 @@ using namespace std;
 
 int main(){
 	
-	SwingSpline ss = SwingSpline();
+	State state;
+	COMTrajectory comtrajectory;
+	LegTrajectory ss = LegTrajectory(&state, &comtrajectory);
 	
 	float t = 0.1;
-	Coordinates s = ss.get_leg_position(t);
-	//ss.change_spline(0, 0, 0);
-	//int s = 0;
-	cout << s << endl;
-	cout << s(0, 0) << endl;
-	
-	//Matrix<float, 3, 4> m;
-	//Coordinates m;
-	//m << 0, 0, 0, 0,
-	//	 0, 0, 0, 0,
-	//	 0, 0, 0, 0;
-	
-	//cout << m << endl;
+	for(float t = 0.0; t<1.0; t += 0.1){
+		comtrajectory.update(t);
+		cout << t << "-----------" << endl;
+		cout << ss.get_leg_position(t) << endl;
+	}
+	cout << "end" << endl;
 }

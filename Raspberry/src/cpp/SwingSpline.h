@@ -1,14 +1,18 @@
 #ifndef SWINGSPLINE_H
 #define SWINGSPLINE_H
 
-#include "Coordinates.h"
+#include <iostream>
+#include "Coordinate.h"
+#include "State.h"
 
 class SwingSpline {
 	public:
-		SwingSpline();
+		SwingSpline(State* pstate);
 		~SwingSpline();
-		Coordinates get_leg_position(float t); 
-		void change_spline(int to_be_changed, int liftoff_pos, int t);
+		Coordinate get_leg_position(float tn); 
+		void update_spline(Coordinate liftoff_pos);
+	private:
+	State* state;
 };
 
 

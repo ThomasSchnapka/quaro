@@ -1,6 +1,5 @@
 /*
- * Definition of a 3x4 matrix used to describe leg coordinates. This
- * is the defintion used to convert Eigen matrices into Numpy arrays
+ * Definition of a 3x4 matrix used to describe leg coordinates.
  * 
  * Columns differentiate legs, rows differentiate single coodinates
  * 

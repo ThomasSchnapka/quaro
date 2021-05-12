@@ -1,23 +1,25 @@
 #include <iostream>
 #include "SwingSpline.h"
-#include "Coordinates.h"
+#include "Coordinate.h"
+#include "State.h"
  
 // Default constructor
-SwingSpline::SwingSpline() {}
+SwingSpline::SwingSpline(State* pstate) {
+	state = pstate;
+	}
 
 // Destructor
 SwingSpline::~SwingSpline() {}
 
-// Return the area of the rectangle
-Coordinates SwingSpline::get_leg_position(float t) {
-	Coordinates m;
-	m << 0, 0, 0, 0,
-		 0, 0, 0, 3.1,
-		 0, 0, 0, 0;
+
+Coordinate SwingSpline::get_leg_position(float tn) {
+	Coordinate m;
+	m << -1, -1, -1;
 	return m;
 }
 
-void SwingSpline::change_spline(int to_be_changed, int liftoff_pos, int t){
-	to_be_changed = liftoff_pos;
+void SwingSpline::update_spline(Coordinate liftoff_pos){
+	int i = 0;
+	// pass
 }
 
