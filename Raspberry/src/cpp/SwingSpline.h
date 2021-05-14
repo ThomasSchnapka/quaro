@@ -9,7 +9,7 @@
 
 class SwingSpline {
 	public:
-		SwingSpline(State* pstate, BaseFrameTrajectory* pcomtrajectory);
+		SwingSpline(State* pstate, BaseFrameTrajectory* pbftrajectory);
 		~SwingSpline();
 		Coordinate get_leg_position(float tn); 
 		void update_spline(Coordinate pliftoff_pos);

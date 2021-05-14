@@ -24,12 +24,16 @@ lt = LegTrajectory(state, ct, cs)
 from src.cpp.LegTrajectory_py import LegTrajectory_py
 
 lt = LegTrajectory_py()
+lt.change_cycle_time(2)
 
 
 N = 200
 pos = np.zeros((3,4,N))
-t_idx = np.linspace(0, 3, N)
+t_idx = np.linspace(0, 5, N)
 for i in range(N):
+    #if i==N/4:
+     #   
+    #    print("changed ct at", t_idx[i])
     lt.update_com(t_idx[i])
     pos[:,:,i] = lt.get_leg_position(t_idx[i])
 

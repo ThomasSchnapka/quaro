@@ -9,3 +9,4 @@ cdef extern from "BaseFrameTrajectory.h":
     cdef cppclass BaseFrameTrajectory:
         BaseFrameTrajectory(State* pstate) except +
         void update(float t)
+        

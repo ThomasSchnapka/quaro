@@ -9,14 +9,14 @@
 
 class SingleLegTrajectory {
 	public:
-		SingleLegTrajectory(State* pstate, BaseFrameTrajectory* pcomtrajectory, int pnum);
+		SingleLegTrajectory(State* pstate, BaseFrameTrajectory* pbftrajectory, int pnum);
 		~SingleLegTrajectory();
 		Coordinate get_leg_position(float t);
 		
 		Coordinate liftoff_pos;
 		Coordinate current_pos;
 		Coordinate leg_at_touchdown;
-		Coordinate com_at_touchdown;
+		Coordinate bf_at_touchdown;
 		
 		//SwingSpline(State* pstate) : swingspline(pstate) {}
 		SwingSpline swingspline;

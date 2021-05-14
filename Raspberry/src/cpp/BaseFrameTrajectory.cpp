@@ -6,7 +6,7 @@
 // Default constructor
 BaseFrameTrajectory::BaseFrameTrajectory(State* pstate) {
 	state = pstate;
-	x_com << 0, 0, 0;
+	x_bf << 0, 0, 0;
 	rpy << 0, 0, 0;
 	t_last = 0;
 	}
@@ -14,16 +14,16 @@ BaseFrameTrajectory::BaseFrameTrajectory(State* pstate) {
 // Destructor
 BaseFrameTrajectory::~BaseFrameTrajectory() {}
 
-Coordinate BaseFrameTrajectory::predict_x_com(float dt){
+Coordinate BaseFrameTrajectory::predict_x_bf(float dt){
 	Coordinate pos;
-	pos = x_com;
-	pos += dt*state->dx_com;
+	pos = x_bf;
+	pos += dt*state->dx_bf;
 	return pos;
 }
 
 void BaseFrameTrajectory::update(float t){
 	float dt = t - t_last;
-	x_com += dt*state->dx_com;
+	x_bf += dt*state->dx_bf;
 	rpy += dt*state->d_rpy;
 	t_last = t;
 }

@@ -16,9 +16,9 @@
 
  
 // Default constructor
-SwingSpline::SwingSpline(State* pstate, BaseFrameTrajectory* pcomtrajectory) {
+SwingSpline::SwingSpline(State* pstate, BaseFrameTrajectory* pbftrajectory) {
 	state = pstate;
-	bftrajectory = pcomtrajectory;
+	bftrajectory = pbftrajectory;
 	Coordinate c;
 	c << 0.0, 0.0, 0.0;
 	update_spline(c);
@@ -53,18 +53,18 @@ void SwingSpline::update_spline(Coordinate pliftoff_pos){
 	liftoff_pos = pliftoff_pos;
 	// calculate optimal tochdown position
 	float dt = state->support_ratio*state->cycle_time*0.5;
-	touchdown_pos = bftrajectory->predict_x_com(dt);
-	touchdown_pos -= bftrajectory->x_com;
+	touchdown_pos = bftrajectory->predict_x_bf(dt);
+	touchdown_pos -= bftrajectory->x_bf;
 	// *= 0.5;
 	
 	// calculate new spline coefficients
 	// TODO: add derivatives
 	float T = 1.0 - state->support_ratio;
 	float Tm = 1.0 - state->support_midpoint;
-	ax =  calc_coefficients(liftoff_pos(0),     -state->dx_com(0), touchdown_pos(0),   -state->dx_com(0), T);
-	ay =  calc_coefficients(liftoff_pos(1),     -state->dx_com(1), touchdown_pos(1),   -state->dx_com(1), T);
-	az1 = calc_coefficients(liftoff_pos(2),     -state->dx_com(2), state->swing_hight, 0,                 Tm);
-	az2 = calc_coefficients(state->swing_hight, 0, 	   			   touchdown_pos(2),   -state->dx_com(2), (T-Tm));
+	ax =  calc_coefficients(liftoff_pos(0),     -state->dx_bf(0), touchdown_pos(0),   -state->dx_bf(0), T);
+	ay =  calc_coefficients(liftoff_pos(1),     -state->dx_bf(1), touchdown_pos(1),   -state->dx_bf(1), T);
+	az1 = calc_coefficients(liftoff_pos(2),     -state->dx_bf(2), state->swing_hight, 0,                 Tm);
+	az2 = calc_coefficients(state->swing_hight, 0, 	   			   touchdown_pos(2),   -state->dx_bf(2), (T-Tm));
 	
 }
 

@@ -8,18 +8,18 @@
  
 
 SingleLegTrajectory::SingleLegTrajectory(State* pstate,
-										 BaseFrameTrajectory* pcomtrajectory,
+										 BaseFrameTrajectory* pbftrajectory,
 										 int pnum) 
-										 : swingspline(pstate, pcomtrajectory)
+										 : swingspline(pstate, pbftrajectory)
 										 {
 	state = pstate;
-	bftrajectory = pcomtrajectory;
+	bftrajectory = pbftrajectory;
 	num = pnum;
 	
 	liftoff_pos << 0, 0, 0;
 	current_pos << 0, 0, 0;
 	leg_at_touchdown << 0, 0, 0;
-	com_at_touchdown << 0, 0, 0;
+	bf_at_touchdown << 0, 0, 0;
 	fsm = 0;
 	
 	
@@ -68,16 +68,14 @@ void SingleLegTrajectory::update_fsm(float tn){
 void SingleLegTrajectory::update_touchdown_pos(){
 	// save COM position as leg touches ground
 	leg_at_touchdown = current_pos;
-	com_at_touchdown = bftrajectory->x_com;
+	bf_at_touchdown = bftrajectory->x_bf;
 }	
 
 Coordinate SingleLegTrajectory::get_position_stance(){
-	// pos = leg_at_touchdown - (bftrajectory->x_com - com_at_touchdown)
-	// subtraction in a single line results in compilation error,
-	// that it is done in seperate lines
+	// pos = leg_at_touchdown - (bftrajectory->x_bf - bf_at_touchdown)
 	Coordinate c = leg_at_touchdown;
-	c -= bftrajectory->x_com;
-	c += com_at_touchdown;
+	c -= bftrajectory->x_bf;
+	c += bf_at_touchdown;
 	return c;
 }
     

@@ -6,14 +6,14 @@
 #include "State.h"
 
 
-LegTrajectory::LegTrajectory(State* pstate, BaseFrameTrajectory* pcomtrajectory){
+LegTrajectory::LegTrajectory(State* pstate, BaseFrameTrajectory* pbftrajectory){
 	state = pstate;
-	bftrajectory = pcomtrajectory;
+	bftrajectory = pbftrajectory;
 	
 	// initialize std::vector containing legs
 	leg.reserve(4);
 	for(int i = 0; i<4; i++){
-		leg[i] = SingleLegTrajectory(pstate, pcomtrajectory, i);
+		leg[i] = SingleLegTrajectory(pstate, pbftrajectory, i);
 	}
 	
 }

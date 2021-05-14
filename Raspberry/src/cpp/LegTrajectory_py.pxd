@@ -9,7 +9,5 @@ cdef extern from "LegTrajectory.cpp": # tell cython that this is the source
 
 cdef extern from "LegTrajectory.h":
     cdef cppclass LegTrajectory:
-        #cdef cppclass State
-        #cdef cppclass COMTrajectory
         LegTrajectory(State* pstate, BaseFrameTrajectory* pbftrajectory) except +
         Coordinates get_leg_position(float t)

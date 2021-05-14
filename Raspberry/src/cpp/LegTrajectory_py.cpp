@@ -1293,8 +1293,11 @@ static PyObject *__pyx_n_s_zeros;
 static int __pyx_pf_16LegTrajectory_py_16LegTrajectory_py___cinit__(struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_2get_leg_position(struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self, float __pyx_v_t); /* proto */
 static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_4update_com(struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self, float __pyx_v_t); /* proto */
-static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_6__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_8__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_6change_vel_x(struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self, float __pyx_v_vx); /* proto */
+static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_8change_cycle_time(struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self, float __pyx_v_ct); /* proto */
+static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_10change_support_ratio(struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self, float __pyx_v_sr); /* proto */
+static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_12__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_14__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
 static PyObject *__pyx_tp_new_16LegTrajectory_py_LegTrajectory_py(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_int_3;
 static PyObject *__pyx_int_4;
@@ -1373,7 +1376,7 @@ static int __pyx_pf_16LegTrajectory_py_16LegTrajectory_py___cinit__(struct __pyx
  *         self.bft = new BaseFrameTrajectory(&self.st)
  *         self.lt = new LegTrajectory(&self.st, self.bft)             # <<<<<<<<<<<<<<
  * 
- *     #def __dealloc__(self):
+ *     def get_leg_position(self, float t):
  */
   try {
     __pyx_t_3 = new LegTrajectory(((State *)(&__pyx_v_self->st)), __pyx_v_self->bft);
@@ -1402,8 +1405,8 @@ static int __pyx_pf_16LegTrajectory_py_16LegTrajectory_py___cinit__(struct __pyx
   return __pyx_r;
 }
 
-/* "LegTrajectory_py.pyx":26
- *     #    cqueue.queue_free(self._c_queue)
+/* "LegTrajectory_py.pyx":22
+ *         self.lt = new LegTrajectory(&self.st, self.bft)
  * 
  *     def get_leg_position(self, float t):             # <<<<<<<<<<<<<<
  *         cdef Coordinates inp = self.lt.get_leg_position(t)
@@ -1421,7 +1424,7 @@ static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_3get_leg_positio
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("get_leg_position (wrapper)", 0);
   assert(__pyx_arg_t); {
-    __pyx_v_t = __pyx_PyFloat_AsFloat(__pyx_arg_t); if (unlikely((__pyx_v_t == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 26, __pyx_L3_error)
+    __pyx_v_t = __pyx_PyFloat_AsFloat(__pyx_arg_t); if (unlikely((__pyx_v_t == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 22, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -1454,7 +1457,7 @@ static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_2get_leg_positio
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("get_leg_position", 0);
 
-  /* "LegTrajectory_py.pyx":27
+  /* "LegTrajectory_py.pyx":23
  * 
  *     def get_leg_position(self, float t):
  *         cdef Coordinates inp = self.lt.get_leg_position(t)             # <<<<<<<<<<<<<<
@@ -1463,16 +1466,16 @@ static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_2get_leg_positio
  */
   __pyx_v_inp = __pyx_v_self->lt->get_leg_position(__pyx_v_t);
 
-  /* "LegTrajectory_py.pyx":30
+  /* "LegTrajectory_py.pyx":26
  *         cdef int i, j
  * 
  *         out = np.zeros((3,4))             # <<<<<<<<<<<<<<
  *         for i in range(3):
  *             for j in range(4):
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 30, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 26, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 30, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 26, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -1487,13 +1490,13 @@ static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_2get_leg_positio
   }
   __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_2, __pyx_tuple_) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_tuple_);
   __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 30, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 26, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_out = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "LegTrajectory_py.pyx":31
+  /* "LegTrajectory_py.pyx":27
  * 
  *         out = np.zeros((3,4))
  *         for i in range(3):             # <<<<<<<<<<<<<<
@@ -1503,7 +1506,7 @@ static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_2get_leg_positio
   for (__pyx_t_4 = 0; __pyx_t_4 < 3; __pyx_t_4+=1) {
     __pyx_v_i = __pyx_t_4;
 
-    /* "LegTrajectory_py.pyx":32
+    /* "LegTrajectory_py.pyx":28
  *         out = np.zeros((3,4))
  *         for i in range(3):
  *             for j in range(4):             # <<<<<<<<<<<<<<
@@ -1513,20 +1516,20 @@ static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_2get_leg_positio
     for (__pyx_t_5 = 0; __pyx_t_5 < 4; __pyx_t_5+=1) {
       __pyx_v_j = __pyx_t_5;
 
-      /* "LegTrajectory_py.pyx":33
+      /* "LegTrajectory_py.pyx":29
  *         for i in range(3):
  *             for j in range(4):
  *                 out[i, j] = inp(i, j)             # <<<<<<<<<<<<<<
  *         return out
  * 
  */
-      __pyx_t_1 = PyFloat_FromDouble(__pyx_v_inp(__pyx_v_i, __pyx_v_j)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 33, __pyx_L1_error)
+      __pyx_t_1 = PyFloat_FromDouble(__pyx_v_inp(__pyx_v_i, __pyx_v_j)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 29, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_i); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 33, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_i); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 29, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_j); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 33, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_j); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 29, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 33, __pyx_L1_error)
+      __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 29, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_GIVEREF(__pyx_t_3);
       PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_3);
@@ -1534,13 +1537,13 @@ static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_2get_leg_positio
       PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_t_2);
       __pyx_t_3 = 0;
       __pyx_t_2 = 0;
-      if (unlikely(PyObject_SetItem(__pyx_v_out, __pyx_t_6, __pyx_t_1) < 0)) __PYX_ERR(0, 33, __pyx_L1_error)
+      if (unlikely(PyObject_SetItem(__pyx_v_out, __pyx_t_6, __pyx_t_1) < 0)) __PYX_ERR(0, 29, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     }
   }
 
-  /* "LegTrajectory_py.pyx":34
+  /* "LegTrajectory_py.pyx":30
  *             for j in range(4):
  *                 out[i, j] = inp(i, j)
  *         return out             # <<<<<<<<<<<<<<
@@ -1552,8 +1555,8 @@ static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_2get_leg_positio
   __pyx_r = __pyx_v_out;
   goto __pyx_L0;
 
-  /* "LegTrajectory_py.pyx":26
- *     #    cqueue.queue_free(self._c_queue)
+  /* "LegTrajectory_py.pyx":22
+ *         self.lt = new LegTrajectory(&self.st, self.bft)
  * 
  *     def get_leg_position(self, float t):             # <<<<<<<<<<<<<<
  *         cdef Coordinates inp = self.lt.get_leg_position(t)
@@ -1575,7 +1578,7 @@ static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_2get_leg_positio
   return __pyx_r;
 }
 
-/* "LegTrajectory_py.pyx":36
+/* "LegTrajectory_py.pyx":32
  *         return out
  * 
  *     def update_com(self, float t):             # <<<<<<<<<<<<<<
@@ -1595,7 +1598,7 @@ static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_5update_com(PyOb
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("update_com (wrapper)", 0);
   assert(__pyx_arg_t); {
-    __pyx_v_t = __pyx_PyFloat_AsFloat(__pyx_arg_t); if (unlikely((__pyx_v_t == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 36, __pyx_L3_error)
+    __pyx_v_t = __pyx_PyFloat_AsFloat(__pyx_arg_t); if (unlikely((__pyx_v_t == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 32, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -1615,19 +1618,209 @@ static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_4update_com(stru
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("update_com", 0);
 
-  /* "LegTrajectory_py.pyx":39
+  /* "LegTrajectory_py.pyx":35
  *         '''helper to update COM position to avoid linking an outside COM trajectory
  *         object with leg trajectory'''
  *         self.bft.update(t)             # <<<<<<<<<<<<<<
+ * 
+ *     def change_vel_x(self, float vx):
  */
   __pyx_v_self->bft->update(__pyx_v_t);
 
-  /* "LegTrajectory_py.pyx":36
+  /* "LegTrajectory_py.pyx":32
  *         return out
  * 
  *     def update_com(self, float t):             # <<<<<<<<<<<<<<
  *         '''helper to update COM position to avoid linking an outside COM trajectory
  *         object with leg trajectory'''
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "LegTrajectory_py.pyx":37
+ *         self.bft.update(t)
+ * 
+ *     def change_vel_x(self, float vx):             # <<<<<<<<<<<<<<
+ *         # TODO: shift this to own State pyx
+ *         self.st.set_vel_x(vx)
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_7change_vel_x(PyObject *__pyx_v_self, PyObject *__pyx_arg_vx); /*proto*/
+static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_7change_vel_x(PyObject *__pyx_v_self, PyObject *__pyx_arg_vx) {
+  float __pyx_v_vx;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("change_vel_x (wrapper)", 0);
+  assert(__pyx_arg_vx); {
+    __pyx_v_vx = __pyx_PyFloat_AsFloat(__pyx_arg_vx); if (unlikely((__pyx_v_vx == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 37, __pyx_L3_error)
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("LegTrajectory_py.LegTrajectory_py.change_vel_x", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_16LegTrajectory_py_16LegTrajectory_py_6change_vel_x(((struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *)__pyx_v_self), ((float)__pyx_v_vx));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_6change_vel_x(struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self, float __pyx_v_vx) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("change_vel_x", 0);
+
+  /* "LegTrajectory_py.pyx":39
+ *     def change_vel_x(self, float vx):
+ *         # TODO: shift this to own State pyx
+ *         self.st.set_vel_x(vx)             # <<<<<<<<<<<<<<
+ * 
+ *     def change_cycle_time(self, float ct):
+ */
+  __pyx_v_self->st.set_vel_x(__pyx_v_vx);
+
+  /* "LegTrajectory_py.pyx":37
+ *         self.bft.update(t)
+ * 
+ *     def change_vel_x(self, float vx):             # <<<<<<<<<<<<<<
+ *         # TODO: shift this to own State pyx
+ *         self.st.set_vel_x(vx)
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "LegTrajectory_py.pyx":41
+ *         self.st.set_vel_x(vx)
+ * 
+ *     def change_cycle_time(self, float ct):             # <<<<<<<<<<<<<<
+ *         # TODO: shift this to own State pyx
+ *         self.st.set_cycle_time(ct)
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_9change_cycle_time(PyObject *__pyx_v_self, PyObject *__pyx_arg_ct); /*proto*/
+static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_9change_cycle_time(PyObject *__pyx_v_self, PyObject *__pyx_arg_ct) {
+  float __pyx_v_ct;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("change_cycle_time (wrapper)", 0);
+  assert(__pyx_arg_ct); {
+    __pyx_v_ct = __pyx_PyFloat_AsFloat(__pyx_arg_ct); if (unlikely((__pyx_v_ct == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 41, __pyx_L3_error)
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("LegTrajectory_py.LegTrajectory_py.change_cycle_time", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_16LegTrajectory_py_16LegTrajectory_py_8change_cycle_time(((struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *)__pyx_v_self), ((float)__pyx_v_ct));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_8change_cycle_time(struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self, float __pyx_v_ct) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("change_cycle_time", 0);
+
+  /* "LegTrajectory_py.pyx":43
+ *     def change_cycle_time(self, float ct):
+ *         # TODO: shift this to own State pyx
+ *         self.st.set_cycle_time(ct)             # <<<<<<<<<<<<<<
+ * 
+ *     def change_support_ratio(self, float sr):
+ */
+  __pyx_v_self->st.set_cycle_time(__pyx_v_ct);
+
+  /* "LegTrajectory_py.pyx":41
+ *         self.st.set_vel_x(vx)
+ * 
+ *     def change_cycle_time(self, float ct):             # <<<<<<<<<<<<<<
+ *         # TODO: shift this to own State pyx
+ *         self.st.set_cycle_time(ct)
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "LegTrajectory_py.pyx":45
+ *         self.st.set_cycle_time(ct)
+ * 
+ *     def change_support_ratio(self, float sr):             # <<<<<<<<<<<<<<
+ *         # TODO: shift this to own State pyx
+ *         self.st.set_support_ratio(sr)
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_11change_support_ratio(PyObject *__pyx_v_self, PyObject *__pyx_arg_sr); /*proto*/
+static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_11change_support_ratio(PyObject *__pyx_v_self, PyObject *__pyx_arg_sr) {
+  float __pyx_v_sr;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("change_support_ratio (wrapper)", 0);
+  assert(__pyx_arg_sr); {
+    __pyx_v_sr = __pyx_PyFloat_AsFloat(__pyx_arg_sr); if (unlikely((__pyx_v_sr == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 45, __pyx_L3_error)
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("LegTrajectory_py.LegTrajectory_py.change_support_ratio", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_16LegTrajectory_py_16LegTrajectory_py_10change_support_ratio(((struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *)__pyx_v_self), ((float)__pyx_v_sr));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_10change_support_ratio(struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self, float __pyx_v_sr) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("change_support_ratio", 0);
+
+  /* "LegTrajectory_py.pyx":47
+ *     def change_support_ratio(self, float sr):
+ *         # TODO: shift this to own State pyx
+ *         self.st.set_support_ratio(sr)             # <<<<<<<<<<<<<<
+ * 
+ */
+  __pyx_v_self->st.set_support_ratio(__pyx_v_sr);
+
+  /* "LegTrajectory_py.pyx":45
+ *         self.st.set_cycle_time(ct)
+ * 
+ *     def change_support_ratio(self, float sr):             # <<<<<<<<<<<<<<
+ *         # TODO: shift this to own State pyx
+ *         self.st.set_support_ratio(sr)
  */
 
   /* function exit code */
@@ -1644,19 +1837,19 @@ static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_4update_com(stru
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_7__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_7__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_13__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_13__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__reduce_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_16LegTrajectory_py_16LegTrajectory_py_6__reduce_cython__(((struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *)__pyx_v_self));
+  __pyx_r = __pyx_pf_16LegTrajectory_py_16LegTrajectory_py_12__reduce_cython__(((struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_6__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self) {
+static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_12__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1701,19 +1894,19 @@ static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_6__reduce_cython
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_9__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
-static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_9__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_15__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
+static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_15__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__setstate_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_16LegTrajectory_py_16LegTrajectory_py_8__setstate_cython__(((struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
+  __pyx_r = __pyx_pf_16LegTrajectory_py_16LegTrajectory_py_14__setstate_cython__(((struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_8__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_14__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1782,8 +1975,11 @@ static void __pyx_tp_dealloc_16LegTrajectory_py_LegTrajectory_py(PyObject *o) {
 static PyMethodDef __pyx_methods_16LegTrajectory_py_LegTrajectory_py[] = {
   {"get_leg_position", (PyCFunction)__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_3get_leg_position, METH_O, 0},
   {"update_com", (PyCFunction)__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_5update_com, METH_O, __pyx_doc_16LegTrajectory_py_16LegTrajectory_py_4update_com},
-  {"__reduce_cython__", (PyCFunction)__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_7__reduce_cython__, METH_NOARGS, 0},
-  {"__setstate_cython__", (PyCFunction)__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_9__setstate_cython__, METH_O, 0},
+  {"change_vel_x", (PyCFunction)__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_7change_vel_x, METH_O, 0},
+  {"change_cycle_time", (PyCFunction)__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_9change_cycle_time, METH_O, 0},
+  {"change_support_ratio", (PyCFunction)__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_11change_support_ratio, METH_O, 0},
+  {"__reduce_cython__", (PyCFunction)__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_13__reduce_cython__, METH_NOARGS, 0},
+  {"__setstate_cython__", (PyCFunction)__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_15__setstate_cython__, METH_O, 0},
   {0, 0, 0, 0}
 };
 
@@ -1923,7 +2119,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 31, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 27, __pyx_L1_error)
   __pyx_builtin_TypeError = __Pyx_GetBuiltinName(__pyx_n_s_TypeError); if (!__pyx_builtin_TypeError) __PYX_ERR(1, 2, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
@@ -1934,14 +2130,14 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "LegTrajectory_py.pyx":30
+  /* "LegTrajectory_py.pyx":26
  *         cdef int i, j
  * 
  *         out = np.zeros((3,4))             # <<<<<<<<<<<<<<
  *         for i in range(3):
  *             for j in range(4):
  */
-  __pyx_tuple_ = PyTuple_Pack(2, __pyx_int_3, __pyx_int_4); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 30, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(2, __pyx_int_3, __pyx_int_4); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 26, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 

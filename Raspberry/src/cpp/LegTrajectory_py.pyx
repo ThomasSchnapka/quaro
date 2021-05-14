@@ -19,10 +19,6 @@ cdef class LegTrajectory_py:
         self.bft = new BaseFrameTrajectory(&self.st)
         self.lt = new LegTrajectory(&self.st, self.bft)
     
-    #def __dealloc__(self):
-    #if self._c_queue is not NULL:
-    #    cqueue.queue_free(self._c_queue)
-    
     def get_leg_position(self, float t):
         cdef Coordinates inp = self.lt.get_leg_position(t)
         cdef int i, j
@@ -37,3 +33,16 @@ cdef class LegTrajectory_py:
         '''helper to update COM position to avoid linking an outside COM trajectory
         object with leg trajectory'''
         self.bft.update(t)
+        
+    def set_vel_x(self, float vx):
+        # TODO: shift this to own State pyx
+        self.st.set_vel_x(vx)
+        
+    def set_cycle_time(self, float ct):
+        # TODO: shift this to own State pyx
+        self.st.set_cycle_time(ct)
+        
+    def set_support_ratio(self, float sr):
+        # TODO: shift this to own State pyx
+        self.st.set_support_ratio(sr)
+        

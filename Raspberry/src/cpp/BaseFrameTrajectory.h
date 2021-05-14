@@ -8,9 +8,9 @@ class BaseFrameTrajectory {
 	public:
 		BaseFrameTrajectory(State* pstate);
 		~BaseFrameTrajectory();
-		Coordinate x_com;
+		Coordinate x_bf;
 		Coordinate rpy;
-		Coordinate predict_x_com(float dt);
+		Coordinate predict_x_bf(float dt);
 		void update(float t);
 	private:
 		State* state;
