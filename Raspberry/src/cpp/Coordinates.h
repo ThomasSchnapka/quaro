@@ -12,7 +12,11 @@
 #ifndef COORDINATES_H
 #define COORDINATES_H
 
-#include <Eigen/Dense>
+#if defined __arm__
+    #include <eigen3/Eigen/Dense>
+#else
+    #include <Eigen/Dense>
+#endif
 
 using namespace Eigen;
 

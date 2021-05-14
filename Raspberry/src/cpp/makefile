@@ -6,7 +6,7 @@
 CC = g++
 # CFLAGS = -Wall -g
 CFLAGS = -g -w
-INC = -I eigen-3.4-rc1
+INC = -I eigen-3.4-rc1 -lm
  
 # *****************************************************
 # linking

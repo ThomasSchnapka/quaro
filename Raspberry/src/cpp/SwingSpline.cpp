@@ -8,7 +8,11 @@
 
 
 #include <iostream>
-#include <Eigen/Dense>
+#if defined __arm__
+    #include <eigen3/Eigen/Dense>
+#else
+    #include <Eigen/Dense>
+#endif
 #include "SwingSpline.h"
 #include "Coordinate.h"
 #include "State.h"

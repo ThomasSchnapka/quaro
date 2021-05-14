@@ -1,9 +1,10 @@
-import numpy as np
+#import numpy as np
 import time
 
-from src.Stabilizer import Stabilizer
-from src.COMTrajectory import COMTrajectory
-from src.LegTrajectory import LegTrajectory
+#from src.Stabilizer import Stabilizer
+from src.cpp.LegTrajectory_py import LegTrajectory_py
+
+
 
 
 class GaitController:
@@ -26,9 +27,10 @@ class GaitController:
         self.last_update = 0
         self.t_init = time.time()
         
-        self.stabilizer = Stabilizer(self.state)
-        self.comtraj = COMTrajectory(self.state, self.stabilizer)
-        self.leg_trajectory = LegTrajectory(state, self.comtraj, contact_sensor)
+        #self.stabilizer = Stabilizer(self.state)
+        #self.comtraj = COMTrajectory(self.state, self.stabilizer)
+        self.lt = LegTrajectory_py()
+        self.lt.set_vel_x(0.05)
         
     def get_position(self, initial=False):
         '''
@@ -40,8 +42,8 @@ class GaitController:
         '''
         t = self.get_time()
         if t is not None:
-            self.comtraj.update_state(t)
-            pos = np.copy(self.leg_trajectory.get_leg_position(t))
+            self.lt.update_com(t)
+            pos = self.lt.get_leg_position(t)
             #pos = self.rotation_controller.rotate(abs_position,
             #                                      leg_state, leg_time)
             pos[2,:] = self.state.operating_hight - pos[2,:]

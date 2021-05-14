@@ -1,5 +1,6 @@
 #include <iostream>
-#include <cmath>
+//#include <cmath>
+#include "math.h"
 #include "SingleLegTrajectory.h"
 #include "Coordinate.h"
 #include "State.h"
@@ -31,7 +32,7 @@ SingleLegTrajectory::~SingleLegTrajectory() {}
 
 Coordinate SingleLegTrajectory::get_leg_position(float t) {
 	// normalized time
-	float tn = std::fmodf((t+state->phase(num)), 1.0);
+	float tn = std::fmod((t+state->phase(num)), 1.0);
 	update_fsm(tn);
 	
 	
