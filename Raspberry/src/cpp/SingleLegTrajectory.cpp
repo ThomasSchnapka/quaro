@@ -4,20 +4,21 @@
 #include "Coordinate.h"
 #include "State.h"
 #include "SwingSpline.h"
-#include "COMTrajectory.h"
+#include "BaseFrameTrajectory.h"
  
 
 SingleLegTrajectory::SingleLegTrajectory(State* pstate,
-										 COMTrajectory* pcomtrajectory,
+										 BaseFrameTrajectory* pcomtrajectory,
 										 int pnum) 
 										 : swingspline(pstate, pcomtrajectory)
 										 {
 	state = pstate;
-	comtrajectory = pcomtrajectory;
+	bftrajectory = pcomtrajectory;
 	num = pnum;
 	
 	liftoff_pos << 0, 0, 0;
 	current_pos << 0, 0, 0;
+	leg_at_touchdown << 0, 0, 0;
 	com_at_touchdown << 0, 0, 0;
 	fsm = 0;
 	
@@ -37,8 +38,7 @@ Coordinate SingleLegTrajectory::get_leg_position(float t) {
 	// retrieve current leg position depending on state
 	Coordinate c;
 	if(fsm==0){
-		c = comtrajectory->x_com;		// subtraction in a single line results in a compilation error
-		c -= com_at_touchdown;
+		c = get_position_stance();
 	}else{
 		c = swingspline.get_leg_position(tn);
 	}
@@ -67,6 +67,17 @@ void SingleLegTrajectory::update_fsm(float tn){
 
 void SingleLegTrajectory::update_touchdown_pos(){
 	// save COM position as leg touches ground
-	com_at_touchdown = comtrajectory->x_com;
+	leg_at_touchdown = current_pos;
+	com_at_touchdown = bftrajectory->x_com;
 }	
+
+Coordinate SingleLegTrajectory::get_position_stance(){
+	// pos = leg_at_touchdown - (bftrajectory->x_com - com_at_touchdown)
+	// subtraction in a single line results in compilation error,
+	// that it is done in seperate lines
+	Coordinate c = leg_at_touchdown;
+	c -= bftrajectory->x_com;
+	c += com_at_touchdown;
+	return c;
+}
     

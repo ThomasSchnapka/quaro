@@ -4,10 +4,10 @@
 #include "Coordinate.h"
 #include "State.h"
 
-class COMTrajectory {
+class BaseFrameTrajectory {
 	public:
-		COMTrajectory(State* pstate);
-		~COMTrajectory();
+		BaseFrameTrajectory(State* pstate);
+		~BaseFrameTrajectory();
 		Coordinate x_com;
 		Coordinate rpy;
 		Coordinate predict_x_com(float dt);

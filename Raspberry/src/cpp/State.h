@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <Eigen/Dense>
+#include "Coordinate.h"
 
 using namespace Eigen;
 
@@ -15,6 +16,10 @@ class State {
 		float swing_hight;
 		int cycle_time;
 		Vector4f phase;
+		
+		Coordinate dx_com;
+		Coordinate d_rpy;
+		
 		
 };
 

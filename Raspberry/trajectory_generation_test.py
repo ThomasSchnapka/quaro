@@ -8,7 +8,7 @@ Created on Thu May  6 08:19:55 2021
 
 import matplotlib.pyplot as plt
 import numpy as np
-import time
+'''
 from src.State import State
 from src.COMTrajectory import COMTrajectory
 from src.LegTrajectory import LegTrajectory
@@ -20,16 +20,20 @@ stabilizer = Stabilizer(state)
 ct = COMTrajectory(state, stabilizer)
 cs = ContactSensor()
 lt = LegTrajectory(state, ct, cs)
+'''
+from src.cpp.LegTrajectory_py import LegTrajectory_py
+
+lt = LegTrajectory_py()
 
 
 N = 200
 pos = np.zeros((3,4,N))
-t_idx = np.linspace(0, 5, N)
+t_idx = np.linspace(0, 3, N)
 for i in range(N):
-    ct.update_state(t_idx[i])
+    lt.update_com(t_idx[i])
     pos[:,:,i] = lt.get_leg_position(t_idx[i])
 
-for i in range(4):
+for i in [0, 1]:#range(4):
     plt.plot(t_idx, pos[0, i, :], label=("x"+str(i)))
     plt.plot(t_idx, pos[1, i, :], label=("y"+str(i)))
     plt.plot(t_idx, pos[2, i, :], label=("z"+str(i)))

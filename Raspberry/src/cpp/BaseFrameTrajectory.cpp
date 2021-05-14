@@ -1,10 +1,10 @@
 #include <iostream>
-#include "COMTrajectory.h"
+#include "BaseFrameTrajectory.h"
 #include "Coordinate.h"
 #include "State.h"
  
 // Default constructor
-COMTrajectory::COMTrajectory(State* pstate) {
+BaseFrameTrajectory::BaseFrameTrajectory(State* pstate) {
 	state = pstate;
 	x_com << 0, 0, 0;
 	rpy << 0, 0, 0;
@@ -12,16 +12,16 @@ COMTrajectory::COMTrajectory(State* pstate) {
 	}
 
 // Destructor
-COMTrajectory::~COMTrajectory() {}
+BaseFrameTrajectory::~BaseFrameTrajectory() {}
 
-Coordinate COMTrajectory::predict_x_com(float dt){
+Coordinate BaseFrameTrajectory::predict_x_com(float dt){
 	Coordinate pos;
 	pos = x_com;
 	pos += dt*state->dx_com;
 	return pos;
 }
 
-void COMTrajectory::update(float t){
+void BaseFrameTrajectory::update(float t){
 	float dt = t - t_last;
 	x_com += dt*state->dx_com;
 	rpy += dt*state->d_rpy;

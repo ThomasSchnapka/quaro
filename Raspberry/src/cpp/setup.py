@@ -20,7 +20,8 @@ extensions = [Extension(name = "LegTrajectory_py",
                                  ],
                             include_dirs=["eigen-3.4-rc1"],
                             language="c++"
-                            )]
+                            )
+              ]
 
 setup(
     ext_modules=cythonize(extensions,

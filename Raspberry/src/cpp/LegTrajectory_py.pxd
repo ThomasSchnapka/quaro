@@ -2,7 +2,7 @@
 
 from Coordinates_py cimport Coordinates
 from State cimport State
-from COMTrajectory_py cimport COMTrajectory
+from BaseFrameTrajectory_py cimport BaseFrameTrajectory
 
 cdef extern from "LegTrajectory.cpp": # tell cython that this is the source
     pass
@@ -11,5 +11,5 @@ cdef extern from "LegTrajectory.h":
     cdef cppclass LegTrajectory:
         #cdef cppclass State
         #cdef cppclass COMTrajectory
-        LegTrajectory(State* pstate, COMTrajectory* pcomtrajectory) except +
+        LegTrajectory(State* pstate, BaseFrameTrajectory* pbftrajectory) except +
         Coordinates get_leg_position(float t)

@@ -10,8 +10,8 @@ INC = -I eigen-3.4-rc1
  
 # *****************************************************
 # linking
-test: test.o LegTrajectory.o SingleLegTrajectory.o SwingSpline.o COMTrajectory.o State.o
-	$(CC) $(CFLAGS) test.o LegTrajectory.o SingleLegTrajectory.o SwingSpline.o COMTrajectory.o State.o -o test
+test: test.o LegTrajectory.o SingleLegTrajectory.o SwingSpline.o BaseFrameTrajectory.o State.o
+	$(CC) $(CFLAGS) test.o LegTrajectory.o SingleLegTrajectory.o SwingSpline.o BaseFrameTrajectory.o State.o -o test
 	
 # *****************************************************
 # compilation
@@ -28,8 +28,8 @@ SingleLegTrajectory.o: SingleLegTrajectory.cpp
 SwingSpline.o: SwingSpline.cpp
 	$(CC) $(CFLAGS) $(INC) -c SwingSpline.cpp
 
-COMTrajectory.o: COMTrajectory.cpp
-	$(CC) $(CFLAGS) $(INC) -c COMTrajectory.cpp
+BaseFrameTrajectory.o: BaseFrameTrajectory.cpp
+	$(CC) $(CFLAGS) $(INC) -c BaseFrameTrajectory.cpp
 	
 State.o: State.cpp
 	$(CC) $(CFLAGS) $(INC) -c State.cpp
