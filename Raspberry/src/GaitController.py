@@ -2,9 +2,7 @@
 import time
 
 #from src.Stabilizer import Stabilizer
-from src.cpp.LegTrajectory_py import LegTrajectory_py
-
-
+from src.cpp.GaitController_py import GaitController_py
 
 
 class GaitController:
@@ -28,9 +26,11 @@ class GaitController:
         
         #self.stabilizer = Stabilizer(self.state)
         #self.comtraj = COMTrajectory(self.state, self.stabilizer)
-        self.lt = LegTrajectory_py()
-        self.lt.set_vel_x(0.0)
-        self.lt.set_support_ratio(0.7)
+        self.gc = GaitController_py()
+        self.gc.set_vel_x(0.0)
+        self.gc.set_support_ratio(0.8)
+        self.gc.set_cycle_time(2)
+        self.gc.set_swing_hight(0.015)
         
     def get_position(self, initial=False):
         '''
@@ -42,8 +42,7 @@ class GaitController:
         '''
         t = self.get_time()
         if t is not None:
-            self.lt.update_com(t)
-            pos = self.lt.get_leg_position(t)
+            pos = self.gc.get_leg_position(t)
             #pos = self.rotation_controller.rotate(abs_position,
             #                                      leg_state, leg_time)
             pos[2,:] = self.state.operating_hight - pos[2,:]

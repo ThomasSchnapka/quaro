@@ -20,7 +20,7 @@ State::State() {
 	phase = Vector4f(0.0, 0.5, 0.5, 0.0);
 	dx_bf << 0.01, 0.0, 0.0;
     d_rpy << 0.0, 0.0, 0.0;
-	}
+}
 
 // Destructor
 State::~State() {}

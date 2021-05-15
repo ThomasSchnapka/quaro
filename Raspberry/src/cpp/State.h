@@ -21,6 +21,7 @@ class State {
 		int cycle_time;
 		Vector4f phase;
 		
+		EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 		Coordinate dx_bf;
 		Coordinate d_rpy;		
 		
