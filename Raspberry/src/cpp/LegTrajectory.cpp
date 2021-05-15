@@ -25,6 +25,10 @@ LegTrajectory::~LegTrajectory() {}
 
 
 Coordinates LegTrajectory::get_leg_position(float t) {
+    // update BaseFrame position
+    bftrajectory->update(t);
+    
+    // get ContactSensor readings and update leg positions
     std::vector<bool> csr = contact_sensor_result();
 	Coordinates c;
 	for(int i = 0; i<4; i++){

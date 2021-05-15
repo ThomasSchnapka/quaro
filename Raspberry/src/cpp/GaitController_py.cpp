@@ -4,28 +4,25 @@
 {
     "distutils": {
         "depends": [
-            "BaseFrameTrajectory.cpp",
-            "BaseFrameTrajectory.h",
             "Coordinates.h",
-            "LegTrajectory.cpp",
-            "LegTrajectory.h",
-            "State.cpp",
-            "State.h"
+            "GaitController.cpp",
+            "GaitController.h"
         ],
         "include_dirs": [
             ".",
             "eigen-3.4-rc1"
         ],
         "language": "c++",
-        "name": "LegTrajectory_py",
+        "name": "GaitController_py",
         "sources": [
-            "LegTrajectory_py.pyx",
+            "GaitController_py.pyx",
+            "LegTrajectory.cpp",
             "SingleLegTrajectory.cpp",
             "SwingSpline.cpp",
             "ContactSensor.cpp"
         ]
     },
-    "module_name": "LegTrajectory_py"
+    "module_name": "GaitController_py"
 }
 END: Cython Metadata */
 
@@ -645,20 +642,16 @@ static CYTHON_INLINE float __PYX_NAN() {
   #endif
 #endif
 
-#define __PYX_HAVE__LegTrajectory_py
-#define __PYX_HAVE_API__LegTrajectory_py
+#define __PYX_HAVE__GaitController_py
+#define __PYX_HAVE_API__GaitController_py
 /* Early includes */
 #include "ios"
 #include "new"
 #include "stdexcept"
 #include "typeinfo"
 #include "Coordinates.h"
-#include "State.cpp"
-#include "State.h"
-#include "BaseFrameTrajectory.cpp"
-#include "BaseFrameTrajectory.h"
-#include "LegTrajectory.cpp"
-#include "LegTrajectory.h"
+#include "GaitController.cpp"
+#include "GaitController.h"
 #ifdef _OPENMP
 #include <omp.h>
 #endif /* _OPENMP */
@@ -867,25 +860,23 @@ static const char *__pyx_filename;
 
 
 static const char *__pyx_f[] = {
-  "LegTrajectory_py.pyx",
+  "GaitController_py.pyx",
   "stringsource",
 };
 
 /*--- Type declarations ---*/
-struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py;
+struct __pyx_obj_17GaitController_py_GaitController_py;
 
-/* "LegTrajectory_py.pyx":10
+/* "GaitController_py.pyx":8
  * # as an attribute and create a bunch of forwarding methods
  * # Python extension type.
- * cdef class LegTrajectory_py:             # <<<<<<<<<<<<<<
+ * cdef class GaitController_py:             # <<<<<<<<<<<<<<
  *     #cdef LegTrajectory(State*, COMTrajectory*) lt# Hold a C++ instance which we're wrapping
  *     #the following classes do not have nullary constructors, so we have to manually allocate them
  */
-struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py {
+struct __pyx_obj_17GaitController_py_GaitController_py {
   PyObject_HEAD
-  State st;
-  BaseFrameTrajectory *bft;
-  LegTrajectory *lt;
+  GaitController *gc;
 };
 
 
@@ -1065,6 +1056,14 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_CallMethO(PyObject *func, PyObject
 /* PyObjectCallOneArg.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyObject_CallOneArg(PyObject *func, PyObject *arg);
 
+/* RaiseDoubleKeywords.proto */
+static void __Pyx_RaiseDoubleKeywordsError(const char* func_name, PyObject* kw_name);
+
+/* ParseKeywords.proto */
+static int __Pyx_ParseOptionalKeywords(PyObject *kwds, PyObject **argnames[],\
+    PyObject *kwds2, PyObject *values[], Py_ssize_t num_pos_args,\
+    const char* function_name);
+
 /* PyThreadStateGet.proto */
 #if CYTHON_FAST_THREAD_STATE
 #define __Pyx_PyThreadState_declare  PyThreadState *__pyx_tstate;
@@ -1161,9 +1160,6 @@ static void __pyx_insert_code_object(int code_line, PyCodeObject* code_object);
 static void __Pyx_AddTraceback(const char *funcname, int c_line,
                                int py_line, const char *filename);
 
-/* None.proto */
-#include <new>
-
 /* CppExceptionConversion.proto */
 #ifndef __Pyx_CppExn2PyErr
 #include <new>
@@ -1240,22 +1236,20 @@ static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
 /* Module declarations from 'Coordinates_py' */
 
-/* Module declarations from 'State' */
+/* Module declarations from 'GaitController_py' */
+static PyTypeObject *__pyx_ptype_17GaitController_py_GaitController_py = 0;
+#define __Pyx_MODULE_NAME "GaitController_py"
+extern int __pyx_module_is_main_GaitController_py;
+int __pyx_module_is_main_GaitController_py = 0;
 
-/* Module declarations from 'BaseFrameTrajectory_py' */
-
-/* Module declarations from 'State_py' */
-
-/* Module declarations from 'LegTrajectory_py' */
-static PyTypeObject *__pyx_ptype_16LegTrajectory_py_LegTrajectory_py = 0;
-#define __Pyx_MODULE_NAME "LegTrajectory_py"
-extern int __pyx_module_is_main_LegTrajectory_py;
-int __pyx_module_is_main_LegTrajectory_py = 0;
-
-/* Implementation of 'LegTrajectory_py' */
+/* Implementation of 'GaitController_py' */
 static PyObject *__pyx_builtin_range;
 static PyObject *__pyx_builtin_TypeError;
 static const char __pyx_k_np[] = "np";
+static const char __pyx_k_p0[] = "p0";
+static const char __pyx_k_p1[] = "p1";
+static const char __pyx_k_p2[] = "p2";
+static const char __pyx_k_p3[] = "p3";
 static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_name[] = "__name__";
 static const char __pyx_k_test[] = "__test__";
@@ -1270,10 +1264,10 @@ static const char __pyx_k_TypeError[] = "TypeError";
 static const char __pyx_k_reduce_ex[] = "__reduce_ex__";
 static const char __pyx_k_reduce_cython[] = "__reduce_cython__";
 static const char __pyx_k_setstate_cython[] = "__setstate_cython__";
-static const char __pyx_k_LegTrajectory_py[] = "LegTrajectory_py";
+static const char __pyx_k_GaitController_py[] = "GaitController_py";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
 static const char __pyx_k_no_default___reduce___due_to_non[] = "no default __reduce__ due to non-trivial __cinit__";
-static PyObject *__pyx_n_s_LegTrajectory_py;
+static PyObject *__pyx_n_s_GaitController_py;
 static PyObject *__pyx_n_s_TypeError;
 static PyObject *__pyx_n_s_cline_in_traceback;
 static PyObject *__pyx_n_s_getstate;
@@ -1283,6 +1277,10 @@ static PyObject *__pyx_n_s_name;
 static PyObject *__pyx_kp_s_no_default___reduce___due_to_non;
 static PyObject *__pyx_n_s_np;
 static PyObject *__pyx_n_s_numpy;
+static PyObject *__pyx_n_s_p0;
+static PyObject *__pyx_n_s_p1;
+static PyObject *__pyx_n_s_p2;
+static PyObject *__pyx_n_s_p3;
 static PyObject *__pyx_n_s_range;
 static PyObject *__pyx_n_s_reduce;
 static PyObject *__pyx_n_s_reduce_cython;
@@ -1291,15 +1289,16 @@ static PyObject *__pyx_n_s_setstate;
 static PyObject *__pyx_n_s_setstate_cython;
 static PyObject *__pyx_n_s_test;
 static PyObject *__pyx_n_s_zeros;
-static int __pyx_pf_16LegTrajectory_py_16LegTrajectory_py___cinit__(struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_2get_leg_position(struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self, float __pyx_v_t); /* proto */
-static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_4update_com(struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self, float __pyx_v_t); /* proto */
-static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_6set_vel_x(struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self, float __pyx_v_vx); /* proto */
-static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_8set_cycle_time(struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self, float __pyx_v_ct); /* proto */
-static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_10set_support_ratio(struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self, float __pyx_v_sr); /* proto */
-static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_12__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_14__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_tp_new_16LegTrajectory_py_LegTrajectory_py(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static int __pyx_pf_17GaitController_py_17GaitController_py___cinit__(struct __pyx_obj_17GaitController_py_GaitController_py *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_17GaitController_py_17GaitController_py_2get_leg_position(struct __pyx_obj_17GaitController_py_GaitController_py *__pyx_v_self, float __pyx_v_t); /* proto */
+static PyObject *__pyx_pf_17GaitController_py_17GaitController_py_4set_vel_x(struct __pyx_obj_17GaitController_py_GaitController_py *__pyx_v_self, float __pyx_v_vx); /* proto */
+static PyObject *__pyx_pf_17GaitController_py_17GaitController_py_6set_cycle_time(struct __pyx_obj_17GaitController_py_GaitController_py *__pyx_v_self, float __pyx_v_ct); /* proto */
+static PyObject *__pyx_pf_17GaitController_py_17GaitController_py_8set_support_ratio(struct __pyx_obj_17GaitController_py_GaitController_py *__pyx_v_self, float __pyx_v_sr); /* proto */
+static PyObject *__pyx_pf_17GaitController_py_17GaitController_py_10set_phase(struct __pyx_obj_17GaitController_py_GaitController_py *__pyx_v_self, float __pyx_v_p0, float __pyx_v_p1, float __pyx_v_p2, float __pyx_v_p3); /* proto */
+static PyObject *__pyx_pf_17GaitController_py_17GaitController_py_12set_swing_hight(struct __pyx_obj_17GaitController_py_GaitController_py *__pyx_v_self, float __pyx_v_sh); /* proto */
+static PyObject *__pyx_pf_17GaitController_py_17GaitController_py_14__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_17GaitController_py_GaitController_py *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_17GaitController_py_17GaitController_py_16__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_17GaitController_py_GaitController_py *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_tp_new_17GaitController_py_GaitController_py(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_int_3;
 static PyObject *__pyx_int_4;
 static PyObject *__pyx_tuple_;
@@ -1307,116 +1306,84 @@ static PyObject *__pyx_tuple__2;
 static PyObject *__pyx_tuple__3;
 /* Late includes */
 
-/* "LegTrajectory_py.pyx":17
- *     cdef LegTrajectory* lt
+/* "GaitController_py.pyx":14
+ *     cdef GaitController* gc
  * 
  *     def __cinit__(self):             # <<<<<<<<<<<<<<
- *         self.st = State()
- *         self.bft = new BaseFrameTrajectory(&self.st)
+ *         self.gc = new GaitController()
+ * 
  */
 
 /* Python wrapper */
-static int __pyx_pw_16LegTrajectory_py_16LegTrajectory_py_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_pw_16LegTrajectory_py_16LegTrajectory_py_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static int __pyx_pw_17GaitController_py_17GaitController_py_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_pw_17GaitController_py_17GaitController_py_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__cinit__ (wrapper)", 0);
   if (unlikely(PyTuple_GET_SIZE(__pyx_args) > 0)) {
     __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 0, 0, PyTuple_GET_SIZE(__pyx_args)); return -1;}
   if (unlikely(__pyx_kwds) && unlikely(PyDict_Size(__pyx_kwds) > 0) && unlikely(!__Pyx_CheckKeywordStrings(__pyx_kwds, "__cinit__", 0))) return -1;
-  __pyx_r = __pyx_pf_16LegTrajectory_py_16LegTrajectory_py___cinit__(((struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *)__pyx_v_self));
+  __pyx_r = __pyx_pf_17GaitController_py_17GaitController_py___cinit__(((struct __pyx_obj_17GaitController_py_GaitController_py *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_16LegTrajectory_py_16LegTrajectory_py___cinit__(struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self) {
+static int __pyx_pf_17GaitController_py_17GaitController_py___cinit__(struct __pyx_obj_17GaitController_py_GaitController_py *__pyx_v_self) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
-  State __pyx_t_1;
-  BaseFrameTrajectory *__pyx_t_2;
-  LegTrajectory *__pyx_t_3;
+  GaitController *__pyx_t_1;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__cinit__", 0);
 
-  /* "LegTrajectory_py.pyx":18
+  /* "GaitController_py.pyx":15
  * 
  *     def __cinit__(self):
- *         self.st = State()             # <<<<<<<<<<<<<<
- *         self.bft = new BaseFrameTrajectory(&self.st)
- *         self.lt = new LegTrajectory(&self.st, self.bft)
- */
-  try {
-    __pyx_t_1 = State();
-  } catch(...) {
-    __Pyx_CppExn2PyErr();
-    __PYX_ERR(0, 18, __pyx_L1_error)
-  }
-  __pyx_v_self->st = __pyx_t_1;
-
-  /* "LegTrajectory_py.pyx":19
- *     def __cinit__(self):
- *         self.st = State()
- *         self.bft = new BaseFrameTrajectory(&self.st)             # <<<<<<<<<<<<<<
- *         self.lt = new LegTrajectory(&self.st, self.bft)
- * 
- */
-  try {
-    __pyx_t_2 = new BaseFrameTrajectory(((State *)(&__pyx_v_self->st)));
-  } catch(...) {
-    __Pyx_CppExn2PyErr();
-    __PYX_ERR(0, 19, __pyx_L1_error)
-  }
-  __pyx_v_self->bft = __pyx_t_2;
-
-  /* "LegTrajectory_py.pyx":20
- *         self.st = State()
- *         self.bft = new BaseFrameTrajectory(&self.st)
- *         self.lt = new LegTrajectory(&self.st, self.bft)             # <<<<<<<<<<<<<<
+ *         self.gc = new GaitController()             # <<<<<<<<<<<<<<
  * 
  *     def get_leg_position(self, float t):
  */
   try {
-    __pyx_t_3 = new LegTrajectory(((State *)(&__pyx_v_self->st)), __pyx_v_self->bft);
+    __pyx_t_1 = new GaitController();
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    __PYX_ERR(0, 20, __pyx_L1_error)
+    __PYX_ERR(0, 15, __pyx_L1_error)
   }
-  __pyx_v_self->lt = __pyx_t_3;
+  __pyx_v_self->gc = __pyx_t_1;
 
-  /* "LegTrajectory_py.pyx":17
- *     cdef LegTrajectory* lt
+  /* "GaitController_py.pyx":14
+ *     cdef GaitController* gc
  * 
  *     def __cinit__(self):             # <<<<<<<<<<<<<<
- *         self.st = State()
- *         self.bft = new BaseFrameTrajectory(&self.st)
+ *         self.gc = new GaitController()
+ * 
  */
 
   /* function exit code */
   __pyx_r = 0;
   goto __pyx_L0;
   __pyx_L1_error:;
-  __Pyx_AddTraceback("LegTrajectory_py.LegTrajectory_py.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("GaitController_py.GaitController_py.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "LegTrajectory_py.pyx":22
- *         self.lt = new LegTrajectory(&self.st, self.bft)
+/* "GaitController_py.pyx":17
+ *         self.gc = new GaitController()
  * 
  *     def get_leg_position(self, float t):             # <<<<<<<<<<<<<<
- *         cdef Coordinates inp = self.lt.get_leg_position(t)
+ *         cdef Coordinates inp = self.gc.get_leg_position(t)
  *         cdef int i, j
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_3get_leg_position(PyObject *__pyx_v_self, PyObject *__pyx_arg_t); /*proto*/
-static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_3get_leg_position(PyObject *__pyx_v_self, PyObject *__pyx_arg_t) {
+static PyObject *__pyx_pw_17GaitController_py_17GaitController_py_3get_leg_position(PyObject *__pyx_v_self, PyObject *__pyx_arg_t); /*proto*/
+static PyObject *__pyx_pw_17GaitController_py_17GaitController_py_3get_leg_position(PyObject *__pyx_v_self, PyObject *__pyx_arg_t) {
   float __pyx_v_t;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -1425,22 +1392,22 @@ static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_3get_leg_positio
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("get_leg_position (wrapper)", 0);
   assert(__pyx_arg_t); {
-    __pyx_v_t = __pyx_PyFloat_AsFloat(__pyx_arg_t); if (unlikely((__pyx_v_t == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 22, __pyx_L3_error)
+    __pyx_v_t = __pyx_PyFloat_AsFloat(__pyx_arg_t); if (unlikely((__pyx_v_t == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 17, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
-  __Pyx_AddTraceback("LegTrajectory_py.LegTrajectory_py.get_leg_position", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("GaitController_py.GaitController_py.get_leg_position", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_16LegTrajectory_py_16LegTrajectory_py_2get_leg_position(((struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *)__pyx_v_self), ((float)__pyx_v_t));
+  __pyx_r = __pyx_pf_17GaitController_py_17GaitController_py_2get_leg_position(((struct __pyx_obj_17GaitController_py_GaitController_py *)__pyx_v_self), ((float)__pyx_v_t));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_2get_leg_position(struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self, float __pyx_v_t) {
+static PyObject *__pyx_pf_17GaitController_py_17GaitController_py_2get_leg_position(struct __pyx_obj_17GaitController_py_GaitController_py *__pyx_v_self, float __pyx_v_t) {
   Coordinates __pyx_v_inp;
   int __pyx_v_i;
   int __pyx_v_j;
@@ -1458,25 +1425,25 @@ static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_2get_leg_positio
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("get_leg_position", 0);
 
-  /* "LegTrajectory_py.pyx":23
+  /* "GaitController_py.pyx":18
  * 
  *     def get_leg_position(self, float t):
- *         cdef Coordinates inp = self.lt.get_leg_position(t)             # <<<<<<<<<<<<<<
+ *         cdef Coordinates inp = self.gc.get_leg_position(t)             # <<<<<<<<<<<<<<
  *         cdef int i, j
  * 
  */
-  __pyx_v_inp = __pyx_v_self->lt->get_leg_position(__pyx_v_t);
+  __pyx_v_inp = __pyx_v_self->gc->get_leg_position(__pyx_v_t);
 
-  /* "LegTrajectory_py.pyx":26
+  /* "GaitController_py.pyx":21
  *         cdef int i, j
  * 
  *         out = np.zeros((3,4))             # <<<<<<<<<<<<<<
  *         for i in range(3):
  *             for j in range(4):
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -1491,13 +1458,13 @@ static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_2get_leg_positio
   }
   __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_2, __pyx_tuple_) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_tuple_);
   __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 26, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_out = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "LegTrajectory_py.pyx":27
+  /* "GaitController_py.pyx":22
  * 
  *         out = np.zeros((3,4))
  *         for i in range(3):             # <<<<<<<<<<<<<<
@@ -1507,7 +1474,7 @@ static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_2get_leg_positio
   for (__pyx_t_4 = 0; __pyx_t_4 < 3; __pyx_t_4+=1) {
     __pyx_v_i = __pyx_t_4;
 
-    /* "LegTrajectory_py.pyx":28
+    /* "GaitController_py.pyx":23
  *         out = np.zeros((3,4))
  *         for i in range(3):
  *             for j in range(4):             # <<<<<<<<<<<<<<
@@ -1517,20 +1484,20 @@ static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_2get_leg_positio
     for (__pyx_t_5 = 0; __pyx_t_5 < 4; __pyx_t_5+=1) {
       __pyx_v_j = __pyx_t_5;
 
-      /* "LegTrajectory_py.pyx":29
+      /* "GaitController_py.pyx":24
  *         for i in range(3):
  *             for j in range(4):
  *                 out[i, j] = inp(i, j)             # <<<<<<<<<<<<<<
  *         return out
  * 
  */
-      __pyx_t_1 = PyFloat_FromDouble(__pyx_v_inp(__pyx_v_i, __pyx_v_j)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 29, __pyx_L1_error)
+      __pyx_t_1 = PyFloat_FromDouble(__pyx_v_inp(__pyx_v_i, __pyx_v_j)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 24, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_i); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 29, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_i); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 24, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_j); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 29, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_j); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 24, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 29, __pyx_L1_error)
+      __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 24, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_GIVEREF(__pyx_t_3);
       PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_3);
@@ -1538,29 +1505,29 @@ static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_2get_leg_positio
       PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_t_2);
       __pyx_t_3 = 0;
       __pyx_t_2 = 0;
-      if (unlikely(PyObject_SetItem(__pyx_v_out, __pyx_t_6, __pyx_t_1) < 0)) __PYX_ERR(0, 29, __pyx_L1_error)
+      if (unlikely(PyObject_SetItem(__pyx_v_out, __pyx_t_6, __pyx_t_1) < 0)) __PYX_ERR(0, 24, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     }
   }
 
-  /* "LegTrajectory_py.pyx":30
+  /* "GaitController_py.pyx":25
  *             for j in range(4):
  *                 out[i, j] = inp(i, j)
  *         return out             # <<<<<<<<<<<<<<
  * 
- *     def update_com(self, float t):
+ *     def set_vel_x(self, float vx):
  */
   __Pyx_XDECREF(__pyx_r);
   __Pyx_INCREF(__pyx_v_out);
   __pyx_r = __pyx_v_out;
   goto __pyx_L0;
 
-  /* "LegTrajectory_py.pyx":22
- *         self.lt = new LegTrajectory(&self.st, self.bft)
+  /* "GaitController_py.pyx":17
+ *         self.gc = new GaitController()
  * 
  *     def get_leg_position(self, float t):             # <<<<<<<<<<<<<<
- *         cdef Coordinates inp = self.lt.get_leg_position(t)
+ *         cdef Coordinates inp = self.gc.get_leg_position(t)
  *         cdef int i, j
  */
 
@@ -1570,7 +1537,7 @@ static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_2get_leg_positio
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_6);
-  __Pyx_AddTraceback("LegTrajectory_py.LegTrajectory_py.get_leg_position", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("GaitController_py.GaitController_py.get_leg_position", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_out);
@@ -1579,81 +1546,17 @@ static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_2get_leg_positio
   return __pyx_r;
 }
 
-/* "LegTrajectory_py.pyx":32
+/* "GaitController_py.pyx":27
  *         return out
- * 
- *     def update_com(self, float t):             # <<<<<<<<<<<<<<
- *         '''helper to update COM position to avoid linking an outside COM trajectory
- *         object with leg trajectory'''
- */
-
-/* Python wrapper */
-static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_5update_com(PyObject *__pyx_v_self, PyObject *__pyx_arg_t); /*proto*/
-static char __pyx_doc_16LegTrajectory_py_16LegTrajectory_py_4update_com[] = "helper to update COM position to avoid linking an outside COM trajectory\n        object with leg trajectory";
-static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_5update_com(PyObject *__pyx_v_self, PyObject *__pyx_arg_t) {
-  float __pyx_v_t;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("update_com (wrapper)", 0);
-  assert(__pyx_arg_t); {
-    __pyx_v_t = __pyx_PyFloat_AsFloat(__pyx_arg_t); if (unlikely((__pyx_v_t == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 32, __pyx_L3_error)
-  }
-  goto __pyx_L4_argument_unpacking_done;
-  __pyx_L3_error:;
-  __Pyx_AddTraceback("LegTrajectory_py.LegTrajectory_py.update_com", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __Pyx_RefNannyFinishContext();
-  return NULL;
-  __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_16LegTrajectory_py_16LegTrajectory_py_4update_com(((struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *)__pyx_v_self), ((float)__pyx_v_t));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_4update_com(struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self, float __pyx_v_t) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("update_com", 0);
-
-  /* "LegTrajectory_py.pyx":35
- *         '''helper to update COM position to avoid linking an outside COM trajectory
- *         object with leg trajectory'''
- *         self.bft.update(t)             # <<<<<<<<<<<<<<
- * 
- *     def set_vel_x(self, float vx):
- */
-  __pyx_v_self->bft->update(__pyx_v_t);
-
-  /* "LegTrajectory_py.pyx":32
- *         return out
- * 
- *     def update_com(self, float t):             # <<<<<<<<<<<<<<
- *         '''helper to update COM position to avoid linking an outside COM trajectory
- *         object with leg trajectory'''
- */
-
-  /* function exit code */
-  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "LegTrajectory_py.pyx":37
- *         self.bft.update(t)
  * 
  *     def set_vel_x(self, float vx):             # <<<<<<<<<<<<<<
- *         # TODO: shift this to own State pyx
- *         self.st.set_vel_x(vx)
+ *         self.gc.set_vel_x(vx)
+ * 
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_7set_vel_x(PyObject *__pyx_v_self, PyObject *__pyx_arg_vx); /*proto*/
-static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_7set_vel_x(PyObject *__pyx_v_self, PyObject *__pyx_arg_vx) {
+static PyObject *__pyx_pw_17GaitController_py_17GaitController_py_5set_vel_x(PyObject *__pyx_v_self, PyObject *__pyx_arg_vx); /*proto*/
+static PyObject *__pyx_pw_17GaitController_py_17GaitController_py_5set_vel_x(PyObject *__pyx_v_self, PyObject *__pyx_arg_vx) {
   float __pyx_v_vx;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -1662,41 +1565,41 @@ static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_7set_vel_x(PyObj
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("set_vel_x (wrapper)", 0);
   assert(__pyx_arg_vx); {
-    __pyx_v_vx = __pyx_PyFloat_AsFloat(__pyx_arg_vx); if (unlikely((__pyx_v_vx == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 37, __pyx_L3_error)
+    __pyx_v_vx = __pyx_PyFloat_AsFloat(__pyx_arg_vx); if (unlikely((__pyx_v_vx == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 27, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
-  __Pyx_AddTraceback("LegTrajectory_py.LegTrajectory_py.set_vel_x", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("GaitController_py.GaitController_py.set_vel_x", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_16LegTrajectory_py_16LegTrajectory_py_6set_vel_x(((struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *)__pyx_v_self), ((float)__pyx_v_vx));
+  __pyx_r = __pyx_pf_17GaitController_py_17GaitController_py_4set_vel_x(((struct __pyx_obj_17GaitController_py_GaitController_py *)__pyx_v_self), ((float)__pyx_v_vx));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_6set_vel_x(struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self, float __pyx_v_vx) {
+static PyObject *__pyx_pf_17GaitController_py_17GaitController_py_4set_vel_x(struct __pyx_obj_17GaitController_py_GaitController_py *__pyx_v_self, float __pyx_v_vx) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("set_vel_x", 0);
 
-  /* "LegTrajectory_py.pyx":39
+  /* "GaitController_py.pyx":28
+ * 
  *     def set_vel_x(self, float vx):
- *         # TODO: shift this to own State pyx
- *         self.st.set_vel_x(vx)             # <<<<<<<<<<<<<<
+ *         self.gc.set_vel_x(vx)             # <<<<<<<<<<<<<<
  * 
  *     def set_cycle_time(self, float ct):
  */
-  __pyx_v_self->st.set_vel_x(__pyx_v_vx);
+  __pyx_v_self->gc->set_vel_x(__pyx_v_vx);
 
-  /* "LegTrajectory_py.pyx":37
- *         self.bft.update(t)
+  /* "GaitController_py.pyx":27
+ *         return out
  * 
  *     def set_vel_x(self, float vx):             # <<<<<<<<<<<<<<
- *         # TODO: shift this to own State pyx
- *         self.st.set_vel_x(vx)
+ *         self.gc.set_vel_x(vx)
+ * 
  */
 
   /* function exit code */
@@ -1706,17 +1609,17 @@ static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_6set_vel_x(struc
   return __pyx_r;
 }
 
-/* "LegTrajectory_py.pyx":41
- *         self.st.set_vel_x(vx)
+/* "GaitController_py.pyx":30
+ *         self.gc.set_vel_x(vx)
  * 
  *     def set_cycle_time(self, float ct):             # <<<<<<<<<<<<<<
- *         # TODO: shift this to own State pyx
- *         self.st.set_cycle_time(ct)
+ *         self.gc.set_cycle_time(ct)
+ * 
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_9set_cycle_time(PyObject *__pyx_v_self, PyObject *__pyx_arg_ct); /*proto*/
-static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_9set_cycle_time(PyObject *__pyx_v_self, PyObject *__pyx_arg_ct) {
+static PyObject *__pyx_pw_17GaitController_py_17GaitController_py_7set_cycle_time(PyObject *__pyx_v_self, PyObject *__pyx_arg_ct); /*proto*/
+static PyObject *__pyx_pw_17GaitController_py_17GaitController_py_7set_cycle_time(PyObject *__pyx_v_self, PyObject *__pyx_arg_ct) {
   float __pyx_v_ct;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -1725,41 +1628,41 @@ static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_9set_cycle_time(
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("set_cycle_time (wrapper)", 0);
   assert(__pyx_arg_ct); {
-    __pyx_v_ct = __pyx_PyFloat_AsFloat(__pyx_arg_ct); if (unlikely((__pyx_v_ct == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 41, __pyx_L3_error)
+    __pyx_v_ct = __pyx_PyFloat_AsFloat(__pyx_arg_ct); if (unlikely((__pyx_v_ct == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 30, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
-  __Pyx_AddTraceback("LegTrajectory_py.LegTrajectory_py.set_cycle_time", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("GaitController_py.GaitController_py.set_cycle_time", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_16LegTrajectory_py_16LegTrajectory_py_8set_cycle_time(((struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *)__pyx_v_self), ((float)__pyx_v_ct));
+  __pyx_r = __pyx_pf_17GaitController_py_17GaitController_py_6set_cycle_time(((struct __pyx_obj_17GaitController_py_GaitController_py *)__pyx_v_self), ((float)__pyx_v_ct));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_8set_cycle_time(struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self, float __pyx_v_ct) {
+static PyObject *__pyx_pf_17GaitController_py_17GaitController_py_6set_cycle_time(struct __pyx_obj_17GaitController_py_GaitController_py *__pyx_v_self, float __pyx_v_ct) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("set_cycle_time", 0);
 
-  /* "LegTrajectory_py.pyx":43
+  /* "GaitController_py.pyx":31
+ * 
  *     def set_cycle_time(self, float ct):
- *         # TODO: shift this to own State pyx
- *         self.st.set_cycle_time(ct)             # <<<<<<<<<<<<<<
+ *         self.gc.set_cycle_time(ct)             # <<<<<<<<<<<<<<
  * 
  *     def set_support_ratio(self, float sr):
  */
-  __pyx_v_self->st.set_cycle_time(__pyx_v_ct);
+  __pyx_v_self->gc->set_cycle_time(__pyx_v_ct);
 
-  /* "LegTrajectory_py.pyx":41
- *         self.st.set_vel_x(vx)
+  /* "GaitController_py.pyx":30
+ *         self.gc.set_vel_x(vx)
  * 
  *     def set_cycle_time(self, float ct):             # <<<<<<<<<<<<<<
- *         # TODO: shift this to own State pyx
- *         self.st.set_cycle_time(ct)
+ *         self.gc.set_cycle_time(ct)
+ * 
  */
 
   /* function exit code */
@@ -1769,17 +1672,17 @@ static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_8set_cycle_time(
   return __pyx_r;
 }
 
-/* "LegTrajectory_py.pyx":45
- *         self.st.set_cycle_time(ct)
+/* "GaitController_py.pyx":33
+ *         self.gc.set_cycle_time(ct)
  * 
  *     def set_support_ratio(self, float sr):             # <<<<<<<<<<<<<<
- *         # TODO: shift this to own State pyx
- *         self.st.set_support_ratio(sr)
+ *         self.gc.set_support_ratio(sr)
+ * 
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_11set_support_ratio(PyObject *__pyx_v_self, PyObject *__pyx_arg_sr); /*proto*/
-static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_11set_support_ratio(PyObject *__pyx_v_self, PyObject *__pyx_arg_sr) {
+static PyObject *__pyx_pw_17GaitController_py_17GaitController_py_9set_support_ratio(PyObject *__pyx_v_self, PyObject *__pyx_arg_sr); /*proto*/
+static PyObject *__pyx_pw_17GaitController_py_17GaitController_py_9set_support_ratio(PyObject *__pyx_v_self, PyObject *__pyx_arg_sr) {
   float __pyx_v_sr;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -1788,40 +1691,223 @@ static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_11set_support_ra
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("set_support_ratio (wrapper)", 0);
   assert(__pyx_arg_sr); {
-    __pyx_v_sr = __pyx_PyFloat_AsFloat(__pyx_arg_sr); if (unlikely((__pyx_v_sr == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 45, __pyx_L3_error)
+    __pyx_v_sr = __pyx_PyFloat_AsFloat(__pyx_arg_sr); if (unlikely((__pyx_v_sr == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 33, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
-  __Pyx_AddTraceback("LegTrajectory_py.LegTrajectory_py.set_support_ratio", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("GaitController_py.GaitController_py.set_support_ratio", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_16LegTrajectory_py_16LegTrajectory_py_10set_support_ratio(((struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *)__pyx_v_self), ((float)__pyx_v_sr));
+  __pyx_r = __pyx_pf_17GaitController_py_17GaitController_py_8set_support_ratio(((struct __pyx_obj_17GaitController_py_GaitController_py *)__pyx_v_self), ((float)__pyx_v_sr));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_10set_support_ratio(struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self, float __pyx_v_sr) {
+static PyObject *__pyx_pf_17GaitController_py_17GaitController_py_8set_support_ratio(struct __pyx_obj_17GaitController_py_GaitController_py *__pyx_v_self, float __pyx_v_sr) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("set_support_ratio", 0);
 
-  /* "LegTrajectory_py.pyx":47
- *     def set_support_ratio(self, float sr):
- *         # TODO: shift this to own State pyx
- *         self.st.set_support_ratio(sr)             # <<<<<<<<<<<<<<
+  /* "GaitController_py.pyx":34
  * 
+ *     def set_support_ratio(self, float sr):
+ *         self.gc.set_support_ratio(sr)             # <<<<<<<<<<<<<<
+ * 
+ *     def set_phase(self, float p0, float p1, float p2, float p3):
  */
-  __pyx_v_self->st.set_support_ratio(__pyx_v_sr);
+  __pyx_v_self->gc->set_support_ratio(__pyx_v_sr);
 
-  /* "LegTrajectory_py.pyx":45
- *         self.st.set_cycle_time(ct)
+  /* "GaitController_py.pyx":33
+ *         self.gc.set_cycle_time(ct)
  * 
  *     def set_support_ratio(self, float sr):             # <<<<<<<<<<<<<<
- *         # TODO: shift this to own State pyx
- *         self.st.set_support_ratio(sr)
+ *         self.gc.set_support_ratio(sr)
+ * 
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "GaitController_py.pyx":36
+ *         self.gc.set_support_ratio(sr)
+ * 
+ *     def set_phase(self, float p0, float p1, float p2, float p3):             # <<<<<<<<<<<<<<
+ *         self.gc.set_phase(p0, p1, p2, p3)
+ * 
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_17GaitController_py_17GaitController_py_11set_phase(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_17GaitController_py_17GaitController_py_11set_phase(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  float __pyx_v_p0;
+  float __pyx_v_p1;
+  float __pyx_v_p2;
+  float __pyx_v_p3;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("set_phase (wrapper)", 0);
+  {
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_p0,&__pyx_n_s_p1,&__pyx_n_s_p2,&__pyx_n_s_p3,0};
+    PyObject* values[4] = {0,0,0,0};
+    if (unlikely(__pyx_kwds)) {
+      Py_ssize_t kw_args;
+      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
+      switch (pos_args) {
+        case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
+        CYTHON_FALLTHROUGH;
+        case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
+        CYTHON_FALLTHROUGH;
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        CYTHON_FALLTHROUGH;
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = PyDict_Size(__pyx_kwds);
+      switch (pos_args) {
+        case  0:
+        if (likely((values[0] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_p0)) != 0)) kw_args--;
+        else goto __pyx_L5_argtuple_error;
+        CYTHON_FALLTHROUGH;
+        case  1:
+        if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_p1)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("set_phase", 1, 4, 4, 1); __PYX_ERR(0, 36, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  2:
+        if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_p2)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("set_phase", 1, 4, 4, 2); __PYX_ERR(0, 36, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  3:
+        if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_p3)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("set_phase", 1, 4, 4, 3); __PYX_ERR(0, 36, __pyx_L3_error)
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "set_phase") < 0)) __PYX_ERR(0, 36, __pyx_L3_error)
+      }
+    } else if (PyTuple_GET_SIZE(__pyx_args) != 4) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+      values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+      values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
+      values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
+    }
+    __pyx_v_p0 = __pyx_PyFloat_AsFloat(values[0]); if (unlikely((__pyx_v_p0 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 36, __pyx_L3_error)
+    __pyx_v_p1 = __pyx_PyFloat_AsFloat(values[1]); if (unlikely((__pyx_v_p1 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 36, __pyx_L3_error)
+    __pyx_v_p2 = __pyx_PyFloat_AsFloat(values[2]); if (unlikely((__pyx_v_p2 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 36, __pyx_L3_error)
+    __pyx_v_p3 = __pyx_PyFloat_AsFloat(values[3]); if (unlikely((__pyx_v_p3 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 36, __pyx_L3_error)
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("set_phase", 1, 4, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 36, __pyx_L3_error)
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("GaitController_py.GaitController_py.set_phase", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_17GaitController_py_17GaitController_py_10set_phase(((struct __pyx_obj_17GaitController_py_GaitController_py *)__pyx_v_self), __pyx_v_p0, __pyx_v_p1, __pyx_v_p2, __pyx_v_p3);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_17GaitController_py_17GaitController_py_10set_phase(struct __pyx_obj_17GaitController_py_GaitController_py *__pyx_v_self, float __pyx_v_p0, float __pyx_v_p1, float __pyx_v_p2, float __pyx_v_p3) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("set_phase", 0);
+
+  /* "GaitController_py.pyx":37
+ * 
+ *     def set_phase(self, float p0, float p1, float p2, float p3):
+ *         self.gc.set_phase(p0, p1, p2, p3)             # <<<<<<<<<<<<<<
+ * 
+ *     def set_swing_hight(self, float sh):
+ */
+  __pyx_v_self->gc->set_phase(__pyx_v_p0, __pyx_v_p1, __pyx_v_p2, __pyx_v_p3);
+
+  /* "GaitController_py.pyx":36
+ *         self.gc.set_support_ratio(sr)
+ * 
+ *     def set_phase(self, float p0, float p1, float p2, float p3):             # <<<<<<<<<<<<<<
+ *         self.gc.set_phase(p0, p1, p2, p3)
+ * 
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "GaitController_py.pyx":39
+ *         self.gc.set_phase(p0, p1, p2, p3)
+ * 
+ *     def set_swing_hight(self, float sh):             # <<<<<<<<<<<<<<
+ *         self.gc.set_swing_hight(sh)
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_17GaitController_py_17GaitController_py_13set_swing_hight(PyObject *__pyx_v_self, PyObject *__pyx_arg_sh); /*proto*/
+static PyObject *__pyx_pw_17GaitController_py_17GaitController_py_13set_swing_hight(PyObject *__pyx_v_self, PyObject *__pyx_arg_sh) {
+  float __pyx_v_sh;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("set_swing_hight (wrapper)", 0);
+  assert(__pyx_arg_sh); {
+    __pyx_v_sh = __pyx_PyFloat_AsFloat(__pyx_arg_sh); if (unlikely((__pyx_v_sh == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 39, __pyx_L3_error)
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("GaitController_py.GaitController_py.set_swing_hight", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_17GaitController_py_17GaitController_py_12set_swing_hight(((struct __pyx_obj_17GaitController_py_GaitController_py *)__pyx_v_self), ((float)__pyx_v_sh));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_17GaitController_py_17GaitController_py_12set_swing_hight(struct __pyx_obj_17GaitController_py_GaitController_py *__pyx_v_self, float __pyx_v_sh) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("set_swing_hight", 0);
+
+  /* "GaitController_py.pyx":40
+ * 
+ *     def set_swing_hight(self, float sh):
+ *         self.gc.set_swing_hight(sh)             # <<<<<<<<<<<<<<
+ */
+  __pyx_v_self->gc->set_swing_hight(__pyx_v_sh);
+
+  /* "GaitController_py.pyx":39
+ *         self.gc.set_phase(p0, p1, p2, p3)
+ * 
+ *     def set_swing_hight(self, float sh):             # <<<<<<<<<<<<<<
+ *         self.gc.set_swing_hight(sh)
  */
 
   /* function exit code */
@@ -1838,19 +1924,19 @@ static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_10set_support_ra
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_13__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_13__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_17GaitController_py_17GaitController_py_15__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_17GaitController_py_17GaitController_py_15__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__reduce_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_16LegTrajectory_py_16LegTrajectory_py_12__reduce_cython__(((struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *)__pyx_v_self));
+  __pyx_r = __pyx_pf_17GaitController_py_17GaitController_py_14__reduce_cython__(((struct __pyx_obj_17GaitController_py_GaitController_py *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_12__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self) {
+static PyObject *__pyx_pf_17GaitController_py_17GaitController_py_14__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_17GaitController_py_GaitController_py *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1880,7 +1966,7 @@ static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_12__reduce_cytho
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("LegTrajectory_py.LegTrajectory_py.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("GaitController_py.GaitController_py.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
@@ -1895,19 +1981,19 @@ static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_12__reduce_cytho
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_15__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
-static PyObject *__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_15__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pw_17GaitController_py_17GaitController_py_17__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
+static PyObject *__pyx_pw_17GaitController_py_17GaitController_py_17__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__setstate_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_16LegTrajectory_py_16LegTrajectory_py_14__setstate_cython__(((struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
+  __pyx_r = __pyx_pf_17GaitController_py_17GaitController_py_16__setstate_cython__(((struct __pyx_obj_17GaitController_py_GaitController_py *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_14__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_17GaitController_py_17GaitController_py_16__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_17GaitController_py_GaitController_py *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1937,15 +2023,14 @@ static PyObject *__pyx_pf_16LegTrajectory_py_16LegTrajectory_py_14__setstate_cyt
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("LegTrajectory_py.LegTrajectory_py.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("GaitController_py.GaitController_py.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_tp_new_16LegTrajectory_py_LegTrajectory_py(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
-  struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *p;
+static PyObject *__pyx_tp_new_17GaitController_py_GaitController_py(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
   PyObject *o;
   if (likely((t->tp_flags & Py_TPFLAGS_IS_ABSTRACT) == 0)) {
     o = (*t->tp_alloc)(t, 0);
@@ -1953,43 +2038,40 @@ static PyObject *__pyx_tp_new_16LegTrajectory_py_LegTrajectory_py(PyTypeObject *
     o = (PyObject *) PyBaseObject_Type.tp_new(t, __pyx_empty_tuple, 0);
   }
   if (unlikely(!o)) return 0;
-  p = ((struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *)o);
-  new((void*)&(p->st)) State();
-  if (unlikely(__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_1__cinit__(o, __pyx_empty_tuple, NULL) < 0)) goto bad;
+  if (unlikely(__pyx_pw_17GaitController_py_17GaitController_py_1__cinit__(o, __pyx_empty_tuple, NULL) < 0)) goto bad;
   return o;
   bad:
   Py_DECREF(o); o = 0;
   return NULL;
 }
 
-static void __pyx_tp_dealloc_16LegTrajectory_py_LegTrajectory_py(PyObject *o) {
-  struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *p = (struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py *)o;
+static void __pyx_tp_dealloc_17GaitController_py_GaitController_py(PyObject *o) {
   #if CYTHON_USE_TP_FINALIZE
   if (unlikely(PyType_HasFeature(Py_TYPE(o), Py_TPFLAGS_HAVE_FINALIZE) && Py_TYPE(o)->tp_finalize) && (!PyType_IS_GC(Py_TYPE(o)) || !_PyGC_FINALIZED(o))) {
     if (PyObject_CallFinalizerFromDealloc(o)) return;
   }
   #endif
-  __Pyx_call_destructor(p->st);
   (*Py_TYPE(o)->tp_free)(o);
 }
 
-static PyMethodDef __pyx_methods_16LegTrajectory_py_LegTrajectory_py[] = {
-  {"get_leg_position", (PyCFunction)__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_3get_leg_position, METH_O, 0},
-  {"update_com", (PyCFunction)__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_5update_com, METH_O, __pyx_doc_16LegTrajectory_py_16LegTrajectory_py_4update_com},
-  {"set_vel_x", (PyCFunction)__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_7set_vel_x, METH_O, 0},
-  {"set_cycle_time", (PyCFunction)__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_9set_cycle_time, METH_O, 0},
-  {"set_support_ratio", (PyCFunction)__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_11set_support_ratio, METH_O, 0},
-  {"__reduce_cython__", (PyCFunction)__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_13__reduce_cython__, METH_NOARGS, 0},
-  {"__setstate_cython__", (PyCFunction)__pyx_pw_16LegTrajectory_py_16LegTrajectory_py_15__setstate_cython__, METH_O, 0},
+static PyMethodDef __pyx_methods_17GaitController_py_GaitController_py[] = {
+  {"get_leg_position", (PyCFunction)__pyx_pw_17GaitController_py_17GaitController_py_3get_leg_position, METH_O, 0},
+  {"set_vel_x", (PyCFunction)__pyx_pw_17GaitController_py_17GaitController_py_5set_vel_x, METH_O, 0},
+  {"set_cycle_time", (PyCFunction)__pyx_pw_17GaitController_py_17GaitController_py_7set_cycle_time, METH_O, 0},
+  {"set_support_ratio", (PyCFunction)__pyx_pw_17GaitController_py_17GaitController_py_9set_support_ratio, METH_O, 0},
+  {"set_phase", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_17GaitController_py_17GaitController_py_11set_phase, METH_VARARGS|METH_KEYWORDS, 0},
+  {"set_swing_hight", (PyCFunction)__pyx_pw_17GaitController_py_17GaitController_py_13set_swing_hight, METH_O, 0},
+  {"__reduce_cython__", (PyCFunction)__pyx_pw_17GaitController_py_17GaitController_py_15__reduce_cython__, METH_NOARGS, 0},
+  {"__setstate_cython__", (PyCFunction)__pyx_pw_17GaitController_py_17GaitController_py_17__setstate_cython__, METH_O, 0},
   {0, 0, 0, 0}
 };
 
-static PyTypeObject __pyx_type_16LegTrajectory_py_LegTrajectory_py = {
+static PyTypeObject __pyx_type_17GaitController_py_GaitController_py = {
   PyVarObject_HEAD_INIT(0, 0)
-  "LegTrajectory_py.LegTrajectory_py", /*tp_name*/
-  sizeof(struct __pyx_obj_16LegTrajectory_py_LegTrajectory_py), /*tp_basicsize*/
+  "GaitController_py.GaitController_py", /*tp_name*/
+  sizeof(struct __pyx_obj_17GaitController_py_GaitController_py), /*tp_basicsize*/
   0, /*tp_itemsize*/
-  __pyx_tp_dealloc_16LegTrajectory_py_LegTrajectory_py, /*tp_dealloc*/
+  __pyx_tp_dealloc_17GaitController_py_GaitController_py, /*tp_dealloc*/
   #if PY_VERSION_HEX < 0x030800b4
   0, /*tp_print*/
   #endif
@@ -2022,7 +2104,7 @@ static PyTypeObject __pyx_type_16LegTrajectory_py_LegTrajectory_py = {
   0, /*tp_weaklistoffset*/
   0, /*tp_iter*/
   0, /*tp_iternext*/
-  __pyx_methods_16LegTrajectory_py_LegTrajectory_py, /*tp_methods*/
+  __pyx_methods_17GaitController_py_GaitController_py, /*tp_methods*/
   0, /*tp_members*/
   0, /*tp_getset*/
   0, /*tp_base*/
@@ -2032,7 +2114,7 @@ static PyTypeObject __pyx_type_16LegTrajectory_py_LegTrajectory_py = {
   0, /*tp_dictoffset*/
   0, /*tp_init*/
   0, /*tp_alloc*/
-  __pyx_tp_new_16LegTrajectory_py_LegTrajectory_py, /*tp_new*/
+  __pyx_tp_new_17GaitController_py_GaitController_py, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -2060,17 +2142,17 @@ static PyMethodDef __pyx_methods[] = {
 #if PY_MAJOR_VERSION >= 3
 #if CYTHON_PEP489_MULTI_PHASE_INIT
 static PyObject* __pyx_pymod_create(PyObject *spec, PyModuleDef *def); /*proto*/
-static int __pyx_pymod_exec_LegTrajectory_py(PyObject* module); /*proto*/
+static int __pyx_pymod_exec_GaitController_py(PyObject* module); /*proto*/
 static PyModuleDef_Slot __pyx_moduledef_slots[] = {
   {Py_mod_create, (void*)__pyx_pymod_create},
-  {Py_mod_exec, (void*)__pyx_pymod_exec_LegTrajectory_py},
+  {Py_mod_exec, (void*)__pyx_pymod_exec_GaitController_py},
   {0, NULL}
 };
 #endif
 
 static struct PyModuleDef __pyx_moduledef = {
     PyModuleDef_HEAD_INIT,
-    "LegTrajectory_py",
+    "GaitController_py",
     0, /* m_doc */
   #if CYTHON_PEP489_MULTI_PHASE_INIT
     0, /* m_size */
@@ -2099,7 +2181,7 @@ static struct PyModuleDef __pyx_moduledef = {
 #endif
 
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
-  {&__pyx_n_s_LegTrajectory_py, __pyx_k_LegTrajectory_py, sizeof(__pyx_k_LegTrajectory_py), 0, 0, 1, 1},
+  {&__pyx_n_s_GaitController_py, __pyx_k_GaitController_py, sizeof(__pyx_k_GaitController_py), 0, 0, 1, 1},
   {&__pyx_n_s_TypeError, __pyx_k_TypeError, sizeof(__pyx_k_TypeError), 0, 0, 1, 1},
   {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
   {&__pyx_n_s_getstate, __pyx_k_getstate, sizeof(__pyx_k_getstate), 0, 0, 1, 1},
@@ -2109,6 +2191,10 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_no_default___reduce___due_to_non, __pyx_k_no_default___reduce___due_to_non, sizeof(__pyx_k_no_default___reduce___due_to_non), 0, 0, 1, 0},
   {&__pyx_n_s_np, __pyx_k_np, sizeof(__pyx_k_np), 0, 0, 1, 1},
   {&__pyx_n_s_numpy, __pyx_k_numpy, sizeof(__pyx_k_numpy), 0, 0, 1, 1},
+  {&__pyx_n_s_p0, __pyx_k_p0, sizeof(__pyx_k_p0), 0, 0, 1, 1},
+  {&__pyx_n_s_p1, __pyx_k_p1, sizeof(__pyx_k_p1), 0, 0, 1, 1},
+  {&__pyx_n_s_p2, __pyx_k_p2, sizeof(__pyx_k_p2), 0, 0, 1, 1},
+  {&__pyx_n_s_p3, __pyx_k_p3, sizeof(__pyx_k_p3), 0, 0, 1, 1},
   {&__pyx_n_s_range, __pyx_k_range, sizeof(__pyx_k_range), 0, 0, 1, 1},
   {&__pyx_n_s_reduce, __pyx_k_reduce, sizeof(__pyx_k_reduce), 0, 0, 1, 1},
   {&__pyx_n_s_reduce_cython, __pyx_k_reduce_cython, sizeof(__pyx_k_reduce_cython), 0, 0, 1, 1},
@@ -2120,7 +2206,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 27, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 22, __pyx_L1_error)
   __pyx_builtin_TypeError = __Pyx_GetBuiltinName(__pyx_n_s_TypeError); if (!__pyx_builtin_TypeError) __PYX_ERR(1, 2, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
@@ -2131,14 +2217,14 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "LegTrajectory_py.pyx":26
+  /* "GaitController_py.pyx":21
  *         cdef int i, j
  * 
  *         out = np.zeros((3,4))             # <<<<<<<<<<<<<<
  *         for i in range(3):
  *             for j in range(4):
  */
-  __pyx_tuple_ = PyTuple_Pack(2, __pyx_int_3, __pyx_int_4); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(2, __pyx_int_3, __pyx_int_4); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 
@@ -2215,16 +2301,16 @@ static int __Pyx_modinit_type_init_code(void) {
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__Pyx_modinit_type_init_code", 0);
   /*--- Type init code ---*/
-  if (PyType_Ready(&__pyx_type_16LegTrajectory_py_LegTrajectory_py) < 0) __PYX_ERR(0, 10, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_17GaitController_py_GaitController_py) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
-  __pyx_type_16LegTrajectory_py_LegTrajectory_py.tp_print = 0;
+  __pyx_type_17GaitController_py_GaitController_py.tp_print = 0;
   #endif
-  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_16LegTrajectory_py_LegTrajectory_py.tp_dictoffset && __pyx_type_16LegTrajectory_py_LegTrajectory_py.tp_getattro == PyObject_GenericGetAttr)) {
-    __pyx_type_16LegTrajectory_py_LegTrajectory_py.tp_getattro = __Pyx_PyObject_GenericGetAttr;
+  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_17GaitController_py_GaitController_py.tp_dictoffset && __pyx_type_17GaitController_py_GaitController_py.tp_getattro == PyObject_GenericGetAttr)) {
+    __pyx_type_17GaitController_py_GaitController_py.tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_LegTrajectory_py, (PyObject *)&__pyx_type_16LegTrajectory_py_LegTrajectory_py) < 0) __PYX_ERR(0, 10, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_16LegTrajectory_py_LegTrajectory_py) < 0) __PYX_ERR(0, 10, __pyx_L1_error)
-  __pyx_ptype_16LegTrajectory_py_LegTrajectory_py = &__pyx_type_16LegTrajectory_py_LegTrajectory_py;
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_GaitController_py, (PyObject *)&__pyx_type_17GaitController_py_GaitController_py) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_17GaitController_py_GaitController_py) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
+  __pyx_ptype_17GaitController_py_GaitController_py = &__pyx_type_17GaitController_py_GaitController_py;
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -2275,11 +2361,11 @@ static int __Pyx_modinit_function_import_code(void) {
 
 
 #if PY_MAJOR_VERSION < 3
-__Pyx_PyMODINIT_FUNC initLegTrajectory_py(void) CYTHON_SMALL_CODE; /*proto*/
-__Pyx_PyMODINIT_FUNC initLegTrajectory_py(void)
+__Pyx_PyMODINIT_FUNC initGaitController_py(void) CYTHON_SMALL_CODE; /*proto*/
+__Pyx_PyMODINIT_FUNC initGaitController_py(void)
 #else
-__Pyx_PyMODINIT_FUNC PyInit_LegTrajectory_py(void) CYTHON_SMALL_CODE; /*proto*/
-__Pyx_PyMODINIT_FUNC PyInit_LegTrajectory_py(void)
+__Pyx_PyMODINIT_FUNC PyInit_GaitController_py(void) CYTHON_SMALL_CODE; /*proto*/
+__Pyx_PyMODINIT_FUNC PyInit_GaitController_py(void)
 #if CYTHON_PEP489_MULTI_PHASE_INIT
 {
   return PyModuleDef_Init(&__pyx_moduledef);
@@ -2346,7 +2432,7 @@ bad:
 }
 
 
-static CYTHON_SMALL_CODE int __pyx_pymod_exec_LegTrajectory_py(PyObject *__pyx_pyinit_module)
+static CYTHON_SMALL_CODE int __pyx_pymod_exec_GaitController_py(PyObject *__pyx_pyinit_module)
 #endif
 #endif
 {
@@ -2358,7 +2444,7 @@ static CYTHON_SMALL_CODE int __pyx_pymod_exec_LegTrajectory_py(PyObject *__pyx_p
   #if CYTHON_PEP489_MULTI_PHASE_INIT
   if (__pyx_m) {
     if (__pyx_m == __pyx_pyinit_module) return 0;
-    PyErr_SetString(PyExc_RuntimeError, "Module 'LegTrajectory_py' has already been imported. Re-initialisation is not supported.");
+    PyErr_SetString(PyExc_RuntimeError, "Module 'GaitController_py' has already been imported. Re-initialisation is not supported.");
     return -1;
   }
   #elif PY_MAJOR_VERSION >= 3
@@ -2373,7 +2459,7 @@ if (!__Pyx_RefNanny) {
       Py_FatalError("failed to import 'refnanny' module");
 }
 #endif
-  __Pyx_RefNannySetupContext("__Pyx_PyMODINIT_FUNC PyInit_LegTrajectory_py(void)", 0);
+  __Pyx_RefNannySetupContext("__Pyx_PyMODINIT_FUNC PyInit_GaitController_py(void)", 0);
   if (__Pyx_check_binary_version() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #ifdef __Pxy_PyFrame_Initialize_Offsets
   __Pxy_PyFrame_Initialize_Offsets();
@@ -2412,7 +2498,7 @@ if (!__Pyx_RefNanny) {
   Py_INCREF(__pyx_m);
   #else
   #if PY_MAJOR_VERSION < 3
-  __pyx_m = Py_InitModule4("LegTrajectory_py", __pyx_methods, 0, 0, PYTHON_API_VERSION); Py_XINCREF(__pyx_m);
+  __pyx_m = Py_InitModule4("GaitController_py", __pyx_methods, 0, 0, PYTHON_API_VERSION); Py_XINCREF(__pyx_m);
   #else
   __pyx_m = PyModule_Create(&__pyx_moduledef);
   #endif
@@ -2430,14 +2516,14 @@ if (!__Pyx_RefNanny) {
   #if PY_MAJOR_VERSION < 3 && (__PYX_DEFAULT_STRING_ENCODING_IS_ASCII || __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT)
   if (__Pyx_init_sys_getdefaultencoding_params() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
-  if (__pyx_module_is_main_LegTrajectory_py) {
+  if (__pyx_module_is_main_GaitController_py) {
     if (PyObject_SetAttr(__pyx_m, __pyx_n_s_name, __pyx_n_s_main) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   }
   #if PY_MAJOR_VERSION >= 3
   {
     PyObject *modules = PyImport_GetModuleDict(); if (unlikely(!modules)) __PYX_ERR(0, 1, __pyx_L1_error)
-    if (!PyDict_GetItemString(modules, "LegTrajectory_py")) {
-      if (unlikely(PyDict_SetItemString(modules, "LegTrajectory_py", __pyx_m) < 0)) __PYX_ERR(0, 1, __pyx_L1_error)
+    if (!PyDict_GetItemString(modules, "GaitController_py")) {
+      if (unlikely(PyDict_SetItemString(modules, "GaitController_py", __pyx_m) < 0)) __PYX_ERR(0, 1, __pyx_L1_error)
     }
   }
   #endif
@@ -2458,10 +2544,10 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "LegTrajectory_py.pyx":1
+  /* "GaitController_py.pyx":1
  * import numpy as np             # <<<<<<<<<<<<<<
  * from Coordinates_py cimport Coordinates
- * from LegTrajectory_py cimport LegTrajectory
+ * from GaitController_py cimport GaitController
  */
   __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -2486,11 +2572,11 @@ if (!__Pyx_RefNanny) {
   __Pyx_XDECREF(__pyx_t_1);
   if (__pyx_m) {
     if (__pyx_d) {
-      __Pyx_AddTraceback("init LegTrajectory_py", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      __Pyx_AddTraceback("init GaitController_py", __pyx_clineno, __pyx_lineno, __pyx_filename);
     }
     Py_CLEAR(__pyx_m);
   } else if (!PyErr_Occurred()) {
-    PyErr_SetString(PyExc_ImportError, "init LegTrajectory_py");
+    PyErr_SetString(PyExc_ImportError, "init GaitController_py");
   }
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
@@ -2926,6 +3012,122 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_CallOneArg(PyObject *func, PyObjec
     return result;
 }
 #endif
+
+/* RaiseDoubleKeywords */
+static void __Pyx_RaiseDoubleKeywordsError(
+    const char* func_name,
+    PyObject* kw_name)
+{
+    PyErr_Format(PyExc_TypeError,
+        #if PY_MAJOR_VERSION >= 3
+        "%s() got multiple values for keyword argument '%U'", func_name, kw_name);
+        #else
+        "%s() got multiple values for keyword argument '%s'", func_name,
+        PyString_AsString(kw_name));
+        #endif
+}
+
+/* ParseKeywords */
+static int __Pyx_ParseOptionalKeywords(
+    PyObject *kwds,
+    PyObject **argnames[],
+    PyObject *kwds2,
+    PyObject *values[],
+    Py_ssize_t num_pos_args,
+    const char* function_name)
+{
+    PyObject *key = 0, *value = 0;
+    Py_ssize_t pos = 0;
+    PyObject*** name;
+    PyObject*** first_kw_arg = argnames + num_pos_args;
+    while (PyDict_Next(kwds, &pos, &key, &value)) {
+        name = first_kw_arg;
+        while (*name && (**name != key)) name++;
+        if (*name) {
+            values[name-argnames] = value;
+            continue;
+        }
+        name = first_kw_arg;
+        #if PY_MAJOR_VERSION < 3
+        if (likely(PyString_Check(key))) {
+            while (*name) {
+                if ((CYTHON_COMPILING_IN_PYPY || PyString_GET_SIZE(**name) == PyString_GET_SIZE(key))
+                        && _PyString_Eq(**name, key)) {
+                    values[name-argnames] = value;
+                    break;
+                }
+                name++;
+            }
+            if (*name) continue;
+            else {
+                PyObject*** argname = argnames;
+                while (argname != first_kw_arg) {
+                    if ((**argname == key) || (
+                            (CYTHON_COMPILING_IN_PYPY || PyString_GET_SIZE(**argname) == PyString_GET_SIZE(key))
+                             && _PyString_Eq(**argname, key))) {
+                        goto arg_passed_twice;
+                    }
+                    argname++;
+                }
+            }
+        } else
+        #endif
+        if (likely(PyUnicode_Check(key))) {
+            while (*name) {
+                int cmp = (**name == key) ? 0 :
+                #if !CYTHON_COMPILING_IN_PYPY && PY_MAJOR_VERSION >= 3
+                    (__Pyx_PyUnicode_GET_LENGTH(**name) != __Pyx_PyUnicode_GET_LENGTH(key)) ? 1 :
+                #endif
+                    PyUnicode_Compare(**name, key);
+                if (cmp < 0 && unlikely(PyErr_Occurred())) goto bad;
+                if (cmp == 0) {
+                    values[name-argnames] = value;
+                    break;
+                }
+                name++;
+            }
+            if (*name) continue;
+            else {
+                PyObject*** argname = argnames;
+                while (argname != first_kw_arg) {
+                    int cmp = (**argname == key) ? 0 :
+                    #if !CYTHON_COMPILING_IN_PYPY && PY_MAJOR_VERSION >= 3
+                        (__Pyx_PyUnicode_GET_LENGTH(**argname) != __Pyx_PyUnicode_GET_LENGTH(key)) ? 1 :
+                    #endif
+                        PyUnicode_Compare(**argname, key);
+                    if (cmp < 0 && unlikely(PyErr_Occurred())) goto bad;
+                    if (cmp == 0) goto arg_passed_twice;
+                    argname++;
+                }
+            }
+        } else
+            goto invalid_keyword_type;
+        if (kwds2) {
+            if (unlikely(PyDict_SetItem(kwds2, key, value))) goto bad;
+        } else {
+            goto invalid_keyword;
+        }
+    }
+    return 0;
+arg_passed_twice:
+    __Pyx_RaiseDoubleKeywordsError(function_name, key);
+    goto bad;
+invalid_keyword_type:
+    PyErr_Format(PyExc_TypeError,
+        "%.200s() keywords must be strings", function_name);
+    goto bad;
+invalid_keyword:
+    PyErr_Format(PyExc_TypeError,
+    #if PY_MAJOR_VERSION < 3
+        "%.200s() got an unexpected keyword argument '%.200s'",
+        function_name, PyString_AsString(key));
+    #else
+        "%s() got an unexpected keyword argument '%U'",
+        function_name, key);
+    #endif
+bad:
+    return -1;
+}
 
 /* PyErrFetchRestore */
 #if CYTHON_FAST_THREAD_STATE

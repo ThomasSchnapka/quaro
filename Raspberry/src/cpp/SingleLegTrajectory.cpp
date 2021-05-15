@@ -30,7 +30,8 @@ SingleLegTrajectory::~SingleLegTrajectory() {}
 
 Coordinate SingleLegTrajectory::get_leg_position(float t, bool csr) {
 	// normalized time
-	float tn = std::fmod((t+state->phase(num)), 1.0);
+	float tn = t/state->cycle_time;
+	tn = std::fmod((tn+state->phase(num)), 1.0);
 	update_fsm(tn, csr);
 	// retrieve current leg position depending on state
 	Coordinate c;

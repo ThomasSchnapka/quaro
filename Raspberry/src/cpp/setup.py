@@ -13,8 +13,9 @@ setup(ext_modules=cythonize("gen_ssp.pyx",
 #setup(ext_modules=cythonize("LegTrajectory_py.pyx"))
 
 
-extensions = [Extension(name = "LegTrajectory_py", 
-                        sources=["LegTrajectory_py.pyx", \
+extensions = [Extension(name = "GaitController_py", 
+                        sources=["GaitController_py.pyx", \
+                                 "LegTrajectory.cpp",\
                                  "SingleLegTrajectory.cpp",\
                                  "SwingSpline.cpp",\
                                  "ContactSensor.cpp"\

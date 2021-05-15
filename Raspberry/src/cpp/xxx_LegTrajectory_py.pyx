@@ -28,21 +28,4 @@ cdef class LegTrajectory_py:
             for j in range(4):
                 out[i, j] = inp(i, j)
         return out
-    
-    def update_com(self, float t):
-        '''helper to update COM position to avoid linking an outside COM trajectory
-        object with leg trajectory'''
-        self.bft.update(t)
-        
-    def set_vel_x(self, float vx):
-        # TODO: shift this to own State pyx
-        self.st.set_vel_x(vx)
-        
-    def set_cycle_time(self, float ct):
-        # TODO: shift this to own State pyx
-        self.st.set_cycle_time(ct)
-        
-    def set_support_ratio(self, float sr):
-        # TODO: shift this to own State pyx
-        self.st.set_support_ratio(sr)
         
