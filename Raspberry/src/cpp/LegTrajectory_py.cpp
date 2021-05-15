@@ -21,7 +21,8 @@
         "sources": [
             "LegTrajectory_py.pyx",
             "SingleLegTrajectory.cpp",
-            "SwingSpline.cpp"
+            "SwingSpline.cpp",
+            "ContactSensor.cpp"
         ]
     },
     "module_name": "LegTrajectory_py"

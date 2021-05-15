@@ -4,7 +4,6 @@ import numpy as np
 from .GaitController import GaitController
 from .TransitionController import TransitionController
 from .InclinationController import InclinationController
-from .ContactSensor import ContactSensor
 from . import calibration
 from . import demo
 
@@ -22,8 +21,8 @@ class Controller:
         self.hardware_interface = hardware_interface
         self.hardware_config = hardware_config
         
-        self.contact_sensor = ContactSensor()
-        self.gait_controller = GaitController(state, self.contact_sensor)
+        #self.contact_sensor = ContactSensor()
+        self.gait_controller = GaitController(state)
         self.transition_controller = TransitionController(state, self, 
                                                           hardware_config)
         self.inclination_controller = InclinationController(state,

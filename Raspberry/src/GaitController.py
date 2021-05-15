@@ -17,10 +17,9 @@ class GaitController:
     joint is 0, which means that the distance beween z=0 and z=1 covers the
     full possible operating hight
     '''
-    def __init__(self, state, contact_sensor):
+    def __init__(self, state):
         
         self.state = state
-        self.contact_sensor = contact_sensor
         
         self.update_time = state.update_time
         self.last_cycle  = 0
@@ -30,7 +29,8 @@ class GaitController:
         #self.stabilizer = Stabilizer(self.state)
         #self.comtraj = COMTrajectory(self.state, self.stabilizer)
         self.lt = LegTrajectory_py()
-        self.lt.set_vel_x(0.05)
+        self.lt.set_vel_x(0.0)
+        self.lt.set_support_ratio(0.7)
         
     def get_position(self, initial=False):
         '''

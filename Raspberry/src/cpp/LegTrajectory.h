@@ -8,6 +8,7 @@
 #include "SingleLegTrajectory.h"
 #include "BaseFrameTrajectory.h"
 #include "State.h"
+#include "ContactSensor.h"
 
 class LegTrajectory {
 	public:
@@ -17,8 +18,9 @@ class LegTrajectory {
 	private:
 		State* state;
 		BaseFrameTrajectory* bftrajectory;
+		ContactSensor* contactsensor;
 		std::vector<SingleLegTrajectory> leg;
-		std::vector<bool> int_to_bool(int i);
+		std::vector<bool> contact_sensor_result();
 };
 
 

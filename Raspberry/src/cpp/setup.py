@@ -15,8 +15,9 @@ setup(ext_modules=cythonize("gen_ssp.pyx",
 
 extensions = [Extension(name = "LegTrajectory_py", 
                         sources=["LegTrajectory_py.pyx", \
-                         "SingleLegTrajectory.cpp",\
-                         "SwingSpline.cpp"\
+                                 "SingleLegTrajectory.cpp",\
+                                 "SwingSpline.cpp",\
+                                 "ContactSensor.cpp"\
                                  ],
                             include_dirs=["eigen-3.4-rc1"],
                             language="c++"

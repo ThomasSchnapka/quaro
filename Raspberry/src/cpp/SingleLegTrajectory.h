@@ -11,7 +11,7 @@ class SingleLegTrajectory {
 	public:
 		SingleLegTrajectory(State* pstate, BaseFrameTrajectory* pbftrajectory, int pnum);
 		~SingleLegTrajectory();
-		Coordinate get_leg_position(float t);
+		Coordinate get_leg_position(float t, bool csr);
 		
 		Coordinate liftoff_pos;
 		Coordinate current_pos;
@@ -27,7 +27,7 @@ class SingleLegTrajectory {
 		int num; 		// leg number
 		int fsm;
 		
-		void update_fsm(float tn);
+		void update_fsm(float tn, bool csr);
 		void update_touchdown_pos();
 		Coordinate get_position_stance();
 		

@@ -12,13 +12,13 @@ int main(){
 	
 	State state;
 	BaseFrameTrajectory bftrajectory(&state);
-	LegTrajectory ss = LegTrajectory(&state, &bftrajectory);
+	LegTrajectory lt = LegTrajectory(&state, &bftrajectory);
 	
 	float t = 0.1;
 	for(float t = 0.0; t<1.0; t += 0.1){
 		bftrajectory.update(t);
 		cout << t << "-----------" << endl;
-		cout << ss.get_leg_position(t) << endl;
+		cout << lt.get_leg_position(t) << endl;
 	}
 	cout << "end" << endl;
 }

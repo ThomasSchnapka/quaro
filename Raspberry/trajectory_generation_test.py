@@ -21,9 +21,13 @@ ct = COMTrajectory(state, stabilizer)
 cs = ContactSensor()
 lt = LegTrajectory(state, ct, cs)
 '''
+
+from src.Stabilizer import Stabilizer
 from src.cpp.LegTrajectory_py import LegTrajectory_py
 
 lt = LegTrajectory_py()
+lt.set_vel_x(0.0)
+lt.set_support_ratio(0.7)
 
 N = 1000
 pos = np.zeros((3,4,N))
