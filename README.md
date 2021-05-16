@@ -29,7 +29,7 @@ This repo contains the control software that runs my version of KDY0523's [SpotM
 
 ![gif RPY simulation](https://raw.githubusercontent.com/ThomasSchnapka/quaro/master/media/RPY_simulation.gif) 
 
-The code if mainly written in Python. Parts where speed matters are rewritten to C++. I plan to convert most of the code successively and let only the high level control stay in Python. 
+The code if mainly written in Python, some parts (where speed matters) are rewritten to C++. I plan to convert most of the code successively and let only the high level control stay in Python. 
 
 
 ## Gait generation
