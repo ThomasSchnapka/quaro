@@ -132,7 +132,7 @@ _optional for foot contact switches:_
 ![gif foot contact switches](https://github.com/ThomasSchnapka/quaro/blob/master/media/foot_contact_switches_gait.gif?raw=true)
 
 One of the biggest flaws of a quadruped robot on a budget is that the servo motors do not give any feedback. To deal with it I wanted to try out foot contact switches.
-After testing [this approach](https://github.com/open-dynamic-robot-initiative/open_robot_actuator_hardware/blob/master/mechanics/foot_contact_switch_v1/README.md) with Phototransistors, I found out that using force-sensitive resistors is more feasible if one wants to maintain the Spot Micro design and avoid buying SMD boards. Instructions and files are available on [Thingivese](https://www.thingiverse.com/thing:4821239). More information: [link](https://github.com/ThomasSchnapka/quaro/tree/master/Hardware/Foot_contact_switch)
+After testing [this approach](https://github.com/open-dynamic-robot-initiative/open_robot_actuator_hardware/blob/master/mechanics/foot_contact_switch_v1/README.md) with Phototransistors, I found out that using force-sensitive resistors is more feasible if one wants to maintain the Spot Micro design and avoid buying SMD boards. Instructions and files are available on [Thingiverse](https://www.thingiverse.com/thing:4821239). More information: [link](https://github.com/ThomasSchnapka/quaro/tree/master/Hardware/Foot_contact_switch)
 
 ## Additional resources 
 1. book with basics and definitions this software follows [link](https://mitpress.mit.edu/books/legged-robots-balance)
