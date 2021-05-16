@@ -16,13 +16,13 @@ class State:
         self.stability_amplitude = 0
         #self.phase = np.array([0.0, 0.25, 0.75, 0.5])  # walk
         self.phase = np.array([0.0, 0.5, 0.5, 0])       # trot
-        self.true_com = np.array([-0.02, 0.0, 0.0])
+        self.true_com = np.array([-0.025, -0.005, 0.0])
         
         
         # Robot schedule
         #self.cycle_time       = 5.0   # walk
         self.cycle_time       = 1.5    # trot
-        self.update_time      = 0.001
+        self.update_time      = 0.0001
         self.true_update_time = 0.0
         
         # PID parameters for inclilation control
