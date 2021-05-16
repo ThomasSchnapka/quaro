@@ -15,7 +15,7 @@ class QuaroServer:
     def __init__(self, state):
         # class params
         self.state = state
-        self.allow_server_loop = True
+        self.enable_server_loop = state.enable_server_loop
         # server params
         self.IP = "192.168.2.111"
         self.IP_COMPUTER = "127.0.0.1"
@@ -41,7 +41,7 @@ class QuaroServer:
             print("[QuaroServer] sucessful connection with client!")
         except:
             print("[QuaroServer] timeout: no client available. Shutting down")
-            self.state.allow_server_loop = False
+            self.state.enable_server_loop = False
             self.sock.close()
         
         
@@ -69,7 +69,7 @@ class QuaroServer:
         try:
             self.clientsocket.close()
             self.sock.close()
-            self.state.allow_server_loop = False
+            self.state.enable_server_loop = False
             print("[QuaroServer] socket closed")
         except:
             #already closed
@@ -78,7 +78,7 @@ class QuaroServer:
         
     def server_loop(self):
         # loop in which server runs until closed
-        while self.state.allow_server_loop == True:
+        while self.state.enable_server_loop == True:
             cmd = self.clientsocket.recv(16)
             try:
                 if cmd == b'abspos':
@@ -106,7 +106,7 @@ if __name__ == "__main__":
     class DummyState:
         def __init__(self):
             self.absolute_foot_position = np.zeros((3,4))
-            self.allow_server_loop = True
+            self.enable_server_loop = True
     dummy_state = DummyState()
     qc = QuaroServer(dummy_state)
     qc.server_loop()

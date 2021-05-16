@@ -61,11 +61,11 @@ class QuaroPlot3D:
         Parameters
         ----------
         i : int, iterable to that gets passed by FuncAnimation, not used here
-        leg_lines : matplotlib line3D objects that gets altered
-        body_lines : matplotlib line3D objects that gets altered
-        leg_numbers : matplotlib text3D objects that gets altered
-        stability_triangle : matplotlib line3d object that gets altered
-        com_projection : matplotlib line3d object that gets altered
+        leg_lines : matplotlib line3D object
+        body_lines : matplotlib line3D object
+        leg_numbers : matplotlib text3D object
+        stability_triangle : matplotlib line3d object
+        com_projection : matplotlib line3d object
 
         Returns
         -------
@@ -88,13 +88,13 @@ class QuaroPlot3D:
                                      leg_points[n,2,:])
             # plot leg numbers
             leg_numbers[n].set_position((edges[0, n], edges[1, n]))
-            leg_numbers[n].set_3d_properties(edges[2, n] - 30)
+            leg_numbers[n].set_3d_properties(edges[2, n] - 0.03)
         
         ## plot stability triangle
         ground_points = leg_points[:,:-1,-1].T
         # points of legs that touch the ground
         lowest_coordinate = np.max(ground_points[-1])
-        leg_on_ground = np.abs(ground_points[2]-lowest_coordinate) < 5 #tolerance
+        leg_on_ground = np.abs(ground_points[2]-lowest_coordinate) < 0.01 #tolerance
         ground_points = ground_points[:, leg_on_ground]
         # check if there is more than one ground points to draw something
         if ground_points.shape[1] > 1:
@@ -125,7 +125,7 @@ class QuaroPlot3D:
     def start_plot(self):
         '''Initialize Plot'''
         # set axes properties
-        ax_range = 230
+        ax_range = 0.23
         self.ax.set_xlim3d([-ax_range, ax_range])
         self.ax.set_ylim3d([-ax_range, ax_range])
         self.ax.set_zlim3d([-ax_range, ax_range])
@@ -153,25 +153,3 @@ class QuaroPlot3D:
               "MUST close the figure window!")
         return ani
         
- 
-        
-        
-#---------------------------- standalone test -------------------------------#
-
-if __name__ == "__main__":
-    
-    # create data source dummy
-    class TestDataSource:
-        def request_data(self, typ):
-            if typ == "joiang":             # joint angles
-                angles = np.array([[ 27.54812251, -42.0457834,   27.54812251, -42.0457834 ],
-                                   [-50.14377845,  75.85203445, -50.14377845,  75.85203445],
-                                   [-33.05519517,   5.21860477, -33.05519517,   5.21860477]])
-                return angles
-            elif typ == "ropiya":           # pitch roll yaw angeles
-                return np.array([0, 0, 20])
-            
-    tds = TestDataSource()
-    qp3 = QuaroPlot3D(tds)
-    ani = qp3.start_plot()
-    #ani.save("ani.gif")

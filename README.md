@@ -7,8 +7,6 @@ Control software for quadrupedal robots with a focus on tidy kinematics and moti
   <img src="https://raw.githubusercontent.com/ThomasSchnapka/quaro/master/media/hardware_image_side.jpeg" width="250">
 </p>
 
-_Made by user Thomas Schnapka_
-
 
 ## Overview
 This repo contains the control software that runs my version of KDY0523's [SpotMicro](https://www.thingiverse.com/thing:3445283). 
@@ -23,14 +21,15 @@ This repo contains the control software that runs my version of KDY0523's [SpotM
 * parameterizable gait generator
 * maintains stability
   * static stability
-  * stability during slopes  
+  * stability during slopes
+  * walking on "uneven" terrain using foot contact switches  
 * servo protection
 * interactive menu
 * simulation and state visualization for testing and during robot operation
 
 ![gif RPY simulation](https://raw.githubusercontent.com/ThomasSchnapka/quaro/master/media/RPY_simulation.gif) 
 
-All scripts are written in Python. The code is highly vectorized, thus I think it would make little to no difference to port some parts into C++. However, I did not check this yet.
+The code if mainly written in Python, some parts (where speed matters) are rewritten to C++. I plan to convert most of the code successively and let only the high level control stay in Python. 
 
 
 ## Gait generation
@@ -43,26 +42,29 @@ The robot follows the conventions introduced in this [book](https://mitpress.mit
 ```
 quaro
 │
-├── Raspberry       # software running on Raspberry Pi
+├── Raspberry        # software running on Raspberry Pi
 │   ├── main.py
-│   ├── src         # general functionalities that can be applied on all quadruped robots
-│   │    └── ...
-│   └── quaro       # hardware specific functionalities for this certain robot
+│   ├── src          # general functionalities that can be applied on all quadruped robots
+│   │    └── cpp     # parts written in C++
+│   │         └── ...
+│   └── quaro        # hardware specific functionalities for this certain robot
 │        └── ...
 │
-├── Arduino         # script for foot contact switch sensors
+├── Arduino          # script for foot contact switch sensors
 │
-├── Simulation      # plot of the robots state
+├── Simulation       # plot of the robots state
 │    └── main.py
 │
-├── doc             # definitions
+├── doc              # definitions
 │
-├── media           # images and videos
+├── media            # images and videos
 ```
 If you want to adopt this software for your own robot, you have to change the hardware-specific parameters in `quaro/hardware_config.py`. Changes for the robot operations are made in `src/state.py` 
 
 ## Installation and execution
 ### Installation
+
+_If you just want a simple, reliable quadruped control software in pure Python, download v3.1. The current version is rather a playground for my own experiments and sometimes unstable. (But it contains some cool features though)_
 
 Because this repo contains a submodule, it is necessary to use clone it with
 the `--recurse-submodules` option:
@@ -99,16 +101,17 @@ Most parameters can be changed during runtime. They are changed with `change [pa
 - [x] add a block diagram about the control software workflow in this repo
 - [x] implement IMU to close control loop
   - [x] controlled slope walking
-  - [ ] balance while robot is nudged/disturbed
-- [ ] add foot contact switches similar to [these](https://github.com/open-dynamic-robot-initiative/open_robot_actuator_hardware/blob/master/mechanics/foot_contact_switch_v1/README.md)
+- [x] add foot contact switches similar to [these](https://github.com/open-dynamic-robot-initiative/open_robot_actuator_hardware/blob/master/mechanics/foot_contact_switch_v1/README.md)
   - [x] develope a reliable way to sense foot contact while keeping the SpotMicro design
-  - [ ] be able to walk on uneven terrain 
+  - [x] be able to walk on uneven terrain 
 - [ ] implement dynamic model for [Model Predictive Control](https://de.wikipedia.org/wiki/Model_Predictive_Control)
-  - [ ] understand MPC by building and controlling an inverted pendulum
-- [ ] add a nice blinking light
+  - [x] understand MPC by building and controlling an inverted pendulum
+  - [ ] do offline trajectory optimization to counteract the inconvenient servo locations
+- [x] add a nice blinking light
 
 _long term:_
 - [ ] buy [better actuators](https://mjbots.com/) that can handle higher loads and give sensor feedback to enable closed-loop control
+- [ ] build a big version
 
 
 ## Hardware
@@ -120,14 +123,16 @@ _long term:_
 
 _optional for foot contact switches:_
 * customized [legs](https://www.thingiverse.com/thing:4821239)
-* Arduino Mini
+* Arduino Nano
 * Force Sensible Resistors (FSR)
 * additional electronics
 
 ### Foot Contact Switches
 
-After testing [this approach](https://github.com/open-dynamic-robot-initiative/open_robot_actuator_hardware/blob/master/mechanics/foot_contact_switch_v1/README.md) with Phototransistors, I found out that using force-sensitive resistors is more feasible if one wants to maintain the Spot Micro design and avoid buying SMD boards. Instructions and files are available on [Thingivese](https://www.thingiverse.com/thing:4821239). Currently, I am waiting for additional electronics to equip all feet with sensors. 
-<img src="https://raw.githubusercontent.com/ThomasSchnapka/quaro/master/media/foot_contact_switches_test.gif" width="250">
+![gif foot contact switches](https://github.com/ThomasSchnapka/quaro/blob/master/media/foot_contact_switches_gait.gif?raw=true)
+
+One of the biggest flaws of a quadruped robot on a budget is that the servo motors do not give any feedback. To deal with it I wanted to try out foot contact switches.
+After testing [this approach](https://github.com/open-dynamic-robot-initiative/open_robot_actuator_hardware/blob/master/mechanics/foot_contact_switch_v1/README.md) with Phototransistors, I found out that using force-sensitive resistors is more feasible if one wants to maintain the Spot Micro design and avoid buying SMD boards. Instructions and files are available on [Thingivese](https://www.thingiverse.com/thing:4821239). More information: [link](https://github.com/ThomasSchnapka/quaro/tree/master/Hardware/Foot_contact_switch)
 
 ## Additional resources 
 1. book with basics and definitions this software follows [link](https://mitpress.mit.edu/books/legged-robots-balance)

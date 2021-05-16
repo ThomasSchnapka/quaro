@@ -30,12 +30,12 @@ class HardwareConfig:
     def __init__(self):
         
         ## Geometric definitions (in mm)
-        self.a = 186     # body length
-        self.b = 78      # body width
-        self.h = 11      # vertical shoulder displacement
-        self.g = 55      # horizontal shoulder displacement
-        self.l1 = 108    # upper leg length
-        self.l2 = 130    # lower leg length
+        self.a = 0.186     # body length
+        self.b = 0.078      # body width
+        self.h = 0.011      # vertical shoulder displacement
+        self.g = 0.055      # horizontal shoulder displacement
+        self.l1 = 0.108    # upper leg length
+        self.l2 = 0.130    # lower leg length
         
         
         self.leg_location = np.array([self.a*0.5*np.array([ 1, 1, -1, -1]),
@@ -86,7 +86,12 @@ class HardwareConfig:
     
     
     def rot_rpy(self, rpy):
-        return self.rot_z(rpy[0])@self.rot_y(rpy[1])@self.rot_x(rpy[2])
+        '''
+        same as self.rot_z(rpy[0])@self.rot_y(rpy[1])@self.rot_x(rpy[2])
+        but rewritten for Pypy
+        '''
+        rot = np.matmul(self.rot_z(rpy[0]), self.rot_y(rpy[1]))
+        return np.matmul(rot, self.rot_x(rpy[2]))
     
     
     def inverse_kinematics(self, coordinates, rpy=np.zeros(3), 
@@ -122,7 +127,7 @@ class HardwareConfig:
         foot_tips = coordinates + leg_location + rotation_location
         
         # rotate coordinates in body coordinate system
-        foot_tips = self.rot_rpy(-rpy)@foot_tips
+        foot_tips = np.matmul(self.rot_rpy(-rpy), foot_tips)
         
         # transform back to shoulder coordinate system
         foot_tips = foot_tips - leg_location - rotation_location

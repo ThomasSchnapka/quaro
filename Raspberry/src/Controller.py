@@ -21,7 +21,8 @@ class Controller:
         self.hardware_interface = hardware_interface
         self.hardware_config = hardware_config
         
-        self.gait_controller = GaitController(state, hardware_config)
+        #self.contact_sensor = ContactSensor()
+        self.gait_controller = GaitController(state)
         self.transition_controller = TransitionController(state, self, 
                                                           hardware_config)
         self.inclination_controller = InclinationController(state,
@@ -77,28 +78,29 @@ class Controller:
         '''
         coordinates = np.copy(coordinates)
         self.state.rpy = rpy
-        
         # correct coordinates
         self.state.uncorrected_foot_position = np.copy(coordinates)
         coordinates += self.correct_shoulder_displacement()
         coordinates += self.state.true_com[:, np.newaxis]
         if self.state.enable_inclination_controller:
             coordinates = self.inclination_controller.correct_inclination(coordinates)
-        
+
         # inverse kinematics
         angle = self.hardware_config.inverse_kinematics(coordinates, rpy, rotation_center)
         
         # save values in state
         self.state.joint_angle = angle
         self.state.rpy = rpy
-        self.state.absolute_foot_position = coordinates
+        self.state.absolute_foot_position = np.copy(coordinates)
         self.set_leg_angle(angle)
+        
         
     def set_leg_angle(self, angle):
         '''check and save angles to hardware interface'''
         angle += self.hardware_config.zero_pos
         angle = self.sanity_check_angle(angle)
         self.hardware_interface.send_angle(angle)
+        
         
     def sanity_check_angle(self, angle):
         '''check if angles can be used without flaws and limit them'''
@@ -107,17 +109,17 @@ class Controller:
             or  np.any(np.abs(angle[1]) > 120)
             or  np.any(np.abs(angle[2]) > 60)
             or  np.any(np.isnan(angle))):
-            print("[controller] bad angle value")
+            print("[controller] bad angle value", self.state.absolute_foot_position)
         ## limits
         # femur
         angle[0][angle[0] >  60] =  60
         angle[0][angle[0] < -60] = -60
         # tibia
-        angle[1][angle[0] > 120] = 120
-        angle[1][angle[0] <-120] =-120
+        angle[1][angle[1] > 120] = 120
+        angle[1][angle[1] <-120] =-120
         # coxa
-        angle[2][angle[0] >  60] =  60
-        angle[2][angle[0] < -60] = -60
+        angle[2][angle[2] >  60] =  60
+        angle[2][angle[2] < -60] = -60
         return angle
     
     def calibrate(self):
