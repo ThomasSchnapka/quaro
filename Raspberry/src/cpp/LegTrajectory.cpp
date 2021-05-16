@@ -1,3 +1,7 @@
+/*
+ * Contains and collects data from single leg trajectories 
+ */
+
 #include <iostream>
 #include "LegTrajectory.h"
 #include "SingleLegTrajectory.h"

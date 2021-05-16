@@ -1,3 +1,7 @@
+/*
+ *  State containing shared information between modules
+ */
+
 #ifndef STATE_H
 #define STATE_H
 

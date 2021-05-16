@@ -1,3 +1,7 @@
+/*
+ * Generates trajectory for a single leg
+ */
+ 
 #ifndef SINGLELEGTRAJECTORY_H
 #define SINGLELEGTRAJECTORY_H
 

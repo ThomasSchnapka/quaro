@@ -1,5 +1,8 @@
+/*
+ * Generates trajectory for a single leg
+ */
+
 #include <iostream>
-//#include <cmath>
 #include "math.h"
 #include "SingleLegTrajectory.h"
 #include "Coordinate.h"

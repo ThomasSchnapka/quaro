@@ -1,7 +1,15 @@
+/*
+ * Interface for the I2C connection with the foot contact switches
+ * 
+ * As the I2C dependencies only exist on the Raspberry, but this code should 
+ * still be compilable on other machines for testing, there exists a
+ * a conditional compiler directive
+ */ 
+
 #include <iostream>
 #include "ContactSensor.h"
 
-// mac this compilable on Mac
+// make this compilable on Mac
 
 #if defined __arm__
     #include <eigen3/Eigen/Dense>

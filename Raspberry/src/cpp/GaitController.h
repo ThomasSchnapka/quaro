@@ -1,3 +1,7 @@
+/*
+ * Interface to connect Python with C++
+ */
+
 #ifndef GAITCONTROLLER_H
 #define GAITCONTROLLER_H
 

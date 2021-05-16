@@ -1,3 +1,7 @@
+/*
+ * Generates splines for swing phase
+ */
+
 #ifndef SWINGSPLINE_H
 #define SWINGSPLINE_H
 

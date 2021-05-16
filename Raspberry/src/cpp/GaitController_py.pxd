@@ -1,4 +1,4 @@
-''' "Python header" for LegTrajectory.h'''
+''' "Python header" for GaitController.h'''
 
 from Coordinates_py cimport Coordinates
 

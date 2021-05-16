@@ -1,3 +1,7 @@
+/*
+ *  State containing shared information between modules
+ */
+ 
 #include "State.h"
 
 #include <iostream>

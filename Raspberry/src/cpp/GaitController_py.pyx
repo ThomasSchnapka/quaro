@@ -1,13 +1,13 @@
+'''
+Cython file that connects Python with C++
+'''
+
 import numpy as np
 from Coordinates_py cimport Coordinates
 from GaitController_py cimport GaitController
 
-# Create a Cython extension type which holds a C++ instance
-# as an attribute and create a bunch of forwarding methods
-# Python extension type.
+
 cdef class GaitController_py:
-    #cdef LegTrajectory(State*, COMTrajectory*) lt# Hold a C++ instance which we're wrapping
-    #the following classes do not have nullary constructors, so we have to manually allocate them
 
     cdef GaitController* gc
 

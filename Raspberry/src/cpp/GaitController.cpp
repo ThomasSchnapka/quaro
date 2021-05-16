@@ -1,3 +1,7 @@
+/*
+ * Interface to connect Python with C++
+ */
+
 #include <iostream>
 #include "GaitController.h"
 #include "LegTrajectory.h"

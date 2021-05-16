@@ -1,3 +1,8 @@
+/*
+ * contains and updates the BaseFrame trajectory
+ */
+
+
 #include <iostream>
 #include "BaseFrameTrajectory.h"
 #include "Coordinate.h"

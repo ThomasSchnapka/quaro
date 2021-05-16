@@ -1,3 +1,7 @@
+/*
+ * contains and updates the BaseFrame trajectory
+ */
+
 #ifndef COMTRAJECTORY_H
 #define COMTRAJECTORY_H
 

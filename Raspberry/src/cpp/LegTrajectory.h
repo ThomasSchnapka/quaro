@@ -1,3 +1,7 @@
+/*
+ * Contains and collects data from different legs
+ */
+
 #ifndef LEGTRAJECTORY_H
 #define LEGTRAJECTORY_H
 
