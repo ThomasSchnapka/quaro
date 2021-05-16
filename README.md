@@ -7,8 +7,6 @@ Control software for quadrupedal robots with a focus on tidy kinematics and moti
   <img src="https://raw.githubusercontent.com/ThomasSchnapka/quaro/master/media/hardware_image_side.jpeg" width="250">
 </p>
 
-_Made by user Thomas Schnapka_
-
 
 ## Overview
 This repo contains the control software that runs my version of KDY0523's [SpotMicro](https://www.thingiverse.com/thing:3445283). 
@@ -65,6 +63,8 @@ If you want to adopt this software for your own robot, you have to change the ha
 
 ## Installation and execution
 ### Installation
+
+_If you just want a simple, reliable quadruped control software in pure Python, download v3.1. The current version is rather a playground for my own experiments and sometimes unstable. (But it contains some cool features though)_
 
 Because this repo contains a submodule, it is necessary to use clone it with
 the `--recurse-submodules` option:
@@ -131,6 +131,7 @@ _optional for foot contact switches:_
 
 ![gif foot contact switches](https://github.com/ThomasSchnapka/quaro/blob/master/media/foot_contact_switches_gait.gif?raw=true)
 
+One of the biggest flaws of a quadruped robot on a budget is that the servo motors do not give any feedback. To deal with it I wanted to try out foot contact switches.
 After testing [this approach](https://github.com/open-dynamic-robot-initiative/open_robot_actuator_hardware/blob/master/mechanics/foot_contact_switch_v1/README.md) with Phototransistors, I found out that using force-sensitive resistors is more feasible if one wants to maintain the Spot Micro design and avoid buying SMD boards. Instructions and files are available on [Thingivese](https://www.thingiverse.com/thing:4821239). More information: [link](https://github.com/ThomasSchnapka/quaro/tree/master/Hardware/Foot_contact_switch)
 
 ## Additional resources 
