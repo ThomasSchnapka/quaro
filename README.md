@@ -55,6 +55,8 @@ quaro
 ├── Simulation       # plot of the robots state
 │    └── main.py
 │
+├── notebooks        # my notes on robot control
+│
 ├── doc              # definitions
 │
 ├── media            # images and videos
