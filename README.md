@@ -72,7 +72,7 @@ Because this repo contains a submodule, it is necessary to use clone it with
 the `--recurse-submodules` option:
 
 ```
-git clone --branch v4 --recurse-submodules https://github.com/ThomasSchnapka/quaro.git
+git clone --branch master --recurse-submodules https://github.com/ThomasSchnapka/quaro.git
 ```
 It is no problem to install the software without IMU, PWM-board or any hardware at all. The software detects which hardware is connected and creates a dummy instance if necessary.
 
