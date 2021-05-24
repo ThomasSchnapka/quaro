@@ -1,3 +1,7 @@
 [submodule "Raspberry/src/Adafruit_Python_PCA9685"]
 	path = Raspberry/src/Adafruit_Python_PCA9685
 	url = https://github.com/adafruit/Adafruit_Python_PCA9685.git
+	
+[submodule "Raspberry/src/cpp/eigen-3.4-rc1"]
+	path = Raspberry/src/cpp/eigen-3.4-rc1	
+	url = https://gitlab.com/libeigen/eigen.git
